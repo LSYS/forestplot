@@ -1,0 +1,21 @@
+var,group,corr,ll,hl
+medicare $ per enrollee,Access to health care,-0.5,-0.62,-0.37
+"% change in population, 1980-2000",Local labor market conditions,-0.04,-0.27,0.2
+population density,Other factors,0.03,-0.06,0.13
+% black adults,Income inequality and social cohesion,-0.18,-0.33,-0.02
+% uninsured,Access to health care,-0.44,-0.55,-0.33
+income segregation,Environmental factors,0.03,-0.13,0.19
+unemployment rate in 2000,Local labor market conditions,-0.38,-0.54,-0.21
+% college graduates,Other factors,0.41,0.25,0.56
+% immigrants,Other factors,-0.21,-0.37,-0.04
+index for social capital,Income inequality and social cohesion,0.46,0.32,0.6
+"% change in labor force, 1980-2000",Local labor market conditions,0.08,-0.15,0.31
+30-d Hospital mortality rate index,Access to health care,-0.19,-0.39,0
+gini index,Income inequality and social cohesion,-0.37,-0.52,-0.23
+% religious,Income inequality and social cohesion,0.02,-0.19,0.22
+Index for preventive care,Access to health care,0.55,0.44,0.67
+obesity,health behaviours,-0.29,-0.46,-0.12
+exercise rate,health behaviours,0.46,0.35,0.58
+loal government expenditures,Other factors,0.05,-0.2,0.31
+median home value,Other factors,0.1,-0.16,0.35
+current smokers,health behaviours,-0.33,-0.51,-0.15
