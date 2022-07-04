@@ -11,10 +11,12 @@ def check_data(
     moerror: Optional[str] = None,
     ll: Optional[str] = None,
     hl: Optional[str] = None,
-    addannote: Optional[Union[list, tuple]] = None,
+    annote: Optional[Union[list, tuple]] = None,
     annoteheaders: Optional[Union[list, tuple]] = None,
     rightannote: Optional[Union[list, tuple]] = None,
     right_annoteheaders: Optional[Union[list, tuple]] = None,
+    pval: Optional[str] = None,
+    ylabel2: Optional[str] = None,
 ) -> pd.core.frame.DataFrame:
     """
 	Checks and validate that dataframe has the correct data. If data is missing, create them.
@@ -36,11 +38,15 @@ def check_data(
 		Optional
 	hl (str)
 		Name of column containing the upper limit of the confidence intervals. 
-	addannote (list-like)
+	annote (list-like)
 		List of columns to add as additional annotation in the plot.
 	annoteheaders (list-like)
 		List of table headers to use as column headers for the additional annotations.
-	
+    pval (str)
+        Name of column containing the p-values.
+    ylabel2 (str)
+        Title of the right-hand side y-axis.
+
 	Returns
 	-------
 		pd.core.frame.DataFrame.	
@@ -111,11 +117,11 @@ def check_data(
     ##########################################################################
     ## Check that the annotations and headers specified are list-like
     ##########################################################################
-    if addannote is not None:
+    if annote is not None:
         try:
-            assert ptypes.is_list_like(addannote)
+            assert ptypes.is_list_like(annote)
         except:
-            raise TypeError("addannote should be list-like.")
+            raise TypeError("annote should be list-like.")
 
     if annoteheaders is not None:
         try:
@@ -138,12 +144,12 @@ def check_data(
     ##########################################################################
     ## Check that annotations and corresponding headers have same length
     ##########################################################################
-    # Check addannote and annoteheader same len
-    if (addannote is not None) & (annoteheaders is not None):
+    # Check annote and annoteheader same len
+    if (annote is not None) & (annoteheaders is not None):
         try:
-            assert len(addannote) == len(annoteheaders)
+            assert len(annote) == len(annoteheaders)
         except:
-            raise AssertionError("addannote and annoteheaders should have same length.")
+            raise AssertionError("annote and annoteheaders should have same length.")
 
     # Check rightannote and right_annoteheaders same len
     if (rightannote is not None) & (right_annoteheaders is not None):
@@ -157,14 +163,14 @@ def check_data(
     ##########################################################################
     ## Check that specified annotations can be found in input or processed dataframe
     ##########################################################################
-    acceptable_annotations = [ # from processed data
+    acceptable_annotations = [  # from processed data
         "ci_range",
         "est_ci",
         "formatted_pval",
-    ]  
+    ]
 
-    if addannote is not None:
-        for col in addannote:
+    if annote is not None:
+        for col in annote:
             try:
                 assert (col in dataframe.columns) or (col in acceptable_annotations)
             except:
@@ -180,10 +186,10 @@ def check_data(
     ##########################################################################
     ## Warnings
     ##########################################################################
-    # Warn: Check that var itself is not in addannote
-    if (addannote is not None) and (varlabel in addannote):
+    # Warn: Check that var itself is not in annote
+    if (annote is not None) and (varlabel in annote):
         warnings.warn(
-            f'{varlabel} is a variable is already printed. Specifying {varlabel} in "addannote" will lead to duplicate printing of {varlabel}.'
+            f'{varlabel} is a variable is already printed. Specifying {varlabel} in "annote" will lead to duplicate printing of {varlabel}.'
         )
 
     if (rightannote is not None) and (varlabel in rightannote):
@@ -193,10 +199,18 @@ def check_data(
             f'{varlabel} is a variable is already printed. Specifying {varlabel} in "rightannote" will lead to duplicate printing of {varlabel}.'
         )
 
-    # Warn: need to ignore ylabel if annoteheaders are specified
+    if (annote is not None) and (rightannote is not None):
+        if any(col in annote for col in rightannote):
+            warnings.warn(f"Duplicates found in annote and rightannote.")
+
+    # Overriding default to plot p-value on the right-hand side since rightannote is specified
+    if (pval is not None) and (rightannote is not None):
+        warnings.warn(
+            "p-value will not be plotted in the right annotation column by default since rightannote is specificied."
+        )
+
     # Warn: need to ignore ylabel2 if right_annote headers are specified
+    if (ylabel2 is not None) and (right_annoteheaders is not None):
+        warnings.warn("ylabel2 is ignored since right_annoteheaders is specified.")
 
-    # Warn: Need to ignore pval plotting if right_annote is specified
-
-    # Warn duplicate labels in left and right side
     return dataframe

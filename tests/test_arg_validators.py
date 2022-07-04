@@ -109,7 +109,7 @@ def test_check_data():
     ##########################################################################
     ## Check annote
     ##########################################################################
-    # Assert assertion that addannote and annoteheader is same length works
+    # Assert assertion that annote and annoteheader is same length works
     _df = pd.DataFrame({"estimate": numeric_as_string, "moerror": numeric})
     with pytest.raises(AssertionError) as excinfo:
         check_data(
@@ -117,28 +117,28 @@ def test_check_data():
             estimate="estimate",
             varlabel="estimate",
             moerror="moerror",
-            addannote=["col1", "col2"],
+            annote=["col1", "col2"],
             annoteheaders=["header1"],
         )
-    assert str(excinfo.value) == "addannote and annoteheaders should have same length."
+    assert str(excinfo.value) == "annote and annoteheaders should have same length."
 
-    # No errors if addannote can be found in dataframe columns
+    # No errors if annote can be found in dataframe columns
     processed_df = check_data(
         dataframe=_df,
         estimate="estimate",
         varlabel="estimate",
         moerror="moerror",
-        addannote=["moerror"],
+        annote=["moerror"],
     )
 
-    # Raise error if addannote cannot be found in dataframe columns
+    # Raise error if annote cannot be found in dataframe columns
     with pytest.raises(AssertionError) as excinfo:
         processed_df = check_data(
             dataframe=_df,
             estimate="estimate",
             varlabel="estimate",
             moerror="moerror",
-            addannote=["dummy"],
+            annote=["dummy"],
         )
     assert str(excinfo.value) == "the field dummy is not found in dataframe."
 
@@ -149,7 +149,7 @@ def test_check_data():
         estimate="estimate",
         varlabel="moerror",
         moerror="moerror",
-        addannote=["ci_range"],
+        annote=["ci_range"],
     )
 
     ##########################################################################
