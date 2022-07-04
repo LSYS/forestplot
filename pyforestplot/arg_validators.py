@@ -91,7 +91,7 @@ def check_data(
     if moerror is None:
         try:
             assert (ll is not None) & (hl is not None)
-        except:
+        except Exception:
             raise AssertionError(
                 'If "moerror" is not provided, then "ll" and "hl" must be provided.'
             )
@@ -99,7 +99,7 @@ def check_data(
     if (ll is None) or (hl is None):
         try:
             assert moerror is not None
-        except:
+        except Exception:
             raise AssertionError(
                 'If "ll, hl" is not provided, then "moerror" must be provided.'
             )
@@ -120,25 +120,25 @@ def check_data(
     if annote is not None:
         try:
             assert ptypes.is_list_like(annote)
-        except:
+        except Exception:
             raise TypeError("annote should be list-like.")
 
     if annoteheaders is not None:
         try:
             assert ptypes.is_list_like(annoteheaders)
-        except:
+        except Exception:
             raise TypeError("annoteheaders should be list-like.")
 
     if rightannote is not None:
         try:
             assert ptypes.is_list_like(rightannote)
-        except:
+        except Exception:
             raise TypeError("rightannote should be list-like.")
 
     if right_annoteheaders is not None:
         try:
             assert ptypes.is_list_like(right_annoteheaders)
-        except:
+        except Exception:
             raise TypeError("right_annoteheaders should be list-like.")
 
     ##########################################################################
@@ -148,14 +148,14 @@ def check_data(
     if (annote is not None) & (annoteheaders is not None):
         try:
             assert len(annote) == len(annoteheaders)
-        except:
+        except Exception:
             raise AssertionError("annote and annoteheaders should have same length.")
 
     # Check rightannote and right_annoteheaders same len
     if (rightannote is not None) & (right_annoteheaders is not None):
         try:
             assert len(rightannote) == len(right_annoteheaders)
-        except:
+        except Exception:
             raise AssertionError(
                 "rightannote and right_annoteheaders should have same length."
             )
@@ -173,14 +173,14 @@ def check_data(
         for col in annote:
             try:
                 assert (col in dataframe.columns) or (col in acceptable_annotations)
-            except:
+            except Exception:
                 raise AssertionError(f"the field {col} is not found in dataframe.")
 
     if rightannote is not None:
         for col in rightannote:
             try:
                 assert (col in dataframe.columns) or (col in acceptable_annotations)
-            except:
+            except Exception:
                 raise AssertionError(f"the field {col} is not found in dataframe.")
 
     ##########################################################################
