@@ -259,8 +259,6 @@ def _remove_est_ci(
 		pd.core.frame.DataFrame.
 	"""
 	if groupvar is not None:
-		groups = [gr.lower() for gr in dataframe[groupvar].unique()]
-
 		for ix, row in dataframe.iterrows():
 			var = row[varlabel]
 			grouplabel = row[groupvar]
@@ -467,9 +465,6 @@ def prep_rightannnote(
 			_annotation = str(_annotation).ljust(_pad)
 
 			dataframe.loc[iy, f"formatted_{annotation}"] = _annotation
-
-	# get max length for variables
-	pad = _get_max_varlen(dataframe=dataframe, varlabel=varlabel, extrapad=0)
 
 	if groupvar is not None:
 		groups = [gr.lower() for gr in dataframe[groupvar].unique()]
