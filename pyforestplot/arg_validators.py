@@ -201,7 +201,7 @@ def check_data(
 
     if (annote is not None) and (rightannote is not None):
         if any(col in annote for col in rightannote):
-            warnings.warn(f"Duplicates found in annote and rightannote.")
+            warnings.warn("Duplicates found in annote and rightannote.")
 
     # Overriding default to plot p-value on the right-hand side since rightannote is specified
     if (pval is not None) and (rightannote is not None):
