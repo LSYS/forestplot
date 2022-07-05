@@ -52,9 +52,6 @@ def star_pval(
                 dataframe.loc[ix, "formatted_pval"] = ""
                 continue
 
-            if val >= 1:
-                val = 1.00000000000000000
-
             dec_formatted_pval = round(val, decimal_precision)
             dataframe.loc[ix, "formatted_pval"] = str(dec_formatted_pval)
 
