@@ -20,7 +20,8 @@ def check_data(
 ) -> pd.core.frame.DataFrame:
     """
 	Checks and validate that dataframe has the correct data. If data is missing, create them.
-	Checks and validates key arguments.
+	
+    Checks and validates key arguments.
 
 	Parameters
 	----------

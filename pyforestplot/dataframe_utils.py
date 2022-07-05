@@ -6,6 +6,7 @@ from typing import Optional
 def load_data(name: str, **param_dict) -> pd.core.frame.DataFrame:
     """
 	Load example dataset for quickstart.
+	
 	Example data available now:
 		- mortality
 	

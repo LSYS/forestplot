@@ -14,7 +14,7 @@ def star_pval(
     **kwargs,
 ) -> pd.core.frame.DataFrame:
     """
-	"Star" the p-values according to the thresholds and symbols.
+	Star the p-values according to the thresholds and symbols.
 
 	Parameters
 	----------
