@@ -498,3 +498,211 @@ def prep_rightannnote(
             dataframe.loc[ix, "yticklabel2"] = yticklabel2
 
     return dataframe
+
+
+def make_tableheaders(
+    dataframe: pd.core.frame.DataFrame,
+    varlabel: str,
+    annote: Union[tuple, list],
+    annoteheaders: Union[tuple, list],
+    rightannote: Union[tuple, list],
+    right_annoteheaders: Union[tuple, list],
+    **kwargs,
+) -> pd.core.frame.DataFrame:
+    """
+	Make the table headers from 'annoteheaders' and 'right_annoteheaders' as a row in the
+	dataframe.
+
+	Parameters
+	----------
+	dataframe (pandas.core.frame.DataFrame)
+		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+		margin of error, etc.
+	varlabel (str)
+		Name of column containing the variable label to be printed out.
+	annote (list-like)
+		List of columns to add as additional annotation in the plot.
+	annoteheaders (list-like)
+		List of table headers to use as column headers for the additional annotations.		
+	rightannote (list-like)
+		List of columns to add as additional annotation on the right-hand side of the plot.
+	right_annoteheaders (list-like)
+		List of table headers to use as column headers for the additional annotations.
+
+	Helpers
+	-------
+		_get_max_varlen
+
+	Returns
+	-------
+		pd.core.frame.DataFrame with an additional row as the table headers.	
+	"""
+    # No table headers
+    variable_header = kwargs.get("variable_header", "")
+    if (variable_header == "") or (variable_header is None):
+        variable_header = kwargs.get("variable_header", "")
+
+        if (annoteheaders is None) and (right_annoteheaders is None):
+            return dataframe
+
+    col_spacing = kwargs.get("col_spacing", 2)
+    spacing = "".ljust(col_spacing)
+
+    # Make tableheaders
+    variable_header = kwargs.get("variable_header", "Variable")
+
+    dataframe = dataframe.shift()
+    dataframe.loc[0] = np.nan
+    pad = _get_max_varlen(dataframe=dataframe, varlabel=varlabel, extrapad=0)
+    left_headers = variable_header.ljust(pad)
+    dataframe.loc[0, "yticklabel"] = left_headers
+
+    if (annoteheaders is not None) or (right_annoteheaders is not None):
+        if annoteheaders is not None:
+            for ix, header in enumerate(annoteheaders):
+                corresponding_col = annote[ix]
+                # get max length for variables
+                pad = _get_max_varlen(
+                    dataframe=dataframe, varlabel=corresponding_col, extrapad=0
+                )
+
+                if len(header) > pad:
+                    pad = len(header)
+
+                left_headers = spacing.join([left_headers, header.ljust(pad)])
+
+            dataframe.loc[0, "yticklabel"] = left_headers
+
+        if right_annoteheaders is not None:
+            right_headers = ""
+            for ix, header in enumerate(right_annoteheaders):
+                corresponding_col = rightannote[ix]
+                # get max length for variables
+                pad = _get_max_varlen(
+                    dataframe=dataframe, varlabel=corresponding_col, extrapad=0
+                )
+
+                if len(header) > pad:
+                    pad = len(header)
+
+                if right_headers == "":
+                    right_headers = header.ljust(pad)
+                else:
+                    right_headers = spacing.join([right_headers, header.ljust(pad)])
+
+            dataframe.loc[0, "yticklabel2"] = right_headers
+
+        else:
+            dataframe.loc[0, "yticklabel2"] = ""
+
+    return dataframe
+
+
+def _right_justify_num(dataframe, col, decimal_precision) -> pd.core.frame.DataFrame:
+    """
+	Format numeric columns according to the amount of decimal precision and variable length.
+
+	Parameters
+	----------
+	dataframe (pandas.core.frame.DataFrame)
+		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+		margin of error, etc.
+	col (str)
+		Name of numeric column to format.	
+	decimal_precision (int)
+		Precision of 2 means we go from '0.1234' -> '0.12'.
+
+	Helpers
+	-------
+		_get_max_varlen
+
+	Returns
+	-------
+		pd.core.frame.DataFrame with additional column for the formatted numeric column.		
+	"""
+    dataframe[f"formatted_{col}"] = (
+        dataframe[col].apply(lambda x: f"{x:0.{decimal_precision}f}").astype(str)
+    )
+
+    pad = _get_max_varlen(dataframe=dataframe, varlabel=f"formatted_{col}", extrapad=0)
+    dataframe[f"formatted_{col}"] = dataframe[f"formatted_{col}"].apply(
+        lambda x: x.rjust(pad)
+    )
+
+    return dataframe
+
+
+def form_est_ci(
+    dataframe: pd.core.frame.DataFrame,
+    estimate: str,
+    moerror: str,
+    ll: str,
+    hl: str,
+    decimal_precision: int,
+    caps: Union[tuple, list, str] = "()",
+    connector: str = " to ",
+) -> pd.core.frame.DataFrame:
+    """
+	Form the estimated effect sizes and corresponding confidence intervals as a formatted column.
+
+	Parameters
+	----------
+	dataframe (pandas.core.frame.DataFrame)
+		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+		margin of error, etc.
+	estimate (str)
+		Name of column containing the estimates (e.g. pearson correlation coefficient,
+		OR, regression estimates, etc.).
+	moerror (str)
+		Name of column containing the margin of error in the confidence intervals.
+		Should be available if 'll' and 'hl' are left empty.
+	ll (str)
+		Name of column containing the lower limit of the confidence intervals. 
+		Optional
+	hl (str)
+		Name of column containing the upper limit of the confidence intervals. 
+		Optional		
+	decimal_precision (int)
+		Precision of 2 means we go from '0.1234' -> '0.12'.
+	caps (list-like)
+		Eg '()' means that confidence intervals are enclosed in brackets (eg (-0.1 to 0.4)).
+	connector (str)
+		How to connect lower and upper limits of confidence intervals. Eg ' to ' means 
+		confidence intervals are of the form 'll to hl'.
+	
+	Helpers
+	-------
+		_right_justify_num
+
+	Returns
+	-------
+		pd.core.frame.DataFrame with an additional formatted 'est_ci' column.
+	"""
+    if (moerror is not None) & (ll is None):
+        ll = "ll"
+        hl = "hl"
+
+    dataframe = _right_justify_num(
+        dataframe=dataframe, col=estimate, decimal_precision=decimal_precision
+    )
+    dataframe = _right_justify_num(
+        dataframe=dataframe, col=ll, decimal_precision=decimal_precision
+    )
+    dataframe = _right_justify_num(
+        dataframe=dataframe, col=hl, decimal_precision=decimal_precision
+    )
+
+    for ix, row in dataframe.iterrows():
+        formatted_est = row[f"formatted_{estimate}"]
+        formatted_ll = row[f"formatted_{ll}"]
+        formatted_hl = row[f"formatted_{hl}"]
+
+        formatted_ci = "".join(
+            [caps[0], formatted_ll, connector, formatted_hl, caps[1]]
+        )
+        dataframe.loc[ix, "ci_range"] = formatted_ci
+
+        est_ci = "".join([formatted_est, formatted_ci])
+        dataframe.loc[ix, "est_ci"] = est_ci
+
+    return dataframe
