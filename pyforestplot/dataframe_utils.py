@@ -1,6 +1,4 @@
-import sys
 import pandas as pd
-from typing import Optional
 
 
 def load_data(name: str, **param_dict) -> pd.core.frame.DataFrame:
