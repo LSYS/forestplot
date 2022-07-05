@@ -168,6 +168,8 @@ def format_varlabels(
 		Name of column containing the variable label to be printed out.
 	form_ci_report (bool)
 		If True, form the formatted confidence interval as a string.
+	ci_report (bool)
+		If True, form the formatted confidence interval as a string.
 	column2 (str)
 		Name of column containing the second column of annotation to be printed.
 	groupvar (str)
