@@ -30,6 +30,7 @@ def load_data(name: str, **param_dict) -> pd.core.frame.DataFrame:
         df = pd.read_csv(url, **param_dict)
         return df
     else:
+        available_data_str = ", ".join(available_data)
         raise AssertionError(
-            f"{name} not found. Should be one of '{', '.join(available_data)}'"
+            f"{name} not found. Should be one of '{available_data_str}'"
         )
