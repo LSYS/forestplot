@@ -540,8 +540,6 @@ def make_tableheaders(
     # No table headers
     variable_header = kwargs.get("variable_header", "")
     if (variable_header == "") or (variable_header is None):
-        variable_header = kwargs.get("variable_header", "")
-
         if (annoteheaders is None) and (right_annoteheaders is None):
             return dataframe
 
