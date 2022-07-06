@@ -664,7 +664,7 @@ def form_est_ci(
 		Optional		
 	decimal_precision (int)
 		Precision of 2 means we go from '0.1234' -> '0.12'.
-	caps (list-like)
+	caps (iterable)
 		Eg '()' means that confidence intervals are enclosed in brackets (eg (-0.1 to 0.4)).
 	connector (str)
 		How to connect lower and upper limits of confidence intervals. Eg ' to ' means 
