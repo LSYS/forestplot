@@ -1,11 +1,13 @@
+import pandas as pd
 from pyforestplot.text_utils import (
+    form_est_ci,
+    star_pval,
+    indent_nongroupvar,
+    normalize_varlabels,
     _get_max_varlen,
     _right_justify_num,
     _remove_est_ci,
 )
-from pyforestplot.text_utils import *
-import pandas as pd
-import numpy as np
 from pandas.testing import assert_frame_equal
 from pandas.testing import assert_series_equal
 
