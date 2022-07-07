@@ -207,8 +207,6 @@ def format_varlabels(
                 if var.lower() in groups:  # If row is a group header
                     yticklabel = var.ljust(pad)
                 else:  # indent variable labels
-                    # indent = ''.rjust(varindent)
-                    # yticklabel = ''.join([indent, var.ljust(pad),est_ci])
                     yticklabel = "".join([var.ljust(pad), est_ci])
             else:
                 yticklabel = "".join([var.ljust(pad), est_ci])
@@ -332,14 +330,7 @@ def _get_max_varlen(
 	-------
 		int
 	"""
-    max_varlen = 0
-    for var in dataframe[varlabel]:
-        try:
-            varlen = len(var)
-        except TypeError:
-            continue
-        if varlen > max_varlen:
-            max_varlen = varlen
+    max_varlen = dataframe[varlabel].map(str).str.len().max()
     pad = max_varlen + extrapad
 
     return pad
@@ -387,8 +378,7 @@ def prep_annote(
         if annoteheaders is not None:
             # Check that max len exceeds header length
             _header = annoteheaders[ix]
-            if len(_header) > _pad:
-                _pad = len(_header)
+            _pad = max(_pad, len(_header))
 
         lookup_annote_len[ix] = _pad
 
@@ -465,8 +455,7 @@ def prep_rightannnote(
         if right_annoteheaders is not None:
             # Check that max len exceeds header length
             _header = right_annoteheaders[ix]
-            if len(_header) > _pad:
-                _pad = len(_header)
+            _pad = max(_pad, len(_header))
 
         lookup_annote_len[ix] = _pad
 
@@ -564,9 +553,7 @@ def make_tableheaders(
                     dataframe=dataframe, varlabel=corresponding_col, extrapad=0
                 )
 
-                if len(header) > pad:
-                    pad = len(header)
-
+                pad = max(pad, len(header))
                 left_headers = spacing.join([left_headers, header.ljust(pad)])
 
             dataframe.loc[0, "yticklabel"] = left_headers
@@ -580,9 +567,7 @@ def make_tableheaders(
                     dataframe=dataframe, varlabel=corresponding_col, extrapad=0
                 )
 
-                if len(header) > pad:
-                    pad = len(header)
-
+                pad = max(pad, len(header))
                 if right_headers == "":
                     right_headers = header.ljust(pad)
                 else:
