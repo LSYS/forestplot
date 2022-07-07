@@ -1,0 +1,35 @@
+var,des,group
+age, in years,age
+black, =1 if black,other factors
+case, identifier,other factors
+clerical, =1 if clerical worker,occupation
+construc, =1 if construction worker,occupation
+educ, years of schooling,labor factors
+earns74," total earnings, 1974",labor factors
+gdhlth, =1 if in good or excel. health,health factors
+inlf, =1 if in labor force,labor factors
+leis1, sleep - totwrk,other factors
+leis2, slpnaps - totwrk,other factors
+leis3, rlxall - totwrk,other factors
+smsa, =1 if live in smsa,area of residence
+lhrwage, log hourly wage,labor factors
+lothinc," log othinc, unless othinc < 0",labor factors
+male, =1 if male,other factors
+marr, =1 if married,family factors
+prot, =1 if Protestant,other factors
+rlxall, slpnaps + personal activs,other sleep factors
+selfe, =1 if self employed,labor factors
+sleep," mins sleep at night, per wk",other factors
+slpnaps," minutes sleep, inc. naps",other sleep factors
+south, =1 if live in south,area of residence
+spsepay, spousal wage income,other factors
+spwrk75, =1 if spouse works,other factors
+totwrk, mins worked per week,labor factors
+union, =1 if belong to union,labor factors
+worknrm, mins work main job,labor factors
+workscnd, mins work second job,labor factors
+exper, age - educ - 6,labor factors
+yngkid, =1 if children < 3 present,family factors
+yrsmarr, years married,family factors
+hrwage, hourly wage,labor factors
+agesq, age^2,age
