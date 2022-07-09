@@ -1,4 +1,4 @@
-name: CodeCov
+name: coverage
 on: [push, pull_request]
 jobs:
   run:
