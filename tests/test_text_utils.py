@@ -1,9 +1,15 @@
+import pytest
 import pandas as pd
+import numpy as np
 from pyforestplot.text_utils import (
     form_est_ci,
     star_pval,
     indent_nongroupvar,
     normalize_varlabels,
+    format_varlabels,
+    prep_annote,
+    prep_rightannnote,
+    make_tableheaders,
     _get_max_varlen,
     _right_justify_num,
     _remove_est_ci,
@@ -25,6 +31,27 @@ def test_star_pval():
         {"formatted_pval": ["0.001***", "0.042**", "0.091*", "0.512"]}
     )
     result_df = star_pval(_df, pval="pval", starpval=True, decimal_precision=3)
+    assert_series_equal(result_df.formatted_pval, correct_df.formatted_pval)
+
+    # Assert assertion that  P-value thresholds and symbols list must be of same length works
+    with pytest.raises(Exception) as excinfo:
+        star_pval(
+            _df,
+            pval="pval",
+            starpval=True,
+            decimal_precision=3,
+            thresholds=(0.01, 0.05, 0.1),
+            symbols=("a", "b"),
+        )
+    assert (
+        str(excinfo.value)
+        == "Error: P-value thresholds and symbols list must be of same length."
+    )
+
+    # Assert things work when pval is empty
+    _df = pd.DataFrame({"pval": [0.0001, np.nan, 0.090, 0.500]})
+    correct_df = pd.DataFrame({"formatted_pval": ["0.0***", "", "0.09*", "0.5"]})
+    result_df = star_pval(_df, pval="pval", starpval=True, decimal_precision=2)
     assert_series_equal(result_df.formatted_pval, correct_df.formatted_pval)
 
 
@@ -73,9 +100,8 @@ def test_normalize_varlabels():
     _df = pd.DataFrame({"col": ["row number 1", "row number 2"]})
 
     # No capitalize
-    correct_df = _df
     result_df = normalize_varlabels(_df, varlabel="col", capitalize=None)
-    assert_frame_equal(result_df, correct_df)
+    assert_frame_equal(result_df, _df)
 
     # Capitalize (default)
     correct_df = pd.DataFrame({"col": ["Row number 1", "Row number 2"]})
@@ -95,6 +121,12 @@ def test_normalize_varlabels():
     # upper
     correct_df = pd.DataFrame({"col": ["ROW NUMBER 1", "ROW NUMBER 2"]})
     result_df = normalize_varlabels(_df, varlabel="col", capitalize="upper")
+    assert_frame_equal(result_df, correct_df)
+
+    # swapcase
+    correct_df = pd.DataFrame({"col": ["ROW NUMBER 1", "ROW NUMBER 2"]})
+    _df = pd.DataFrame({"col": ["row number 1", "row number 2"]})
+    result_df = normalize_varlabels(_df, varlabel="col", capitalize="swapcase")
     assert_frame_equal(result_df, correct_df)
 
 
@@ -136,4 +168,358 @@ def test_form_est_ci():
     result_df = form_est_ci(
         _df, estimate="estimate", moerror=None, ll="ll", hl="hl", decimal_precision=2
     )
+    assert_frame_equal(result_df, correct_df)
+
+    # Test that things work when moerror is specified but ll/hl is None
+    result_df = form_est_ci(
+        _df,
+        estimate="estimate",
+        moerror="moerror",
+        ll=None,
+        hl=None,
+        decimal_precision=2,
+    )
+    assert_frame_equal(result_df, correct_df)
+
+
+def test_format_varlabels():
+    input_df = pd.DataFrame(
+        {
+            "var": ["var1", "var2", "var3"],
+            "estimate": [1, 2, 3],
+            "ll": [1, 2, 3],
+            "hl": [1, 2, 3],
+            "info": ["a", "b", "c"],
+            "formatted_estimate": ["1.00", "2.00", "3.00"],
+            "formatted_ll": ["1.00", "2.00", "3.00"],
+            "formatted_hl": ["1.00", "2.00", "3.00"],
+            "ci_range": ["(1.00 to 1.00)", "(2.00 to 2.00)", "(3.00 to 3.00)"],
+            "est_ci": [
+                "1.00(1.00 to 1.00)",
+                "2.00(2.00 to 2.00)",
+                "3.00(3.00 to 3.00)",
+            ],
+        }
+    )
+
+    # Test that no groups and no string annotation (column2) works
+    correct_df = pd.DataFrame(
+        {
+            "var": ["var1", "var2", "var3"],
+            "estimate": [1, 2, 3],
+            "ll": [1, 2, 3],
+            "hl": [1, 2, 3],
+            "info": ["a", "b", "c"],
+            "formatted_estimate": ["1.00", "2.00", "3.00"],
+            "formatted_ll": ["1.00", "2.00", "3.00"],
+            "formatted_hl": ["1.00", "2.00", "3.00"],
+            "ci_range": ["(1.00 to 1.00)", "(2.00 to 2.00)", "(3.00 to 3.00)"],
+            "est_ci": [
+                "1.00(1.00 to 1.00)",
+                "2.00(2.00 to 2.00)",
+                "3.00(3.00 to 3.00)",
+            ],
+            "yticklabel": [
+                "var1  1.00(1.00 to 1.00)",
+                "var2  2.00(2.00 to 2.00)",
+                "var3  3.00(3.00 to 3.00)",
+            ],
+        }
+    )
+    result_df = format_varlabels(
+        input_df, varlabel="var", form_ci_report=True, ci_report=True, groupvar=None
+    )
+    assert_frame_equal(result_df, correct_df)
+
+    # Test that groups with no string annotation works
+    input_df = pd.DataFrame(
+        {
+            "var": ["group", "var1", "var2"],
+            "groupvar": ["group", "group", "group"],
+            "estimate": [1, 2, 3],
+            "ll": [1, 2, 3],
+            "hl": [1, 2, 3],
+            "formatted_estimate": ["1.00", "2.00", "3.00"],
+            "formatted_ll": ["1.00", "2.00", "3.00"],
+            "formatted_hl": ["1.00", "2.00", "3.00"],
+            "info": ["a", "b", "c"],
+            "ci_range": ["(1.00 to 1.00)", "(2.00 to 2.00)", "(3.00 to 3.00)"],
+            "est_ci": [
+                "1.00(1.00 to 1.00)",
+                "2.00(2.00 to 2.00)",
+                "3.00(3.00 to 3.00)",
+            ],
+        }
+    )
+    correct_df = pd.DataFrame(
+        {
+            "var": ["group", "var1", "var2"],
+            "groupvar": ["group", "group", "group"],
+            "estimate": [1, 2, 3],
+            "ll": [1, 2, 3],
+            "hl": [1, 2, 3],
+            "formatted_estimate": ["1.00", "2.00", "3.00"],
+            "formatted_ll": ["1.00", "2.00", "3.00"],
+            "formatted_hl": ["1.00", "2.00", "3.00"],
+            "info": ["a", "b", "c"],
+            "ci_range": ["", "(2.00 to 2.00)", "(3.00 to 3.00)"],
+            "est_ci": ["", "2.00(2.00 to 2.00)", "3.00(3.00 to 3.00)"],
+            "yticklabel": [
+                "group",
+                "var1   2.00(2.00 to 2.00)",
+                "var2   3.00(3.00 to 3.00)",
+            ],
+        }
+    )
+    result_df = format_varlabels(
+        input_df,
+        varlabel="var",
+        form_ci_report=True,
+        ci_report=True,
+        groupvar="groupvar",
+    )
+    assert_frame_equal(result_df, correct_df)
+
+    # Test that ci_report=False option works (yticklabel should just be varlabel)
+    correct_df = pd.DataFrame(
+        {
+            "var": ["group", "var1", "var2"],
+            "groupvar": ["group", "group", "group"],
+            "estimate": [1, 2, 3],
+            "ll": [1, 2, 3],
+            "hl": [1, 2, 3],
+            "formatted_estimate": ["1.00", "2.00", "3.00"],
+            "formatted_ll": ["1.00", "2.00", "3.00"],
+            "formatted_hl": ["1.00", "2.00", "3.00"],
+            "info": ["a", "b", "c"],
+            "ci_range": ["", "(2.00 to 2.00)", "(3.00 to 3.00)"],
+            "est_ci": ["", "2.00(2.00 to 2.00)", "3.00(3.00 to 3.00)"],
+            "yticklabel": ["group", "var1", "var2"],
+        }
+    )
+    result_df = format_varlabels(
+        input_df,
+        varlabel="var",
+        form_ci_report=False,
+        ci_report=False,
+        groupvar="groupvar",
+    )
+    assert_frame_equal(result_df, correct_df)
+
+    # Test that ci_report=False option works (yticklabel should just be varlabel) even when form_ci_report=True
+    correct_df = pd.DataFrame(
+        {
+            "var": ["group", "var1", "var2"],
+            "groupvar": ["group", "group", "group"],
+            "estimate": [1, 2, 3],
+            "ll": [1, 2, 3],
+            "hl": [1, 2, 3],
+            "formatted_estimate": ["1.00", "2.00", "3.00"],
+            "formatted_ll": ["1.00", "2.00", "3.00"],
+            "formatted_hl": ["1.00", "2.00", "3.00"],
+            "info": ["a", "b", "c"],
+            "ci_range": ["", "(2.00 to 2.00)", "(3.00 to 3.00)"],
+            "est_ci": ["", "2.00(2.00 to 2.00)", "3.00(3.00 to 3.00)"],
+            "yticklabel": ["group", "var1", "var2"],
+        }
+    )
+    result_df = format_varlabels(
+        input_df,
+        varlabel="var",
+        form_ci_report=True,
+        ci_report=False,
+        groupvar="groupvar",
+    )
+    assert_frame_equal(result_df, correct_df)
+
+
+def test_prep_annote():
+    # Assert things work when there is group exists
+    input_df = pd.DataFrame(
+        {
+            "var": ["group", "var1", "var2"],
+            "groupvar": ["group", "group", "group"],
+            "estimate": [1, 2, 3],
+            "info": ["a", "b", "c"],
+        }
+    )
+    correct_df = pd.DataFrame(
+        {
+            "var": ["group", "var1", "var2"],
+            "groupvar": ["group", "group", "group"],
+            "estimate": [1, 2, 3],
+            "info": ["a", "b", "c"],
+            "formatted_info": ["a   ", "b   ", "c   "],
+            "yticklabel": ["group", "var1   b   ", "var2   c   "],
+        }
+    )
+    result_df = prep_annote(
+        input_df,
+        annote=["info"],
+        annoteheaders=["info"],
+        varlabel="var",
+        groupvar="groupvar",
+    )
+    assert_frame_equal(result_df, correct_df)
+
+    # Assert things work when there is no group
+    correct_df = pd.DataFrame(
+        {
+            "var": ["group", "var1", "var2"],
+            "groupvar": ["group", "group", "group"],
+            "estimate": [1, 2, 3],
+            "info": ["a", "b", "c"],
+            "formatted_info": ["a   ", "b   ", "c   "],
+            "yticklabel": ["group  a   ", "var1   b   ", "var2   c   "],
+        }
+    )
+    result_df = prep_annote(
+        input_df, annote=["info"], annoteheaders=["info"], varlabel="var", groupvar=None
+    )
+    assert_frame_equal(result_df, correct_df)
+
+
+def test_prep_rightannote():
+    # Assert things work when there is group exists
+    input_df = pd.DataFrame(
+        {
+            "var": ["group", "var1", "var2"],
+            "groupvar": ["group", "group", "group"],
+            "estimate": [1, 2, 3],
+            "info": ["a", "b", "c"],
+        }
+    )
+    correct_df = pd.DataFrame(
+        {
+            "var": ["group", "var1", "var2"],
+            "groupvar": ["group", "group", "group"],
+            "estimate": [1, 2, 3],
+            "info": ["a", "b", "c"],
+            "formatted_info": ["a   ", "b   ", "c   "],
+            "yticklabel2": ["a   ", "b   ", "c   "],
+        }
+    )
+    result_df = prep_rightannnote(
+        input_df,
+        rightannote=["info"],
+        right_annoteheaders=["info"],
+        varlabel="var",
+        groupvar=None,
+    )
+    assert_frame_equal(result_df, correct_df)
+
+    correct_df = pd.DataFrame(
+        {
+            "var": ["group", "var1", "var2"],
+            "groupvar": ["group", "group", "group"],
+            "estimate": [1, 2, 3],
+            "info": ["a", "b", "c"],
+            "formatted_info": ["a   ", "b   ", "c   "],
+            "yticklabel2": ["", "b   ", "c   "],
+        }
+    )
+    result_df = prep_rightannnote(
+        input_df,
+        rightannote=["info"],
+        right_annoteheaders=["info"],
+        varlabel="var",
+        groupvar="groupvar",
+    )
+    assert_frame_equal(result_df, correct_df)
+
+
+def test_make_tableheaders():
+    input_df = pd.DataFrame(
+        {
+            "var": ["group", "var1", "var2"],
+            "groupvar": ["group", "group", "group"],
+            "estimate": [1, 2, 3],
+            "info": ["a", "b", "c"],
+            "fomatted_info": ["a   ", "b   ", "c   "],
+            "yticklabel": ["group", "var1  b", "var2  c"],
+            "yticklabel2": ["", "b   ", "c   "],
+        }
+    )
+    correct_df = pd.DataFrame(
+        {
+            "var": [np.nan, "group", "var1", "var2"],
+            "groupvar": [np.nan, "group", "group", "group"],
+            "estimate": [np.nan, 1, 2, 3],
+            "info": [np.nan, "a", "b", "c"],
+            "fomatted_info": [np.nan, "a   ", "b   ", "c   "],
+            "yticklabel": ["Variable  left head", "group", "var1  b", "var2  c"],
+            "yticklabel2": ["right head", "", "b   ", "c   "],
+        }
+    )
+    result_df = make_tableheaders(
+        input_df,
+        varlabel="var",
+        annote=["info"],
+        annoteheaders=["left head"],
+        rightannote=["info"],
+        right_annoteheaders=["right head"],
+        groupvar="groupvar",
+    )
+    assert len(result_df) == 1 + len(input_df)
+    assert_frame_equal(result_df, correct_df)
+
+    # Assert things work if no headers specified
+    result_df = make_tableheaders(
+        input_df,
+        varlabel="var",
+        annote=["info"],
+        annoteheaders=None,
+        rightannote=["info"],
+        right_annoteheaders=None,
+        groupvar="groupvar",
+    )
+    assert len(result_df) == len(input_df)
+    assert_frame_equal(result_df, input_df)
+
+    # Assert things work if no rightheaders specified
+    correct_df = pd.DataFrame(
+        {
+            "var": [np.nan, "group", "var1", "var2"],
+            "groupvar": [np.nan, "group", "group", "group"],
+            "estimate": [np.nan, 1, 2, 3],
+            "info": [np.nan, "a", "b", "c"],
+            "fomatted_info": [np.nan, "a   ", "b   ", "c   "],
+            "yticklabel": ["Variable  left head", "group", "var1  b", "var2  c"],
+            "yticklabel2": ["", "", "b   ", "c   "],
+        }
+    )
+    result_df = make_tableheaders(
+        input_df,
+        varlabel="var",
+        annote=["info"],
+        annoteheaders=["left head"],
+        rightannote=["info"],
+        right_annoteheaders=None,
+        groupvar="groupvar",
+    )
+    assert len(result_df) == 1 + len(input_df)
+    assert_frame_equal(result_df, correct_df)
+
+    # Assert things work if no leftheaders specified
+    correct_df = pd.DataFrame(
+        {
+            "var": [np.nan, "group", "var1", "var2"],
+            "groupvar": [np.nan, "group", "group", "group"],
+            "estimate": [np.nan, 1, 2, 3],
+            "info": [np.nan, "a", "b", "c"],
+            "fomatted_info": [np.nan, "a   ", "b   ", "c   "],
+            "yticklabel": ["Variable", "group", "var1  b", "var2  c"],
+            "yticklabel2": ["right head", "", "b   ", "c   "],
+        }
+    )
+    result_df = make_tableheaders(
+        input_df,
+        varlabel="var",
+        annote=["info"],
+        annoteheaders=None,
+        rightannote=["info"],
+        right_annoteheaders=["right head"],
+        groupvar="groupvar",
+    )
+    assert len(result_df) == 1 + len(input_df)
     assert_frame_equal(result_df, correct_df)
