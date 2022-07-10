@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from typing import Union
-import sys
+from pyforestplot.dataframe_utils import insert_empty_row
 
 
 def star_pval(
@@ -42,8 +42,9 @@ def star_pval(
         try:
             assert len(thresholds) == len(symbols)
         except Exception:
-            print("Error: P-value thresholds and symbols list must be of same length.")
-            sys.exit(1)
+            raise AssertionError(
+                "Error: P-value thresholds and symbols list must be of same length."
+            )
 
         for ix, row in dataframe.iterrows():
             val = row[pval]
@@ -66,7 +67,11 @@ def star_pval(
 
 
 def indent_nongroupvar(
-    dataframe, varlabel, groupvar, varindent: int = 2, **kwargs
+    dataframe: pd.core.frame.DataFrame,
+    varlabel: str,
+    groupvar: str,
+    varindent: int = 2,
+    **kwargs,
 ) -> pd.core.frame.DataFrame:
     """
 	Indent the non-group variable labels when the 'form_ci_report' option is switched off.
@@ -149,7 +154,6 @@ def format_varlabels(
     varlabel: str,
     form_ci_report: bool,
     ci_report: bool,
-    column2: str,
     groupvar: str,
     extrapad: int = 2,
     varindent: int = 2,
@@ -189,10 +193,8 @@ def format_varlabels(
 	-------
 		pd.core.frame.DataFrame with an additional 'yticklabel' column.
 	"""
-    if form_ci_report | (column2 is not None):
+    if form_ci_report:
         pad = _get_max_varlen(dataframe=dataframe, varlabel=varlabel, extrapad=extrapad)
-
-    if form_ci_report & (column2 is None):
         for ix, row in dataframe.iterrows():
             var = row[varlabel]
             if ci_report:
@@ -203,34 +205,14 @@ def format_varlabels(
 
             if groupvar is not None:
                 groups = [gr.lower() for gr in dataframe[groupvar].unique()]
-
                 if var.lower() in groups:  # If row is a group header
-                    yticklabel = var.ljust(pad)
+                    yticklabel = var
                 else:  # indent variable labels
                     yticklabel = "".join([var.ljust(pad), est_ci])
             else:
                 yticklabel = "".join([var.ljust(pad), est_ci])
 
             dataframe.loc[ix, "yticklabel"] = yticklabel
-
-    elif column2 is not None:
-        dataframe = _format_secondcolumn(dataframe=dataframe, column2=column2)
-
-        for ix, row in dataframe.iterrows():
-            var = row[varlabel]
-            annote = row[f"formatted_{column2}"]
-
-            if groupvar is not None:
-                groups = [gr.lower() for gr in dataframe[groupvar].unique()]
-
-                if var.lower() in groups:  # If row is a group header
-                    yticklabel = var.ljust(pad)
-                else:  # indent variable labels
-                    # already indented from indent_nongroupvar
-                    yticklabel = "".join([var.ljust(pad), annote])
-
-            dataframe.loc[ix, "yticklabel"] = yticklabel
-
     else:
         dataframe["yticklabel"] = dataframe[varlabel]
 
@@ -274,42 +256,6 @@ def _remove_est_ci(
     return dataframe
 
 
-def _format_secondcolumn(
-    dataframe: pd.core.frame.DataFrame, column2: str, ha: str = "right", **kwargs
-) -> pd.core.frame.DataFrame:
-    """
-	Format the non-CI column as an annotation. Right-align this column using the max length in the column.
-
-	Parameters
-	----------
-	dataframe (pandas.core.frame.DataFrame)
-		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
-		margin of error, etc.
-	column2 (str)
-		Name of column containing the second column of annotation to be printed.
-
-	Helpers
-	-------
-		_get_max_varlen
-	Returns
-	-------
-		pd.core.frame.DataFrame with an additional 'formatted_column2' column.	
-	"""
-
-    pad = _get_max_varlen(dataframe=dataframe, varlabel=column2, extrapad=0)
-
-    for ix, row in dataframe.iterrows():
-        annote = row[column2]
-        if ha == "right":
-            annote = str(annote).rjust(pad)
-        else:
-            annote = str(annote).ljust(pad)
-
-        dataframe.loc[ix, f"formatted_{column2}"] = annote
-
-    return dataframe
-
-
 def _get_max_varlen(
     dataframe: pd.core.frame.DataFrame, varlabel: str, extrapad: int,
 ) -> int:
@@ -332,7 +278,6 @@ def _get_max_varlen(
 	"""
     max_varlen = dataframe[varlabel].map(str).str.len().max()
     pad = max_varlen + extrapad
-
     return pad
 
 
@@ -537,9 +482,8 @@ def make_tableheaders(
 
     # Make tableheaders
     variable_header = kwargs.get("variable_header", "Variable")
+    dataframe = insert_empty_row(dataframe)
 
-    dataframe = dataframe.shift()
-    dataframe.loc[0] = np.nan
     pad = _get_max_varlen(dataframe=dataframe, varlabel=varlabel, extrapad=0)
     left_headers = variable_header.ljust(pad)
     dataframe.loc[0, "yticklabel"] = left_headers
@@ -581,7 +525,9 @@ def make_tableheaders(
     return dataframe
 
 
-def _right_justify_num(dataframe, col, decimal_precision) -> pd.core.frame.DataFrame:
+def _right_justify_num(
+    dataframe: pd.core.frame.DataFrame, col: str, decimal_precision: int
+) -> pd.core.frame.DataFrame:
     """
 	Format numeric columns according to the amount of decimal precision and variable length.
 
