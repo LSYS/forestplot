@@ -559,9 +559,9 @@ def _right_justify_num(
 def form_est_ci(
     dataframe: pd.core.frame.DataFrame,
     estimate: str,
-    moerror: Union(str, None),
-    ll: Union(str, None),
-    hl: Union(str, None),
+    moerror: Union[str, None],
+    ll: Union[str, None],
+    hl: Union[str, None],
     decimal_precision: int,
     caps: Union[tuple, list, str] = "()",
     connector: str = " to ",
