@@ -123,7 +123,7 @@ def test_check_data():
     assert str(excinfo.value) == "annote and annoteheaders should have same length."
 
     # No errors if annote can be found in dataframe columns
-    processed_df = check_data(
+    check_data(
         dataframe=_df,
         estimate="estimate",
         varlabel="estimate",
@@ -133,7 +133,7 @@ def test_check_data():
 
     # Raise error if annote cannot be found in dataframe columns
     with pytest.raises(AssertionError) as excinfo:
-        processed_df = check_data(
+        check_data(
             dataframe=_df,
             estimate="estimate",
             varlabel="estimate",
@@ -144,7 +144,7 @@ def test_check_data():
 
     # Confirm no exception if annotation has column not in dataframe, but is found
     # processed dataframe (eg 'ci_range')
-    processed_df = check_data(
+    check_data(
         dataframe=_df,
         estimate="estimate",
         varlabel="moerror",
@@ -172,7 +172,7 @@ def test_check_data():
     )
 
     # No errors if rightannote can be found in dataframe columns
-    processed_df = check_data(
+    check_data(
         dataframe=_df,
         estimate="estimate",
         varlabel="estimate",
@@ -182,7 +182,7 @@ def test_check_data():
 
     # Raise error if rightannote cannot be found in dataframe columns
     with pytest.raises(AssertionError) as excinfo:
-        processed_df = check_data(
+        check_data(
             dataframe=_df,
             estimate="estimate",
             varlabel="estimate",
@@ -193,7 +193,7 @@ def test_check_data():
 
     # Confirm no exception if annotation has column not in dataframe, but is found
     # processed dataframe (eg 'ci_range')
-    processed_df = check_data(
+    check_data(
         dataframe=_df,
         estimate="estimate",
         varlabel="moerror",
