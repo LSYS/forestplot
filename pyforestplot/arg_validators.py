@@ -64,26 +64,23 @@ def check_data(
         except ValueError:
             raise TypeError("Estimates should be float or int")
 
-    if moerror is not None:
-        if not ptypes.is_numeric_dtype(dataframe[moerror]):
-            try:
-                dataframe[moerror] = dataframe[moerror].astype(float)
-            except ValueError:
-                raise TypeError("Margin of error values should be float or int")
+    if (moerror is not None) and (not ptypes.is_numeric_dtype(dataframe[moerror])):
+        try:
+            dataframe[moerror] = dataframe[moerror].astype(float)
+        except ValueError:
+            raise TypeError("Margin of error values should be float or int")
 
-    if ll is not None:
-        if not ptypes.is_numeric_dtype(dataframe[ll]):
-            try:
-                dataframe[ll] = dataframe[ll].astype(float)
-            except ValueError:
-                raise TypeError("CI lowerlimit values should be float or int")
+    if (ll is not None) and (not ptypes.is_numeric_dtype(dataframe[ll])):
+        try:
+            dataframe[ll] = dataframe[ll].astype(float)
+        except ValueError:
+            raise TypeError("CI lowerlimit values should be float or int")
 
-    if hl is not None:
-        if not ptypes.is_numeric_dtype(dataframe[hl]):
-            try:
-                dataframe[hl] = dataframe[hl].astype(float)
-            except ValueError:
-                raise TypeError("CI higherlimit values should be float or int")
+    if (hl is not None) and (not ptypes.is_numeric_dtype(dataframe[hl])):
+        try:
+            dataframe[hl] = dataframe[hl].astype(float)
+        except ValueError:
+            raise TypeError("CI higherlimit values should be float or int")
 
     ##########################################################################
     ## Check that either moerror or ll, hl are specified.
