@@ -97,7 +97,9 @@ def test_indent_nongroupvar():
 
 
 def test_normalize_varlabels():
-    _df = pd.DataFrame({"col": ["row number 1", "row number 2"]})
+    lowercase_lst = ["row number 1", "row number 2"]
+    _df = pd.DataFrame({"col": lowercase_lst})
+    uppercase_lst = ["ROW NUMBER 1", "ROW NUMBER 2"]
 
     # No capitalize
     result_df = normalize_varlabels(_df, varlabel="col", capitalize=None)
@@ -114,18 +116,18 @@ def test_normalize_varlabels():
     assert_frame_equal(result_df, correct_df)
 
     # lower
-    correct_df = pd.DataFrame({"col": ["row number 1", "row number 2"]})
+    correct_df = pd.DataFrame({"col": lowercase_lst})
     result_df = normalize_varlabels(_df, varlabel="col", capitalize="lower")
     assert_frame_equal(result_df, correct_df)
 
     # upper
-    correct_df = pd.DataFrame({"col": ["ROW NUMBER 1", "ROW NUMBER 2"]})
+    correct_df = pd.DataFrame({"col": uppercase_lst})
     result_df = normalize_varlabels(_df, varlabel="col", capitalize="upper")
     assert_frame_equal(result_df, correct_df)
 
     # swapcase
-    correct_df = pd.DataFrame({"col": ["ROW NUMBER 1", "ROW NUMBER 2"]})
-    _df = pd.DataFrame({"col": ["row number 1", "row number 2"]})
+    correct_df = pd.DataFrame({"col": uppercase_lst})
+    _df = pd.DataFrame({"col": lowercase_lst})
     result_df = normalize_varlabels(_df, varlabel="col", capitalize="swapcase")
     assert_frame_equal(result_df, correct_df)
 
@@ -152,15 +154,17 @@ def test_remove_est_ci():
 
 
 def test_form_est_ci():
-    _df = pd.DataFrame({"estimate": [1, 2], "ll": [1, 2], "hl": [1, 2]})
+    numeric = [1, 2]
+    _df = pd.DataFrame({"estimate": numeric, "ll": numeric, "hl": numeric})
+    ci_lst = ["1.00", "2.00"]
     correct_df = pd.DataFrame(
         {
-            "estimate": [1, 2],
-            "ll": [1, 2],
-            "hl": [1, 2],
-            "formatted_estimate": ["1.00", "2.00"],
-            "formatted_ll": ["1.00", "2.00"],
-            "formatted_hl": ["1.00", "2.00"],
+            "estimate": numeric,
+            "ll": numeric,
+            "hl": numeric,
+            "formatted_estimate": ci_lst,
+            "formatted_ll": ci_lst,
+            "formatted_hl": ci_lst,
             "ci_range": ["(1.00 to 1.00)", "(2.00 to 2.00)"],
             "est_ci": ["1.00(1.00 to 1.00)", "2.00(2.00 to 2.00)"],
         }
@@ -183,42 +187,45 @@ def test_form_est_ci():
 
 
 def test_format_varlabels():
-    input_df = pd.DataFrame(
-        {
-            "var": ["var1", "var2", "var3"],
-            "estimate": [1, 2, 3],
-            "ll": [1, 2, 3],
-            "hl": [1, 2, 3],
-            "info": ["a", "b", "c"],
-            "formatted_estimate": ["1.00", "2.00", "3.00"],
-            "formatted_ll": ["1.00", "2.00", "3.00"],
-            "formatted_hl": ["1.00", "2.00", "3.00"],
-            "ci_range": ["(1.00 to 1.00)", "(2.00 to 2.00)", "(3.00 to 3.00)"],
-            "est_ci": [
+    ci_range = ["(1.00 to 1.00)", "(2.00 to 2.00)", "(3.00 to 3.00)"]
+    var = ["var1", "var2", "var3"]
+    numeric = [1, 2, 3]
+    sringfloat = ["1.00", "2.00", "3.00"]
+    est_ci = [
                 "1.00(1.00 to 1.00)",
                 "2.00(2.00 to 2.00)",
                 "3.00(3.00 to 3.00)",
-            ],
+            ]
+    ci_range_grp = ["", "(2.00 to 2.00)", "(3.00 to 3.00)"]  
+    info = ["a", "b", "c"]      
+    input_df = pd.DataFrame(
+        {
+            "var": var,
+            "estimate": numeric,
+            "ll": numeric,
+            "hl": numeric,
+            "info": info,
+            "formatted_estimate": sringfloat,
+            "formatted_ll": sringfloat,
+            "formatted_hl": sringfloat,
+            "ci_range": ci_range,
+            "est_ci": est_ci,
         }
     )
 
     # Test that no groups and no string annotation (column2) works
     correct_df = pd.DataFrame(
         {
-            "var": ["var1", "var2", "var3"],
-            "estimate": [1, 2, 3],
-            "ll": [1, 2, 3],
-            "hl": [1, 2, 3],
-            "info": ["a", "b", "c"],
-            "formatted_estimate": ["1.00", "2.00", "3.00"],
-            "formatted_ll": ["1.00", "2.00", "3.00"],
-            "formatted_hl": ["1.00", "2.00", "3.00"],
-            "ci_range": ["(1.00 to 1.00)", "(2.00 to 2.00)", "(3.00 to 3.00)"],
-            "est_ci": [
-                "1.00(1.00 to 1.00)",
-                "2.00(2.00 to 2.00)",
-                "3.00(3.00 to 3.00)",
-            ],
+            "var": var,
+            "estimate": numeric,
+            "ll": numeric,
+            "hl": numeric,
+            "info": info,
+            "formatted_estimate": sringfloat,
+            "formatted_ll": sringfloat,
+            "formatted_hl": sringfloat,
+            "ci_range": ci_range,
+            "est_ci": est_ci,
             "yticklabel": [
                 "var1  1.00(1.00 to 1.00)",
                 "var2  2.00(2.00 to 2.00)",
@@ -232,38 +239,37 @@ def test_format_varlabels():
     assert_frame_equal(result_df, correct_df)
 
     # Test that groups with no string annotation works
+    var = ["group", "var1", "var2"]
+    groupvar = ["group", "group", "group"]
+    est_ci = ["", "2.00(2.00 to 2.00)", "3.00(3.00 to 3.00)"]
     input_df = pd.DataFrame(
         {
-            "var": ["group", "var1", "var2"],
-            "groupvar": ["group", "group", "group"],
-            "estimate": [1, 2, 3],
-            "ll": [1, 2, 3],
-            "hl": [1, 2, 3],
-            "formatted_estimate": ["1.00", "2.00", "3.00"],
-            "formatted_ll": ["1.00", "2.00", "3.00"],
-            "formatted_hl": ["1.00", "2.00", "3.00"],
-            "info": ["a", "b", "c"],
-            "ci_range": ["(1.00 to 1.00)", "(2.00 to 2.00)", "(3.00 to 3.00)"],
-            "est_ci": [
-                "1.00(1.00 to 1.00)",
-                "2.00(2.00 to 2.00)",
-                "3.00(3.00 to 3.00)",
-            ],
+            "var": var,
+            "groupvar": groupvar,
+            "estimate": numeric,
+            "ll": numeric,
+            "hl": numeric,
+            "formatted_estimate": sringfloat,
+            "formatted_ll": sringfloat,
+            "formatted_hl": sringfloat,
+            "info": info,
+            "ci_range": ci_range,
+            "est_ci": est_ci,
         }
     )
     correct_df = pd.DataFrame(
         {
-            "var": ["group", "var1", "var2"],
-            "groupvar": ["group", "group", "group"],
-            "estimate": [1, 2, 3],
-            "ll": [1, 2, 3],
-            "hl": [1, 2, 3],
-            "formatted_estimate": ["1.00", "2.00", "3.00"],
-            "formatted_ll": ["1.00", "2.00", "3.00"],
-            "formatted_hl": ["1.00", "2.00", "3.00"],
-            "info": ["a", "b", "c"],
-            "ci_range": ["", "(2.00 to 2.00)", "(3.00 to 3.00)"],
-            "est_ci": ["", "2.00(2.00 to 2.00)", "3.00(3.00 to 3.00)"],
+            "var": var,
+            "groupvar": groupvar,
+            "estimate": numeric,
+            "ll": numeric,
+            "hl": numeric,
+            "formatted_estimate": sringfloat,
+            "formatted_ll": sringfloat,
+            "formatted_hl": sringfloat,
+            "info": info,
+            "ci_range": ci_range_grp,
+            "est_ci": est_ci,
             "yticklabel": [
                 "group",
                 "var1   2.00(2.00 to 2.00)",
@@ -283,18 +289,18 @@ def test_format_varlabels():
     # Test that ci_report=False option works (yticklabel should just be varlabel)
     correct_df = pd.DataFrame(
         {
-            "var": ["group", "var1", "var2"],
-            "groupvar": ["group", "group", "group"],
-            "estimate": [1, 2, 3],
-            "ll": [1, 2, 3],
-            "hl": [1, 2, 3],
-            "formatted_estimate": ["1.00", "2.00", "3.00"],
-            "formatted_ll": ["1.00", "2.00", "3.00"],
-            "formatted_hl": ["1.00", "2.00", "3.00"],
-            "info": ["a", "b", "c"],
-            "ci_range": ["", "(2.00 to 2.00)", "(3.00 to 3.00)"],
-            "est_ci": ["", "2.00(2.00 to 2.00)", "3.00(3.00 to 3.00)"],
-            "yticklabel": ["group", "var1", "var2"],
+            "var": var,
+            "groupvar": groupvar,
+            "estimate": numeric,
+            "ll": numeric,
+            "hl": numeric,
+            "formatted_estimate": sringfloat,
+            "formatted_ll": sringfloat,
+            "formatted_hl": sringfloat,
+            "info": info,
+            "ci_range": ci_range_grp,
+            "est_ci": est_ci,
+            "yticklabel": var,
         }
     )
     result_df = format_varlabels(
@@ -309,18 +315,18 @@ def test_format_varlabels():
     # Test that ci_report=False option works (yticklabel should just be varlabel) even when form_ci_report=True
     correct_df = pd.DataFrame(
         {
-            "var": ["group", "var1", "var2"],
-            "groupvar": ["group", "group", "group"],
-            "estimate": [1, 2, 3],
-            "ll": [1, 2, 3],
-            "hl": [1, 2, 3],
-            "formatted_estimate": ["1.00", "2.00", "3.00"],
-            "formatted_ll": ["1.00", "2.00", "3.00"],
-            "formatted_hl": ["1.00", "2.00", "3.00"],
-            "info": ["a", "b", "c"],
-            "ci_range": ["", "(2.00 to 2.00)", "(3.00 to 3.00)"],
-            "est_ci": ["", "2.00(2.00 to 2.00)", "3.00(3.00 to 3.00)"],
-            "yticklabel": ["group", "var1", "var2"],
+            "var": var,
+            "groupvar": groupvar,
+            "estimate": numeric,
+            "ll": numeric,
+            "hl": numeric,
+            "formatted_estimate": sringfloat,
+            "formatted_ll": sringfloat,
+            "formatted_hl": sringfloat,
+            "info": info,
+            "ci_range": ci_range_grp,
+            "est_ci": est_ci,
+            "yticklabel": var,
         }
     )
     result_df = format_varlabels(
@@ -335,21 +341,26 @@ def test_format_varlabels():
 
 def test_prep_annote():
     # Assert things work when there is group exists
+    numeric = [1, 2, 3]
+    info = ["a", "b", "c"]      
+    var = ["group", "var1", "var2"]
+    groupvar = ["group", "group", "group"]
+    formatted_info = ["a   ", "b   ", "c   "] 
     input_df = pd.DataFrame(
         {
-            "var": ["group", "var1", "var2"],
-            "groupvar": ["group", "group", "group"],
-            "estimate": [1, 2, 3],
-            "info": ["a", "b", "c"],
+            "var": var,
+            "groupvar": groupvar,
+            "estimate": numeric,
+            "info": info,
         }
     )
     correct_df = pd.DataFrame(
         {
-            "var": ["group", "var1", "var2"],
-            "groupvar": ["group", "group", "group"],
-            "estimate": [1, 2, 3],
-            "info": ["a", "b", "c"],
-            "formatted_info": ["a   ", "b   ", "c   "],
+            "var": var,
+            "groupvar": groupvar,
+            "estimate": numeric,
+            "info": info,
+            "formatted_info": formatted_info,
             "yticklabel": ["group", "var1   b   ", "var2   c   "],
         }
     )
@@ -365,11 +376,11 @@ def test_prep_annote():
     # Assert things work when there is no group
     correct_df = pd.DataFrame(
         {
-            "var": ["group", "var1", "var2"],
-            "groupvar": ["group", "group", "group"],
-            "estimate": [1, 2, 3],
-            "info": ["a", "b", "c"],
-            "formatted_info": ["a   ", "b   ", "c   "],
+            "var": var,
+            "groupvar": groupvar,
+            "estimate": numeric,
+            "info": info,
+            "formatted_info": formatted_info,
             "yticklabel": ["group  a   ", "var1   b   ", "var2   c   "],
         }
     )
@@ -381,22 +392,27 @@ def test_prep_annote():
 
 def test_prep_rightannote():
     # Assert things work when there is group exists
+    numeric = [1, 2, 3]
+    info = ["a", "b", "c"]      
+    var = ["group", "var1", "var2"]
+    groupvar = ["group", "group", "group"]
+    formatted_info = ["a   ", "b   ", "c   "] 
     input_df = pd.DataFrame(
         {
-            "var": ["group", "var1", "var2"],
-            "groupvar": ["group", "group", "group"],
-            "estimate": [1, 2, 3],
-            "info": ["a", "b", "c"],
+            "var": var,
+            "groupvar": groupvar,
+            "estimate": numeric,
+            "info": info,
         }
     )
     correct_df = pd.DataFrame(
         {
-            "var": ["group", "var1", "var2"],
-            "groupvar": ["group", "group", "group"],
-            "estimate": [1, 2, 3],
-            "info": ["a", "b", "c"],
-            "formatted_info": ["a   ", "b   ", "c   "],
-            "yticklabel2": ["a   ", "b   ", "c   "],
+            "var": var,
+            "groupvar": groupvar,
+            "estimate": numeric,
+            "info": info,
+            "formatted_info": formatted_info,
+            "yticklabel2": formatted_info,
         }
     )
     result_df = prep_rightannnote(
@@ -410,11 +426,11 @@ def test_prep_rightannote():
 
     correct_df = pd.DataFrame(
         {
-            "var": ["group", "var1", "var2"],
-            "groupvar": ["group", "group", "group"],
-            "estimate": [1, 2, 3],
-            "info": ["a", "b", "c"],
-            "formatted_info": ["a   ", "b   ", "c   "],
+            "var": var,
+            "groupvar": groupvar,
+            "estimate": numeric,
+            "info": info,
+            "formatted_info": formatted_info,
             "yticklabel2": ["", "b   ", "c   "],
         }
     )
@@ -429,12 +445,13 @@ def test_prep_rightannote():
 
 
 def test_make_tableheaders():
+    var = ["group", "var1", "var2"]
     input_df = pd.DataFrame(
         {
-            "var": ["group", "var1", "var2"],
+            "var": var,
             "groupvar": ["group", "group", "group"],
             "estimate": [1, 2, 3],
-            "info": ["a", "b", "c"],
+            "info": ["a", "b", "c"] ,
             "fomatted_info": ["a   ", "b   ", "c   "],
             "yticklabel": ["group", "var1  b", "var2  c"],
             "yticklabel2": ["", "b   ", "c   "],
