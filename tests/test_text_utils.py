@@ -78,11 +78,11 @@ def test_indent_nongroupvar():
 
     # No indent
     correct_df = _df
-    result_df = indent_nongroupvar(_df, varlabel="col", groupvar=None, varindent=0)
+    result_df = indent_nongroupvar(_df, varlabel="col", groupvar='col', varindent=0)
     assert_frame_equal(result_df, correct_df)
 
     # Indent zero spaces when no groupvar
-    result_df = indent_nongroupvar(_df, varlabel="col", groupvar=None, varindent=2)
+    result_df = indent_nongroupvar(_df, varlabel="col", groupvar='col', varindent=2)
     assert_frame_equal(result_df, correct_df)
 
     # Indent one space
@@ -102,7 +102,7 @@ def test_normalize_varlabels():
     uppercase_lst = ["ROW NUMBER 1", "ROW NUMBER 2"]
 
     # No capitalize
-    result_df = normalize_varlabels(_df, varlabel="col", capitalize=None)
+    result_df = normalize_varlabels(_df, varlabel="col", capitalize='lower')
     assert_frame_equal(result_df, _df)
 
     # Capitalize (default)

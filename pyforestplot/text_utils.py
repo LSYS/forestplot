@@ -151,7 +151,7 @@ def format_varlabels(
     varlabel: str,
     form_ci_report: bool,
     ci_report: bool,
-    groupvar: str,
+    groupvar: Union[str, None],
     extrapad: int = 2,
 ) -> pd.core.frame.DataFrame:
     """
