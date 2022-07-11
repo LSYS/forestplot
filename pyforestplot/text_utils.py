@@ -11,7 +11,6 @@ def star_pval(
     decimal_precision: int,
     thresholds: Union[list, tuple] = (0.01, 0.05, 0.1),
     symbols: Union[list, tuple] = ("***", "**", "*"),
-    **kwargs,
 ) -> pd.core.frame.DataFrame:
     """
 	Star the p-values according to the thresholds and symbols.
@@ -71,7 +70,6 @@ def indent_nongroupvar(
     varlabel: str,
     groupvar: str,
     varindent: int = 2,
-    **kwargs,
 ) -> pd.core.frame.DataFrame:
     """
 	Indent the non-group variable labels when the 'form_ci_report' option is switched off.
@@ -114,7 +112,6 @@ def normalize_varlabels(
     dataframe: pd.core.frame.DataFrame,
     varlabel: str,
     capitalize: str = "capitalize",
-    **kwargs,
 ) -> pd.core.frame.DataFrame:
     """
 	Normalize variable labels to capitalize or title form.
@@ -156,8 +153,6 @@ def format_varlabels(
     ci_report: bool,
     groupvar: str,
     extrapad: int = 2,
-    varindent: int = 2,
-    **kwargs,
 ) -> pd.core.frame.DataFrame:
     """
 	Format the yticklabels as normalized variable labels + estimate + confidence interval if 
