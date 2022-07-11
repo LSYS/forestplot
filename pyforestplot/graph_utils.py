@@ -164,8 +164,8 @@ def draw_pval_right(
     annoteheaders: Union[list, tuple],
     rightannote: Union[list, tuple],
     yticklabel: str,
-    yticker2: str,
     pad: float,
+    yticker2: Optional[str],
     ax: Axes,
     **kwargs
 ) -> Axes:
@@ -241,7 +241,7 @@ def draw_pval_right(
     return ax
 
 
-def draw_ylabel2(dataframe: pd.core.frame.DataFrame, pad: float, ax: Axes, **kwargs):
+def draw_ylabel2(dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs):
     """
 	Draw the second ylabel title on the right-hand side y-axis.
 
@@ -250,8 +250,6 @@ def draw_ylabel2(dataframe: pd.core.frame.DataFrame, pad: float, ax: Axes, **kwa
 	dataframe (pandas.core.frame.DataFrame)
 		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
 		margin of error, etc.
-	pad (float)
-		Window wdith of figure
 	ax (Matplotlib Axes)
 		Axes to operate on.
 
