@@ -231,7 +231,7 @@ def draw_pval_right(
 	return ax
 
 
-def draw_ylabel2(dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs):
+def draw_yticklabel2(dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs):
 	"""
 	Draw the second ylabel title on the right-hand side y-axis.
 
