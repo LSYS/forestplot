@@ -2,6 +2,68 @@ import pandas as pd
 import numpy as np
 from typing import Union
 from pyforestplot.dataframe_utils import insert_empty_row
+from pyforestplot.arg_validators import check_iterables_samelen
+
+
+def form_est_ci(
+    dataframe: pd.core.frame.DataFrame,
+    estimate: str,
+    moerror: Union[str, None],
+    ll: Union[str, None],
+    hl: Union[str, None],
+    decimal_precision: int,
+    caps: Union[tuple, list, str] = "()",
+    connector: str = " to ",
+) -> pd.core.frame.DataFrame:
+    """
+	Form the estimated effect sizes and corresponding confidence intervals as a formatted column.
+	(Creating only on demand.)
+
+	Parameters
+	----------
+	dataframe (pandas.core.frame.DataFrame)
+		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+		margin of error, etc.
+	estimate (str)
+		Name of column containing the estimates (e.g. pearson correlation coefficient,
+		OR, regression estimates, etc.).
+	moerror (str)
+		Name of column containing the margin of error in the confidence intervals.
+		Should be available if 'll' and 'hl' are left empty.
+	ll (str)
+		Name of column containing the lower limit of the confidence intervals. 
+		Optional
+	hl (str)
+		Name of column containing the upper limit of the confidence intervals. 
+		Optional		
+	decimal_precision (int)
+		Precision of 2 means we go from '0.1234' -> '0.12'.
+	caps (iterable)
+		Eg '()' means that confidence intervals are enclosed in brackets (eg (-0.1 to 0.4)).
+	connector (str)
+		How to connect lower and upper limits of confidence intervals. Eg ' to ' means 
+		confidence intervals are of the form 'll to hl'.
+	
+	Helpers
+	-------
+		_right_justify_num
+
+	Returns
+	-------
+		pd.core.frame.DataFrame with an additional formatted 'est_ci' column.
+	"""
+    for col in [estimate, ll, hl]:
+        dataframe = _right_justify_num(
+            dataframe=dataframe, col=col, decimal_precision=decimal_precision
+        )
+
+    for ix, row in dataframe.iterrows():
+        formatted_est = row[f"formatted_{estimate}"]
+        formatted_ll, formatted_hl = row[f"formatted_{ll}"], row[f"formatted_{hl}"]
+        formatted_ci = "".join([caps[0], formatted_ll, connector, formatted_hl, caps[1]])
+        dataframe.loc[ix, "ci_range"] = formatted_ci
+        dataframe.loc[ix, "est_ci"] = "".join([formatted_est, formatted_ci])
+    return dataframe
 
 
 def star_pval(
@@ -14,6 +76,7 @@ def star_pval(
 ) -> pd.core.frame.DataFrame:
     """
 	Star the p-values according to the thresholds and symbols.
+	(Creating only on demand.)
 
 	Parameters
 	----------
@@ -38,41 +101,30 @@ def star_pval(
 		pd.core.frame.DataFrame with additional column for 'formatted_pval'.
 	"""
     if pval is not None:
-        try:
-            assert len(thresholds) == len(symbols)
-        except Exception:
-            raise AssertionError(
-                "Error: P-value thresholds and symbols list must be of same length."
-            )
-
+        check_iterables_samelen(thresholds, symbols)
         for ix, row in dataframe.iterrows():
             val = row[pval]
-
-            if (np.isnan(val)) or (val == "nan"):
+            if (np.isnan(val)) or (val == "nan") or (val == ""):
                 dataframe.loc[ix, "formatted_pval"] = ""
                 continue
 
             dec_formatted_pval = round(val, decimal_precision)
             dataframe.loc[ix, "formatted_pval"] = str(dec_formatted_pval)
-
             if starpval:
                 for iy, threshold in enumerate(thresholds):
                     if val <= threshold:
                         _pval = "".join([str(dec_formatted_pval), symbols[iy]])
                         dataframe.loc[ix, "formatted_pval"] = _pval
                         break
-
     return dataframe
 
 
 def indent_nongroupvar(
-    dataframe: pd.core.frame.DataFrame,
-    varlabel: str,
-    groupvar: str,
-    varindent: int = 2,
+    dataframe: pd.core.frame.DataFrame, varlabel: str, groupvar: str, varindent: int = 2,
 ) -> pd.core.frame.DataFrame:
     """
 	Indent the non-group variable labels when the 'form_ci_report' option is switched off.
+	(Creating only on demand.)
 
 	Parameters
 	----------
@@ -94,24 +146,18 @@ def indent_nongroupvar(
         if groupvar is not None:
             groups = [gr.lower() for gr in dataframe[groupvar].unique()]
 
-            for ix, row in dataframe.iterrows():
-                label = row[varlabel]
-                if label.lower() not in groups:
-                    label = label.rjust(varindent + len(label))
-                    dataframe.loc[ix, varlabel] = label
-        else:
-            for ix, row in dataframe.iterrows():
-                label = row[varlabel]
+        for ix, row in dataframe.iterrows():
+            label = row[varlabel]
+            if (groupvar is not None) and (label.lower() not in groups):
+                label = label.rjust(varindent + len(label))
+            else:
                 label = label.rjust(len(label))
-                dataframe.loc[ix, varlabel] = label
-
+            dataframe.loc[ix, varlabel] = label
     return dataframe
 
 
 def normalize_varlabels(
-    dataframe: pd.core.frame.DataFrame,
-    varlabel: str,
-    capitalize: str = "capitalize",
+    dataframe: pd.core.frame.DataFrame, varlabel: str, capitalize: str = "capitalize",
 ) -> pd.core.frame.DataFrame:
     """
 	Normalize variable labels to capitalize or title form.
@@ -142,7 +188,6 @@ def normalize_varlabels(
             dataframe[varlabel] = dataframe[varlabel].str.upper()
         elif capitalize == "swapcase":
             dataframe[varlabel] = dataframe[varlabel].str.swapcase()
-
     return dataframe
 
 
@@ -157,7 +202,8 @@ def format_varlabels(
     """
 	Format the yticklabels as normalized variable labels + estimate + confidence interval if 
 	form_ci_report = True. If form_ci_report = False, then just use the variable label.
-
+	(Creating only on demand.)
+	
 	Parameters
 	----------
 	dataframe (pandas.core.frame.DataFrame)
@@ -206,15 +252,10 @@ def format_varlabels(
                     yticklabel = "".join([var.ljust(pad), est_ci])
             else:
                 yticklabel = "".join([var.ljust(pad), est_ci])
-
             dataframe.loc[ix, "yticklabel"] = yticklabel
     else:
         dataframe["yticklabel"] = dataframe[varlabel]
-
-    dataframe = _remove_est_ci(
-        dataframe=dataframe, varlabel=varlabel, groupvar=groupvar
-    )
-
+    dataframe = _remove_est_ci(dataframe=dataframe, varlabel=varlabel, groupvar=groupvar)
     return dataframe
 
 
@@ -242,18 +283,12 @@ def _remove_est_ci(
         for ix, row in dataframe.iterrows():
             var = row[varlabel]
             grouplabel = row[groupvar]
-            if (
-                var.lower().strip() == grouplabel.lower().strip()
-            ):  # If row is a group header
-                dataframe.loc[ix, "ci_range"] = ""
-                dataframe.loc[ix, "est_ci"] = ""
-
+            if var.lower().strip() == grouplabel.lower().strip():  # If row is a group header
+                dataframe.loc[ix, "ci_range"], dataframe.loc[ix, "est_ci"] = "", ""
     return dataframe
 
 
-def _get_max_varlen(
-    dataframe: pd.core.frame.DataFrame, varlabel: str, extrapad: int,
-) -> int:
+def _get_max_varlen(dataframe: pd.core.frame.DataFrame, varlabel: str, extrapad: int,) -> int:
     """
 	Get max variable length in dataframe.
 
@@ -272,8 +307,7 @@ def _get_max_varlen(
 		int
 	"""
     max_varlen = dataframe[varlabel].map(str).str.len().max()
-    pad = max_varlen + extrapad
-    return pad
+    return max_varlen + extrapad
 
 
 def prep_annote(
@@ -286,6 +320,7 @@ def prep_annote(
 ) -> pd.core.frame.DataFrame:
     """
 	Prepare the additional columns to be printed as annotations. 
+	(Creating only on demand.)
 
 	Parameters
 	----------
@@ -315,17 +350,12 @@ def prep_annote(
     for ix, annotation in enumerate(annote):
         # Get max len for padding
         _pad = _get_max_varlen(dataframe=dataframe, varlabel=annotation, extrapad=0)
-        if annoteheaders is not None:
-            # Check that max len exceeds header length
+        if annoteheaders is not None:  # Check that max len exceeds header length
             _header = annoteheaders[ix]
             _pad = max(_pad, len(_header))
-
         lookup_annote_len[ix] = _pad
-
-        for iy, row in dataframe.iterrows():
-            _annotation = row[annotation]
-            _annotation = str(_annotation).ljust(_pad)
-
+        for iy, row in dataframe.iterrows():  # Make individual formatted_annotations
+            _annotation = str(row[annotation]).ljust(_pad)
             dataframe.loc[iy, f"formatted_{annotation}"] = _annotation
 
     # get max length for variables
@@ -342,14 +372,11 @@ def prep_annote(
             dataframe.loc[ix, "yticklabel"] = yticklabel
         else:
             yticklabel = yticklabel.ljust(pad)
-            yticklabel = f"{yticklabel:}"
             for annotation in annote:
                 _annotation = row[f"formatted_{annotation}"]
                 spacing = "".ljust(col_spacing)
                 yticklabel = spacing.join([yticklabel, _annotation])
-
             dataframe.loc[ix, "yticklabel"] = yticklabel
-
     return dataframe
 
 
@@ -363,6 +390,7 @@ def prep_rightannnote(
 ) -> pd.core.frame.DataFrame:
     """
 	Prepare the additional columns to be printed as annotations on the right. 
+	(Creating only on demand.)
 
 	Parameters
 	----------
@@ -392,17 +420,14 @@ def prep_rightannnote(
     for ix, annotation in enumerate(rightannote):
         # Get max len for padding
         _pad = _get_max_varlen(dataframe=dataframe, varlabel=annotation, extrapad=0)
-        if right_annoteheaders is not None:
-            # Check that max len exceeds header length
+        if right_annoteheaders is not None:  # Check that max len exceeds header length
             _header = right_annoteheaders[ix]
             _pad = max(_pad, len(_header))
-
         lookup_annote_len[ix] = _pad
 
         for iy, row in dataframe.iterrows():
             _annotation = row[annotation]
             _annotation = str(_annotation).ljust(_pad)
-
             dataframe.loc[iy, f"formatted_{annotation}"] = _annotation
 
     if groupvar is not None:
@@ -423,9 +448,7 @@ def prep_rightannnote(
                     yticklabel2 = _annotation
                 else:
                     yticklabel2 = spacing.join([yticklabel2, _annotation])
-
             dataframe.loc[ix, "yticklabel2"] = yticklabel2
-
     return dataframe
 
 
@@ -441,6 +464,7 @@ def make_tableheaders(
     """
 	Make the table headers from 'annoteheaders' and 'right_annoteheaders' as a row in the
 	dataframe.
+	(Creating only on demand.)
 
 	Parameters
 	----------
@@ -472,51 +496,39 @@ def make_tableheaders(
         if (annoteheaders is None) and (right_annoteheaders is None):
             return dataframe
 
+    # Make tableheaders
     col_spacing = kwargs.get("col_spacing", 2)
     spacing = "".ljust(col_spacing)
 
-    # Make tableheaders
     variable_header = kwargs.get("variable_header", "Variable")
     dataframe = insert_empty_row(dataframe)
 
     pad = _get_max_varlen(dataframe=dataframe, varlabel=varlabel, extrapad=0)
     left_headers = variable_header.ljust(pad)
     dataframe.loc[0, "yticklabel"] = left_headers
+    if annoteheaders is not None:
+        for ix, header in enumerate(annoteheaders):
+            corresponding_col = annote[ix]
+            # get max length for variables
+            pad = _get_max_varlen(dataframe=dataframe, varlabel=corresponding_col, extrapad=0)
+            pad = max(pad, len(header))
+            left_headers = spacing.join([left_headers, header.ljust(pad)])
+        dataframe.loc[0, "yticklabel"] = left_headers
 
-    if (annoteheaders is not None) or (right_annoteheaders is not None):
-        if annoteheaders is not None:
-            for ix, header in enumerate(annoteheaders):
-                corresponding_col = annote[ix]
-                # get max length for variables
-                pad = _get_max_varlen(
-                    dataframe=dataframe, varlabel=corresponding_col, extrapad=0
-                )
-
-                pad = max(pad, len(header))
-                left_headers = spacing.join([left_headers, header.ljust(pad)])
-
-            dataframe.loc[0, "yticklabel"] = left_headers
-
-        if right_annoteheaders is not None:
-            right_headers = ""
-            for ix, header in enumerate(right_annoteheaders):
-                corresponding_col = rightannote[ix]
-                # get max length for variables
-                pad = _get_max_varlen(
-                    dataframe=dataframe, varlabel=corresponding_col, extrapad=0
-                )
-
-                pad = max(pad, len(header))
-                if right_headers == "":
-                    right_headers = header.ljust(pad)
-                else:
-                    right_headers = spacing.join([right_headers, header.ljust(pad)])
-
-            dataframe.loc[0, "yticklabel2"] = right_headers
-
-        else:
-            dataframe.loc[0, "yticklabel2"] = ""
-
+    if right_annoteheaders is not None:
+        right_headers = ""
+        for ix, header in enumerate(right_annoteheaders):
+            corresponding_col = rightannote[ix]
+            # get max length for variables
+            pad = _get_max_varlen(dataframe=dataframe, varlabel=corresponding_col, extrapad=0)
+            pad = max(pad, len(header))
+            if right_headers == "":
+                right_headers = header.ljust(pad)
+            else:
+                right_headers = spacing.join([right_headers, header.ljust(pad)])
+        dataframe.loc[0, "yticklabel2"] = right_headers
+    else:
+        dataframe.loc[0, "yticklabel2"] = ""
     return dataframe
 
 
@@ -547,86 +559,6 @@ def _right_justify_num(
     dataframe[f"formatted_{col}"] = (
         dataframe[col].apply(lambda x: f"{x:0.{decimal_precision}f}").astype(str)
     )
-
     pad = _get_max_varlen(dataframe=dataframe, varlabel=f"formatted_{col}", extrapad=0)
-    dataframe[f"formatted_{col}"] = dataframe[f"formatted_{col}"].apply(
-        lambda x: x.rjust(pad)
-    )
-
-    return dataframe
-
-
-def form_est_ci(
-    dataframe: pd.core.frame.DataFrame,
-    estimate: str,
-    moerror: Union[str, None],
-    ll: Union[str, None],
-    hl: Union[str, None],
-    decimal_precision: int,
-    caps: Union[tuple, list, str] = "()",
-    connector: str = " to ",
-) -> pd.core.frame.DataFrame:
-    """
-	Form the estimated effect sizes and corresponding confidence intervals as a formatted column.
-
-	Parameters
-	----------
-	dataframe (pandas.core.frame.DataFrame)
-		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
-		margin of error, etc.
-	estimate (str)
-		Name of column containing the estimates (e.g. pearson correlation coefficient,
-		OR, regression estimates, etc.).
-	moerror (str)
-		Name of column containing the margin of error in the confidence intervals.
-		Should be available if 'll' and 'hl' are left empty.
-	ll (str)
-		Name of column containing the lower limit of the confidence intervals. 
-		Optional
-	hl (str)
-		Name of column containing the upper limit of the confidence intervals. 
-		Optional		
-	decimal_precision (int)
-		Precision of 2 means we go from '0.1234' -> '0.12'.
-	caps (iterable)
-		Eg '()' means that confidence intervals are enclosed in brackets (eg (-0.1 to 0.4)).
-	connector (str)
-		How to connect lower and upper limits of confidence intervals. Eg ' to ' means 
-		confidence intervals are of the form 'll to hl'.
-	
-	Helpers
-	-------
-		_right_justify_num
-
-	Returns
-	-------
-		pd.core.frame.DataFrame with an additional formatted 'est_ci' column.
-	"""
-    if (moerror is not None) & (ll is None):
-        ll = "ll"
-        hl = "hl"
-
-    dataframe = _right_justify_num(
-        dataframe=dataframe, col=estimate, decimal_precision=decimal_precision
-    )
-    dataframe = _right_justify_num(
-        dataframe=dataframe, col=ll, decimal_precision=decimal_precision
-    )
-    dataframe = _right_justify_num(
-        dataframe=dataframe, col=hl, decimal_precision=decimal_precision
-    )
-
-    for ix, row in dataframe.iterrows():
-        formatted_est = row[f"formatted_{estimate}"]
-        formatted_ll = row[f"formatted_{ll}"]
-        formatted_hl = row[f"formatted_{hl}"]
-
-        formatted_ci = "".join(
-            [caps[0], formatted_ll, connector, formatted_hl, caps[1]]
-        )
-        dataframe.loc[ix, "ci_range"] = formatted_ci
-
-        est_ci = "".join([formatted_est, formatted_ci])
-        dataframe.loc[ix, "est_ci"] = est_ci
-
+    dataframe[f"formatted_{col}"] = dataframe[f"formatted_{col}"].apply(lambda x: x.rjust(pad))
     return dataframe
