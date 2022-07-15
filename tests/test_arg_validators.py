@@ -1,5 +1,6 @@
 import pytest
 from pyforestplot.arg_validators import check_data
+from pyforestplot.arg_validators import check_iterables_samelen
 import pandas as pd
 
 
@@ -21,23 +22,17 @@ def test_check_data():
 
     # Assert that conversion for numeric estimate stored as string works
     _df = pd.DataFrame({"estimate": numeric_as_string, "moerror": numeric})
-    check_data(
-        dataframe=_df, estimate="estimate", varlabel="estimate", moerror="moerror"
-    )
+    check_data(dataframe=_df, estimate="estimate", varlabel="estimate", moerror="moerror")
 
     # Assert that assertion for numeric type for moerror works
     _df = pd.DataFrame({"estimate": numeric, "moerror": string})
     with pytest.raises(TypeError) as excinfo:
-        check_data(
-            dataframe=_df, estimate="estimate", varlabel="estimate", moerror="moerror"
-        )
+        check_data(dataframe=_df, estimate="estimate", varlabel="estimate", moerror="moerror")
     assert str(excinfo.value) == "Margin of error values should be float or int"
 
     # Assert that conversion for numeric moerror stored as string works
     _df = pd.DataFrame({"estimate": numeric_as_string, "moerror": numeric_as_string})
-    check_data(
-        dataframe=_df, estimate="estimate", varlabel="estimate", moerror="moerror"
-    )
+    check_data(dataframe=_df, estimate="estimate", varlabel="estimate", moerror="moerror")
 
     # Assert that assertion for numeric type for ll works
     _df = pd.DataFrame({"estimate": numeric, "ll": string})
@@ -47,15 +42,9 @@ def test_check_data():
 
     # Assert that conversion for numeric ll stored as string works
     _df = pd.DataFrame(
-        {
-            "estimate": numeric_as_string,
-            "ll": numeric_as_string,
-            "hl": numeric_as_string,
-        }
+        {"estimate": numeric_as_string, "ll": numeric_as_string, "hl": numeric_as_string,}
     )
-    check_data(
-        dataframe=_df, estimate="estimate", varlabel="estimate", ll="ll", hl="hl"
-    )
+    check_data(dataframe=_df, estimate="estimate", varlabel="estimate", ll="ll", hl="hl")
 
     # Assert that assertion for numeric type for hl works
     _df = pd.DataFrame({"estimate": numeric, "hl": string})
@@ -65,15 +54,9 @@ def test_check_data():
 
     # Assert that conversion for numeric hl stored as string works
     _df = pd.DataFrame(
-        {
-            "estimate": numeric_as_string,
-            "ll": numeric_as_string,
-            "hl": numeric_as_string,
-        }
+        {"estimate": numeric_as_string, "ll": numeric_as_string, "hl": numeric_as_string,}
     )
-    check_data(
-        dataframe=_df, estimate="estimate", varlabel="estimate", ll="ll", hl="hl"
-    )
+    check_data(dataframe=_df, estimate="estimate", varlabel="estimate", ll="ll", hl="hl")
 
     # Assert assertion that either moerror or (ll and hl) is specified works
     with pytest.raises(AssertionError) as excinfo:
@@ -88,11 +71,7 @@ def test_check_data():
     ##########################################################################
     # Assert moerror is created if ll and hl specified
     _df = pd.DataFrame(
-        {
-            "estimate": numeric_as_string,
-            "ll": numeric_as_string,
-            "hl": numeric_as_string,
-        }
+        {"estimate": numeric_as_string, "ll": numeric_as_string, "hl": numeric_as_string,}
     )
     processed_df = check_data(
         dataframe=_df, estimate="estimate", varlabel="estimate", ll="ll", hl="hl"
@@ -166,10 +145,7 @@ def test_check_data():
             rightannote=["col1", "col2"],
             right_annoteheaders=["header1"],
         )
-    assert (
-        str(excinfo.value)
-        == "rightannote and right_annoteheaders should have same length."
-    )
+    assert str(excinfo.value) == "rightannote and right_annoteheaders should have same length."
 
     # No errors if rightannote can be found in dataframe columns
     check_data(
@@ -200,3 +176,15 @@ def test_check_data():
         moerror="moerror",
         rightannote=["ci_range"],
     )
+
+
+def test_check_iterables_samelen():
+    thresholds = (0.01, 0.05, 0.1)
+    symbols = ("***", "**", "*")
+    wrong = ["a", "b"]
+    check_iterables_samelen(thresholds, symbols)
+
+    # Should throw an error
+    with pytest.raises(ValueError) as excinfo:
+        check_iterables_samelen(thresholds, symbols, wrong)
+    assert str(excinfo.value) == "Iterables not of the same length."
