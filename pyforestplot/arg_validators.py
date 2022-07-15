@@ -212,3 +212,10 @@ def check_data(
         warnings.warn("ylabel2 is ignored since right_annoteheaders is specified.")
 
     return dataframe
+
+
+def check_iterables_samelen(*args: Union[list, tuple]):
+    try:
+        assert all(len(args[0]) == len(_arg) for _arg in args[1:])
+    except Exception:
+        raise ValueError("Iterables not of the same length.")
