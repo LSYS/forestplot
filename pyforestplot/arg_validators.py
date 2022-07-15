@@ -8,6 +8,7 @@ def check_data(
     dataframe: pd.core.frame.DataFrame,
     estimate: str,
     varlabel: str,
+    groupvar: Optional[str] = None,
     moerror: Optional[str] = None,
     ll: Optional[str] = None,
     hl: Optional[str] = None,
@@ -31,9 +32,13 @@ def check_data(
 	estimate (str)
 		Name of column containing the estimates (e.g. pearson correlation coefficient,
 		OR, regression estimates, etc.).
+    varlabel (str)
+        Name of column containing the variable label to be printed out.        
 	moerror (str)
 		Name of column containing the margin of error in the confidence intervals.
 		Should be available if 'll' and 'hl' are left empty.
+    groupvar (str)
+        Name of column containing group of variables.
 	ll (str)
 		Name of column containing the lower limit of the confidence intervals. 
 		Optional
@@ -43,6 +48,11 @@ def check_data(
 		List of columns to add as additional annotation in the plot.
 	annoteheaders (list-like)
 		List of table headers to use as column headers for the additional annotations.
+    rightannote (list-like)
+        List of columns to add as additional annotation on the right-hand side of the plot.
+    right_annoteheaders (list-like)
+        List of table headers to use as column headers for the additional annotations
+        on the right-hand side of the plot.        
     pval (str)
         Name of column containing the p-values.
     ylabel2 (str)
@@ -211,6 +221,15 @@ def check_data(
     if (ylabel2 is not None) and (right_annoteheaders is not None):
         warnings.warn("ylabel2 is ignored since right_annoteheaders is specified.")
 
+    # Warn: duplicates found in varlabels and grouplabels
+    if groupvar is not None:
+        grouplabels = dataframe[groupvar].dropna().unique()
+        grouplabels = [grplab_str.lower().strip() for grplab_str in grouplabels]
+        varlabels = dataframe[varlabel].dropna().unique()
+        varlabels = [varlab_str.lower().strip() for varlab_str in varlabels]
+        if any(varlab_str in grouplabels for varlab_str in varlabels):
+            warnings.warn("Duplicates found in variable labels ('varlabel') and group labels ('groupvar'). Formatting of y-axis labels may lead to unexpected errors.")
+            
     return dataframe
 
 
