@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from typing import Optional
+from typing import Optional, Union
 
 
 def insert_groups(
@@ -27,11 +27,33 @@ def insert_groups(
     for group in dataframe[groupvar].unique():
         _df = dataframe.query(f"{groupvar}==@group")
         addgroupvar = pd.DataFrame({varlabel: [group], groupvar: [group]})
-        df_groupsasvar = pd.concat(
-            [df_groupsasvar, addgroupvar, _df], ignore_index=True
-        )
-
+        df_groupsasvar = pd.concat([df_groupsasvar, addgroupvar, _df], ignore_index=True)
     return df_groupsasvar
+
+
+def sort_groups(
+    dataframe: pd.core.frame.DataFrame, groupvar: str, group_order: Union[list, tuple]
+):
+    """
+	Sort dataframe by list of groups implying order.
+
+	Parameters
+	----------
+	dataframe (pandas.core.frame.DataFrame)
+		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+		margin of error, etc.
+	groupvar (str)
+		Name of column containing group of variables.
+	group_order (list-like)
+		List of groups by order to report in the figure.
+		
+	Returns
+	-------
+		pd.core.frame.DataFrame	ordered by order in 'group_order'.
+	"""
+    dataframe[groupvar] = pd.Categorical(dataframe[groupvar], group_order)
+    dataframe.sort_values(groupvar, inplace=True)
+    return dataframe
 
 
 def sort_data(
@@ -72,14 +94,10 @@ def sort_data(
             sortby = estimate
 
         if groupvar is not None:
-            dataframe.sort_values(
-                [groupvar, sortby], ascending=sortascend, inplace=True
-            )
+            dataframe.sort_values([groupvar, sortby], ascending=sortascend, inplace=True)
         else:
             dataframe.sort_values(sortby, ascending=sortascend, inplace=True)
-
         dataframe.reset_index(drop=True, inplace=True)
-
     return dataframe
 
 
@@ -122,6 +140,4 @@ def load_data(name: str, **param_dict) -> pd.core.frame.DataFrame:
         return df
     else:
         available_data_str = ", ".join(available_data)
-        raise AssertionError(
-            f"{name} not found. Should be one of '{available_data_str}'"
-        )
+        raise AssertionError(f"{name} not found. Should be one of '{available_data_str}'")

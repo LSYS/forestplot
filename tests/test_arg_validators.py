@@ -1,6 +1,7 @@
 import pytest
 from pyforestplot.arg_validators import check_data
 from pyforestplot.arg_validators import check_iterables_samelen
+from pyforestplot.arg_validators import check_groups
 import pandas as pd
 
 
@@ -21,8 +22,8 @@ def test_check_data():
     assert str(excinfo.value) == "Estimates should be float or int"
 
     # Assert that conversion for numeric estimate stored as string works
-    _df = pd.DataFrame({"estimate": numeric_as_string, "moerror": numeric})
-    check_data(dataframe=_df, estimate="estimate", varlabel="estimate", moerror="moerror")
+    _df = pd.DataFrame({"estimate": numeric_as_string, "varlabel": string, "moerror": numeric})
+    check_data(dataframe=_df, estimate="estimate", varlabel="varlabel", moerror="moerror")
 
     # Assert that assertion for numeric type for moerror works
     _df = pd.DataFrame({"estimate": numeric, "moerror": string})
@@ -182,9 +183,40 @@ def test_check_iterables_samelen():
     thresholds = (0.01, 0.05, 0.1)
     symbols = ("***", "**", "*")
     wrong = ["a", "b"]
-    check_iterables_samelen(thresholds, symbols)
+    check_iterables_samelen(thresholds, symbols)  # should pass through w/ no errors
 
-    # Should throw an error
     with pytest.raises(ValueError) as excinfo:
-        check_iterables_samelen(thresholds, symbols, wrong)
+        check_iterables_samelen(thresholds, symbols, wrong)  # Should throw an error
     assert str(excinfo.value) == "Iterables not of the same length."
+
+
+def test_check_groups():
+    # Check assertion for group_order provided when groupvar not provided
+    models = ["model1", "model1", "model1", "model2", "model2", "model2"]
+    correct_var_order = ["a", "b", "c", "a", "b", "c"]
+    input_df = pd.DataFrame({"varlabel": correct_var_order, "groupvar": models})
+    with pytest.raises(TypeError) as excinfo:
+        processed_df = check_groups(dataframe=input_df, groupvar=None, group_order=["group1"])
+    assert (
+        str(excinfo.value)
+        == "Group ordering ('group_order') provided but no group column provided ('groupvar')."
+    )
+
+    # Goes through if both groupvar and group_order provided
+    processed_df = check_groups(
+        dataframe=input_df, groupvar="groupvar", group_order=["model1", "model2"]
+    )
+
+    # Check assertion raised if group_order and detected unique groups have different lengths
+    with pytest.raises(ValueError) as excinfo:
+        processed_df = check_groups(
+            dataframe=input_df, groupvar="groupvar", group_order=["model1"]
+        )
+    assert str(excinfo.value) == "Iterables not of the same length."
+
+    # Check assert that groups in group_order can be found in data works
+    with pytest.raises(AssertionError) as excinfo:
+        processed_df = check_groups(
+            dataframe=input_df, groupvar="groupvar", group_order=["null", "model2"]
+        )
+    assert str(excinfo.value) == "Groups specified in `group_order` should exist in the data."

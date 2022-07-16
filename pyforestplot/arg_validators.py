@@ -9,6 +9,7 @@ def check_data(
     estimate: str,
     varlabel: str,
     groupvar: Optional[str] = None,
+    group_order: Optional[Union[list, tuple]] = None,
     moerror: Optional[str] = None,
     ll: Optional[str] = None,
     hl: Optional[str] = None,
@@ -39,6 +40,8 @@ def check_data(
 		Should be available if 'll' and 'hl' are left empty.
     groupvar (str)
         Name of column containing group of variables.
+    group_order (list-like)
+        List of groups by order to report in the figure.
 	ll (str)
 		Name of column containing the lower limit of the confidence intervals. 
 		Optional
@@ -191,6 +194,9 @@ def check_data(
             except Exception:
                 raise AssertionError(f"the field {col} is not found in dataframe.")
 
+    if groupvar is not None:
+        check_groups(dataframe, groupvar=groupvar, group_order=group_order)
+
     ##########################################################################
     ## Warnings
     ##########################################################################
@@ -228,13 +234,51 @@ def check_data(
         varlabels = dataframe[varlabel].dropna().unique()
         varlabels = [varlab_str.lower().strip() for varlab_str in varlabels]
         if any(varlab_str in grouplabels for varlab_str in varlabels):
-            warnings.warn("Duplicates found in variable labels ('varlabel') and group labels ('groupvar'). Formatting of y-axis labels may lead to unexpected errors.")
-            
+            warnings.warn(
+                "Duplicates found in variable labels ('varlabel') and group labels ('groupvar'). Formatting of y-axis labels may lead to unexpected errors."
+            )
+
     return dataframe
 
 
 def check_iterables_samelen(*args: Union[list, tuple]):
+    """Assert that provided iterables have same length"""
     try:
         assert all(len(args[0]) == len(_arg) for _arg in args[1:])
     except Exception:
         raise ValueError("Iterables not of the same length.")
+    return None
+
+
+def check_groups(dataframe, groupvar, group_order):
+    """
+    Check that provided group-related args are well-behaved.
+    
+    Parameters
+    ----------
+    dataframe (pandas.core.frame.DataFrame)
+        Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+        margin of error, etc.
+    groupvar (str)
+        Name of column containing group of variables.
+    group_order (list-like)
+        List of groups by order to report in the figure.
+    Returns
+    -------
+    None
+    """
+    if (group_order is not None) and (groupvar is None):
+        raise TypeError(
+            "Group ordering ('group_order') provided but no group column provided ('groupvar')."
+        )
+    # Check detected unique groups and group_order have same length
+    groups = dataframe[groupvar].dropna().unique()
+    if group_order is not None:
+        check_iterables_samelen(groups, group_order)
+    # Check that groups in group_order exists
+    if (group_order is not None) and (groupvar is not None):
+        try:
+            assert all(group in groups for group in group_order)
+        except Exception:
+            raise AssertionError("Groups specified in `group_order` should exist in the data.")
+    return None

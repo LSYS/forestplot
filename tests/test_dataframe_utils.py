@@ -2,6 +2,7 @@ import pytest
 from pyforestplot.dataframe_utils import (
     load_data,
     insert_groups,
+    sort_groups,
     sort_data,
     reverse_dataframe,
     insert_empty_row,
@@ -28,14 +29,9 @@ def test_load_data():
 
 
 def test_insert_groups():
-    input_df = pd.DataFrame(
-        {"varlabel": ["var1", "var2"], "groupvar": ["group1", "group1"]}
-    )
+    input_df = pd.DataFrame({"varlabel": ["var1", "var2"], "groupvar": ["group1", "group1"]})
     correct_df = pd.DataFrame(
-        {
-            "groupvar": ["group1", "group1", "group1"],
-            "varlabel": ["group1", "var1", "var2"],
-        }
+        {"groupvar": ["group1", "group1", "group1"], "varlabel": ["group1", "var1", "var2"],}
     )
     result_df = insert_groups(input_df, groupvar="groupvar", varlabel="varlabel")
     # assert_frame_equal(result_df, correct_df)
@@ -61,15 +57,9 @@ def test_sort_data():
         {"estimate": input_numeric, "sortval": input_numeric, "groupvar": input_string}
     )
     correct_df = pd.DataFrame(
-        {
-            "estimate": output_numeric,
-            "sortval": output_numeric,
-            "groupvar": output_string,
-        }
+        {"estimate": output_numeric, "sortval": output_numeric, "groupvar": output_string,}
     )
-    result_df = sort_data(
-        input_df, estimate="estimate", groupvar="groupvar", sortby="sortval"
-    )
+    result_df = sort_data(input_df, estimate="estimate", groupvar="groupvar", sortby="sortval")
     assert_frame_equal(result_df, correct_df)
 
     # No sorting
@@ -98,3 +88,25 @@ def test_insert_empty_row():
     assert len(result_df) == 1 + len(input_df)
     assert np.isnan(result_df.loc[0, "estimate"])
     assert np.isnan(result_df.loc[0, "varlabel"])
+
+
+def test_sort_groups():
+    input_string = ["a", "b", "c"]
+    input_numeric = [-1, 2, 3]
+    group = ["g1", "g2", "g1"]
+    input_df = pd.DataFrame(
+        {"estimate": input_numeric, "varlabel": input_string, "group": group}
+    )
+    correct_df = pd.DataFrame(
+        {"estimate": input_numeric, "varlabel": input_string, "group": ["g1", "g1", "g2"]}
+    )
+
+    result_df = sort_groups(input_df, groupvar="group", group_order=["g1", "g2"])
+    assert_frame_equal(result_df, input_df)
+
+    # another test
+    correct_df = pd.DataFrame(
+        {"estimate": input_numeric, "varlabel": input_string, "group": ["g2", "g1", "g1"]}
+    )
+    result_df = sort_groups(input_df, groupvar="group", group_order=["g2", "g1"])
+    assert_frame_equal(result_df, input_df)
