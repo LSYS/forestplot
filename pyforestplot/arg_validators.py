@@ -155,21 +155,11 @@ def check_data(
     ##########################################################################
     ## Check that annotations and corresponding headers have same length
     ##########################################################################
-    # Check annote and annoteheader same len
     if (annote is not None) & (annoteheaders is not None):
-        try:
-            assert len(annote) == len(annoteheaders)
-        except Exception:
-            raise AssertionError("annote and annoteheaders should have same length.")
+        check_iterables_samelen(annote, annoteheaders)
 
-    # Check rightannote and right_annoteheaders same len
     if (rightannote is not None) & (right_annoteheaders is not None):
-        try:
-            assert len(rightannote) == len(right_annoteheaders)
-        except Exception:
-            raise AssertionError(
-                "rightannote and right_annoteheaders should have same length."
-            )
+        check_iterables_samelen(annote, annoteheaders)
 
     ##########################################################################
     ## Check that specified annotations can be found in input or processed dataframe

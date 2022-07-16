@@ -91,7 +91,7 @@ def test_check_data():
     ##########################################################################
     # Assert assertion that annote and annoteheader is same length works
     _df = pd.DataFrame({"estimate": numeric_as_string, "moerror": numeric})
-    with pytest.raises(AssertionError) as excinfo:
+    with pytest.raises(ValueError) as excinfo:
         check_data(
             dataframe=_df,
             estimate="estimate",
@@ -100,7 +100,7 @@ def test_check_data():
             annote=["col1", "col2"],
             annoteheaders=["header1"],
         )
-    assert str(excinfo.value) == "annote and annoteheaders should have same length."
+    assert str(excinfo.value) == "Iterables not of the same length."
 
     # No errors if annote can be found in dataframe columns
     check_data(
@@ -137,7 +137,7 @@ def test_check_data():
     ##########################################################################
     # Assert assertion that rightannote and right_annoteheaders is same length works
     _df = pd.DataFrame({"estimate": numeric_as_string, "moerror": numeric})
-    with pytest.raises(AssertionError) as excinfo:
+    with pytest.raises(ValueError) as excinfo:
         check_data(
             dataframe=_df,
             estimate="estimate",
@@ -146,7 +146,7 @@ def test_check_data():
             rightannote=["col1", "col2"],
             right_annoteheaders=["header1"],
         )
-    assert str(excinfo.value) == "rightannote and right_annoteheaders should have same length."
+    assert str(excinfo.value) == "Iterables not of the same length."
 
     # No errors if rightannote can be found in dataframe columns
     check_data(
