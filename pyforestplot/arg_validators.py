@@ -159,7 +159,7 @@ def check_data(
         check_iterables_samelen(annote, annoteheaders)
 
     if (rightannote is not None) & (right_annoteheaders is not None):
-        check_iterables_samelen(annote, annoteheaders)
+        check_iterables_samelen(rightannote, right_annoteheaders)
 
     ##########################################################################
     ## Check that specified annotations can be found in input or processed dataframe
