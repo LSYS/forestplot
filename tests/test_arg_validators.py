@@ -178,6 +178,35 @@ def test_check_data():
         rightannote=["ci_range"],
     )
 
+    ##########################################################################
+    ## Check assertions that annotations provided when headers provided works
+    ##########################################################################
+    with pytest.raises(TypeError) as excinfo:
+        check_data(
+            dataframe=_df,
+            estimate="estimate",
+            varlabel="estimate",
+            moerror="moerror",
+            right_annoteheaders=["header1"],
+        )
+    assert (
+        str(excinfo.value)
+        == "Right annotation headers are provided but no columns provided ('rightannote')."
+    )
+
+    with pytest.raises(TypeError) as excinfo:
+        check_data(
+            dataframe=_df,
+            estimate="estimate",
+            varlabel="estimate",
+            moerror="moerror",
+            annoteheaders=["header1"],
+        )
+    assert (
+        str(excinfo.value)
+        == "Annotation headers are provided but no columns provided ('annote')."
+    )
+
 
 def test_check_iterables_samelen():
     thresholds = (0.01, 0.05, 0.1)

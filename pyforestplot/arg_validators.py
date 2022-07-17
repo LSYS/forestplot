@@ -188,6 +188,18 @@ def check_data(
         check_groups(dataframe, groupvar=groupvar, group_order=group_order)
 
     ##########################################################################
+    ## Check that column names to add as annotations are provided if the
+    ##   annotation headers are provided
+    ##########################################################################
+    if (annoteheaders is not None) and (annote is None):
+        raise TypeError("Annotation headers are provided but no columns provided ('annote').")
+
+    if (right_annoteheaders is not None) and (rightannote is None):
+        raise TypeError(
+            "Right annotation headers are provided but no columns provided ('rightannote')."
+        )
+
+    ##########################################################################
     ## Warnings
     ##########################################################################
     # Warn: Check that var itself is not in annote
