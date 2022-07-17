@@ -10,7 +10,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build_linux:
+    name: Build ubuntu wheel for python${{ matrix.python-version }}
 
     runs-on: ubuntu-latest
     strategy:
@@ -31,11 +32,50 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with pytest
       run: |
-        pytest
-    - name: Generate Report
+        pytest -v --disable-warnings
+  build_macOS:
+    name: Build macOS wheel for python${{ matrix.python-version }}
+    
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.6','3.7', '3.8', '3.9', '3.10']
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
       run: |
-        pip install pytest
-        pip install coverage
-        coverage run -m pytest
-    - name: Upload Coverage to Codecov
-      uses: codecov/codecov-action@v2
+        python -m pip install --upgrade pip
+        python -m pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Test with pytest
+      run: |
+        pytest -v --disable-warnings
+  build_windows:
+    name: Build windows wheel for python${{ matrix.python-version }}
+
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.6','3.7', '3.8', '3.9', '3.10']
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install flake8 pytest
+        pip install -r requirements.txt
+    - name: Test with pytest
+      run: |
+        pytest -v --disable-warnings
