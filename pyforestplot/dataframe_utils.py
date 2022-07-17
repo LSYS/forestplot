@@ -90,6 +90,7 @@ def sort_data(
 		pd.core.frame.DataFrame that is sorted by the stated options.
 	"""
     if sort or (sortby is not None):
+        sortascend = not sortascend  # reverse b/c plot stands from bottom of df
         if sortby is None:
             sortby = estimate
 
@@ -97,8 +98,9 @@ def sort_data(
             dataframe.sort_values([groupvar, sortby], ascending=sortascend, inplace=True)
         else:
             dataframe.sort_values(sortby, ascending=sortascend, inplace=True)
-        dataframe.reset_index(drop=True, inplace=True)
-    return dataframe
+        return dataframe.reset_index(drop=True)
+    else:
+        return dataframe
 
 
 def reverse_dataframe(dataframe: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
