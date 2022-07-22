@@ -56,7 +56,6 @@ def form_est_ci(
 		dataframe = _right_justify_num(
 			dataframe=dataframe, col=col, decimal_precision=decimal_precision
 		)
-
 	for ix, row in dataframe.iterrows():
 		formatted_est = row[f"formatted_{estimate}"]
 		formatted_ll, formatted_hl = row[f"formatted_{ll}"], row[f"formatted_{hl}"]
