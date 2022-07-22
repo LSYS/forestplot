@@ -225,7 +225,7 @@ def draw_pval_right(
 	return ax
 
 
-def draw_yticklabel2(dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs):
+def draw_yticklabel2(dataframe: pd.core.frame.DataFrame, pad: float, ax: Axes, **kwargs):
 	"""
 	Draw the second ylabel title on the right-hand side y-axis.
 
@@ -234,6 +234,8 @@ def draw_yticklabel2(dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs):
 	dataframe (pandas.core.frame.DataFrame)
 		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
 		margin of error, etc.
+	pad (float)
+		Window wdith of figure
 	ax (Matplotlib Axes)
 		Axes to operate on.
 
@@ -245,7 +247,8 @@ def draw_yticklabel2(dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs):
 	grouplab_fontweight = kwargs.get("grouplab_fontweight", "bold")
 
 	group_row_ix = len(dataframe) - 1
-
+	inv = ax.transData.inverted()
+	righttext_width = 0
 	for ix, row in dataframe.iterrows():
 		yticklabel1 = row["yticklabel"]
 		yticklabel2 = row["yticklabel2"]
@@ -253,7 +256,7 @@ def draw_yticklabel2(dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs):
 		extrapad = 0.05
 		pad = ax.get_xlim()[1] * (1 + extrapad)
 		if ix == group_row_ix:
-			ax.text(
+			t = ax.text(
 				x=pad,
 				y=yticklabel1,
 				s=yticklabel2,
@@ -264,7 +267,7 @@ def draw_yticklabel2(dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs):
 				fontsize=grouplab_size,
 			)
 		else:
-			ax.text(
+			t = ax.text(
 				x=pad,
 				y=yticklabel1,
 				s=yticklabel2,
@@ -272,7 +275,9 @@ def draw_yticklabel2(dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs):
 				horizontalalignment="left",
 				verticalalignment="center",
 			)
-	return ax
+		(_,_),(x1,_) = inv.transform(t.get_window_extent())
+		righttext_width = max(righttext_width, x1)
+	return ax, righttext_width
 
 
 def draw_ylabel1(ylabel: str, pad: float, ax: Axes, **kwargs) -> Axes:
