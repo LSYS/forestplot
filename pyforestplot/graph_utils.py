@@ -38,18 +38,17 @@ def draw_ci(
 		Matplotlib Axes object.
 	"""
 	lw = kwargs.get("lw", 0.5)
-
+	linecolor = kwargs.get('linecolor', '0')
 	ax = dataframe.plot(
 		y=estimate,
 		x=yticklabel,
 		kind="barh",
 		xerr=moerror,
 		color="none",
-		error_kw={"lw": lw},
+		error_kw={"lw": lw, 'ecolor': linecolor},
 		legend=False,
 		ax=ax,
 	)
-
 	return ax
 
 
@@ -79,7 +78,6 @@ def draw_est_markers(
 	marker = kwargs.get("marker", "s")
 	markersize = kwargs.get("markersize", 20)
 	markercolor = kwargs.get("markercolor", "navy")
-
 	ax.scatter(
 		y=yticklabel,
 		x=estimate,
@@ -88,7 +86,6 @@ def draw_est_markers(
 		s=markersize,
 		color=markercolor,
 	)
-
 	return ax
 
 
@@ -139,21 +136,21 @@ def right_flush_yticklabels(
 		Window wdith of figure (float)
 	"""
 	fontfamily = kwargs.get("fontfamily", "monospace")
+	fontsize = kwargs.get("fontsize", 10)
 
 	plt.draw()  # this is needed because get_window_extent needs a renderer to work
 	fig = plt.gcf()
 	if flush:
-		ax.set_yticklabels(dataframe[yticklabel], fontfamily=fontfamily, ha="left")
+		ax.set_yticklabels(dataframe[yticklabel], fontfamily=fontfamily, fontsize=fontsize, ha="left")
 	else:
-		ax.set_yticklabels(dataframe[yticklabel], fontfamily=fontfamily, ha="right")
+		ax.set_yticklabels(dataframe[yticklabel], fontfamily=fontfamily, fontsize=fontsize, ha="right")
 
 	yax = ax.get_yaxis()
 	pad = max(
 		T.label.get_window_extent(renderer=fig.canvas.get_renderer()).width
 		for T in yax.majorTicks
 	)
-	if flush:  # Flush yticklabels to left
-		yax.set_tick_params(pad=pad)
+	if flush: yax.set_tick_params(pad=pad)
 
 	return pad
 
@@ -194,8 +191,7 @@ def draw_pval_right(
 		for _, row in dataframe.iterrows():
 			yticklabel1 = row[yticklabel]
 			yticklabel2 = row['formatted_pval']
-			if pd.isna(yticklabel2):
-				yticklabel2 = ''
+			if pd.isna(yticklabel2): yticklabel2 = ''
 
 			extrapad = 0.05
 			pad = ax.get_xlim()[1] * (1 + extrapad)
@@ -206,7 +202,6 @@ def draw_pval_right(
 				horizontalalignment="left",
 				verticalalignment="center",
 			)
-
 		# 2nd label title
 		pval_title = kwargs.get('pval_title', 'P-value')
 		if pval_title is not None:
@@ -227,7 +222,6 @@ def draw_pval_right(
 					horizontalalignment="left",
 					verticalalignment="center",
 				)
-
 	return ax
 
 
@@ -278,7 +272,6 @@ def draw_yticklabel2(dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs):
 				horizontalalignment="left",
 				verticalalignment="center",
 			)
-
 	return ax
 
 
@@ -299,16 +292,14 @@ def draw_ylabel1(ylabel: str, pad: float, ax: Axes, **kwargs) -> Axes:
 	-------	
 		Matplotlib Axes object.
 	"""
+	ylabel1_fontsize = kwargs.get('ylabel1_fontsize', 12)
 	ax.set_ylabel("")
 	if ylabel is not None:
-
 		# Retrieve settings from kwargs
 		ylabel1_size = kwargs.get("ylabel1_size", 12)
 		ylabel1_fontweight = kwargs.get("ylabel1_fontweight", "bold")
 		ylabel_loc = kwargs.get("ylabel_loc", "top")
 		ylabel_angle = kwargs.get("ylabel_angle", "horizontal")
-
-		# Draw ylabel
 		ax.set_ylabel(
 			ylabel,
 			loc=ylabel_loc,
@@ -317,7 +308,6 @@ def draw_ylabel1(ylabel: str, pad: float, ax: Axes, **kwargs) -> Axes:
 			size=ylabel1_size,
 			fontweight=ylabel1_fontweight,
 		)
-
 	return ax
 
 
@@ -370,7 +360,6 @@ def format_grouplabels(
 	"""
 	grouplab_size = kwargs.get("grouplab_size", 10)
 	grouplab_fontweight = kwargs.get("grouplab_fontweight", "bold")
-
 	if groupvar is not None:
 		for ix, ylabel in enumerate(ax.get_yticklabels()):
 			for gr in dataframe[groupvar].unique():
@@ -380,7 +369,6 @@ def format_grouplabels(
 						ax.get_yticklabels()[ix].set_fontsize(grouplab_size)
 				except AttributeError:
 					pass
-
 	return ax
 
 
@@ -437,7 +425,6 @@ def format_tableheader(
 		nlast = len(ax.get_yticklabels())  # last row is table header
 		ax.get_yticklabels()[nlast - 1].set_fontweight(tableheader_fontweight)
 		ax.get_yticklabels()[nlast - 1].set_fontsize(tableheader_fontsize)
-
 	return ax
 
 
@@ -501,18 +488,16 @@ def format_xticks(
 	"""
 	nticks = kwargs.get("nticks", 5)
 	xtick_size = kwargs.get("xtick_size", 9)
-
 	xlowerlimit = dataframe[ll].min()
 	xupperlimit = dataframe[hl].max()
 
 	ax.set_xlim(xlowerlimit, xupperlimit)
 	if xticks is not None:
-		ax.set_xticklabels(xticks, fontsize=xtick_size)
+		ax.set_xticks(xticks)
+		ax.xaxis.set_tick_params(labelsize=xtick_size)
 	else:
 		ax.xaxis.set_major_locator(plt.MaxNLocator(nticks))
-
 	ax.tick_params(axis="x", labelsize=xtick_size)
-
 	return ax
 
 
@@ -532,12 +517,10 @@ def draw_xticks(xticks: Union[list, tuple], ax: Axes, **kwargs):
 		Matplotlib Axes object.
 	"""
 	xtick_size = kwargs.get("xtick_size", 9)
-
 	if xticks is not None:
 		ax.set_xticklabels(xticks, fontsize=xtick_size)
 	else:
 		ax.tick_params(axis="x", labelsize=xtick_size)
-
 	return ax
 
 
@@ -604,5 +587,42 @@ def draw_alt_row_colors(
 			if counter % 2 == 0:
 				ax.axhspan(ix - 0.5, ix + 0.5, color=row_color, alpha=0.08, zorder=0)
 			counter += 1
-
 	return ax
+
+
+def draw_tablelines(
+	dataframe: pd.core.frame.DataFrame,
+	righttext_width: float,
+	ax: Axes
+):
+	"""
+	Plot horizontal lines as table lines.
+
+	Cf. draw_ylabel2 for righttext_width.
+
+	Parameters
+	----------
+	dataframe (pandas.core.frame.DataFrame)
+		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+		margin of error, etc.
+	righttext_width (float)
+		x-axis coordinate of the rightmost character of the right-side annotations.
+	ax: Axes
+
+	Returns
+	-------
+		Matplotlib Axes object.
+	"""
+	first_yticklab = ax.get_yaxis().majorTicks[-1]
+	bbox_disp = first_yticklab.label.get_window_extent()
+	(x0,_),(x1,_) = ax.transData.inverted().transform(bbox_disp)
+
+	nrows = len(dataframe)
+	plt.plot([x0, x1], [nrows-.4, nrows-.4], color='0', clip_on=False)
+	plt.plot([x0, x1], [nrows-1.5, nrows-1.5], color='0.3', linewidth=1, clip_on=False)
+
+	extrapad = 0.05
+	x0 = ax.get_xlim()[1] * (1 + extrapad)
+	plt.plot([x0, righttext_width], [nrows-.4, nrows-.4], color='0', clip_on=False)
+	plt.plot([x0, righttext_width], [nrows-1.5, nrows-1.5], color='.3', clip_on=False)
+	return ax	
