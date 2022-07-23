@@ -38,8 +38,8 @@ def draw_ci(
 	-------
 		Matplotlib Axes object.
 	"""
-    lw = kwargs.get("lw", 0.5)
-    linecolor = kwargs.get("linecolor", "0")
+    lw = kwargs.get("lw", 1.4)
+    linecolor = kwargs.get("linecolor", ".6")
     ax = dataframe.plot(
         y=estimate,
         x=yticklabel,
@@ -49,6 +49,7 @@ def draw_ci(
         error_kw={"lw": lw, "ecolor": linecolor},
         legend=False,
         ax=ax,
+        zorder=0
     )
     return ax
 
@@ -77,8 +78,8 @@ def draw_est_markers(
 		Matplotlib Axes object.
 	"""
     marker = kwargs.get("marker", "s")
-    markersize = kwargs.get("markersize", 20)
-    markercolor = kwargs.get("markercolor", "navy")
+    markersize = kwargs.get("markersize", 40)
+    markercolor = kwargs.get("markercolor", "darkslategray")
     ax.scatter(
         y=yticklabel,
         x=estimate,
@@ -105,8 +106,8 @@ def draw_ref_xline(ax: Axes, **kwargs):
 	"""
     xline = kwargs.get("xline", 0)
     xlinestyle = kwargs.get("xlinestyle", "-")
-    xlinecolor = kwargs.get("xlinecolor", "k")
-    xlinewidth = kwargs.get("xlinewidth", 0.8)
+    xlinecolor = kwargs.get("xlinecolor", ".2")
+    xlinewidth = kwargs.get("xlinewidth", 1)
     ax.axvline(x=xline, linestyle=xlinestyle, color=xlinecolor, linewidth=xlinewidth)
     return ax
 
@@ -137,7 +138,7 @@ def right_flush_yticklabels(
 		Window wdith of figure (float)
 	"""
     fontfamily = kwargs.get("fontfamily", "monospace")
-    fontsize = kwargs.get("fontsize", 10)
+    fontsize = kwargs.get("fontsize", 12)
 
     plt.draw()  # this is needed because get_window_extent needs a renderer to work
     fig = plt.gcf()
@@ -227,7 +228,7 @@ def draw_pval_right(
                 righttext_width = max(righttext_width, x1)
             if annoteheaders is not None:  # if tableheaders exist
                 pval_title_fontweight = kwargs.get("pval_title_fontweight", "bold")
-                pval_title_fontsize = kwargs.get("pval_title_fontsize", 10)
+                pval_title_fontsize = kwargs.get("pval_title_fontsize", 12)
 
                 header_index = len(ax.get_yticklabels()) - 1
                 t = ax.text(
@@ -264,8 +265,9 @@ def draw_yticklabel2(dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs):
 	-------
 		Matplotlib Axes object.
 	"""
-    grouplab_size = kwargs.get("grouplab_size", 10)
+    grouplab_size = kwargs.get("grouplab_size", 12)
     grouplab_fontweight = kwargs.get("grouplab_fontweight", "bold")
+    fontsize = kwargs.get("fontsize", 12)
 
     group_row_ix = len(dataframe) - 1
     inv = ax.transData.inverted()
@@ -296,6 +298,7 @@ def draw_yticklabel2(dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs):
                 fontfamily="monospace",
                 horizontalalignment="left",
                 verticalalignment="center",
+                fontsize=fontsize
             )
         (_, _), (x1, _) = inv.transform(
             t.get_window_extent(renderer=fig.canvas.get_renderer())
@@ -322,10 +325,11 @@ def draw_ylabel1(ylabel: str, pad: float, ax: Axes, **kwargs) -> Axes:
 		Matplotlib Axes object.
 	"""
     ylabel1_fontsize = kwargs.get("ylabel1_fontsize", 12)
+    fontsize = kwargs.get('fontsize', 12)
     ax.set_ylabel("")
     if ylabel is not None:
         # Retrieve settings from kwargs
-        ylabel1_size = kwargs.get("ylabel1_size", 12)
+        ylabel1_size = kwargs.get("ylabel1_size", 1+fontsize)
         ylabel1_fontweight = kwargs.get("ylabel1_fontweight", "bold")
         ylabel_loc = kwargs.get("ylabel_loc", "top")
         ylabel_angle = kwargs.get("ylabel_angle", "horizontal")
@@ -387,7 +391,7 @@ def format_grouplabels(
 	-------	
 		Matplotlib Axes object.	
 	"""
-    grouplab_size = kwargs.get("grouplab_size", 10)
+    grouplab_size = kwargs.get("grouplab_size", 12)
     grouplab_fontweight = kwargs.get("grouplab_fontweight", "bold")
     if groupvar is not None:
         for ix, ylabel in enumerate(ax.get_yticklabels()):
@@ -449,7 +453,7 @@ def format_tableheader(
 	"""
     if (annoteheaders is not None) or (right_annoteheaders is not None):
         tableheader_fontweight = kwargs.get("tableheader_fontweight", "bold")
-        tableheader_fontsize = kwargs.get("tableheader_fontsize", 10)
+        tableheader_fontsize = kwargs.get("fontsize", 12)
 
         nlast = len(ax.get_yticklabels())  # last row is table header
         ax.get_yticklabels()[nlast - 1].set_fontweight(tableheader_fontweight)
@@ -473,7 +477,7 @@ def format_xlabel(xlabel: str, ax: Axes, **kwargs) -> Axes:
 		Matplotlib Axes object.
 	"""
     if xlabel is not None:
-        xlabel_size = kwargs.get("xlabel_size", 10)
+        xlabel_size = kwargs.get("xlabel_size", 12)
         xlabel_fontweight = kwargs.get("xlabel_fontweight", "bold")
         ax.set_xlabel(xlabel, size=xlabel_size, fontweight=xlabel_fontweight)
     return ax
@@ -515,7 +519,7 @@ def format_xticks(
 		Matplotlib Axes object.	
 	"""
     nticks = kwargs.get("nticks", 5)
-    xtick_size = kwargs.get("xtick_size", 9)
+    xtick_size = kwargs.get("xtick_size", 10)
     xlowerlimit = dataframe[ll].min()
     xupperlimit = dataframe[hl].max()
 
@@ -646,14 +650,14 @@ def draw_tablelines(
     first_yticklab = ax.get_yaxis().majorTicks[-1]
     bbox_disp = first_yticklab.label.get_window_extent()
     (x0, _), (x1, _) = ax.transData.inverted().transform(bbox_disp)
-
+    upper_lw, lower_lw = 1.8, 1.3
     nrows = len(dataframe)
-    plt.plot([x0, x1], [nrows - 0.4, nrows - 0.4], color="0", clip_on=False)
-    plt.plot([x0, x1], [nrows - 1.5, nrows - 1.5], color="0.5", linewidth=.8, clip_on=False)
+    plt.plot([x0, x1], [nrows - 0.4, nrows - 0.4], color="0", linewidth=upper_lw, clip_on=False)
+    plt.plot([x0, x1], [nrows - 1.5, nrows - 1.5], color="0.5", linewidth=lower_lw, clip_on=False)
 
     if (right_annoteheaders is not None) or (pval is not None):
         extrapad = 0.05
         x0 = ax.get_xlim()[1] * (1 + extrapad)
-        plt.plot([x0, righttext_width], [nrows - 0.4, nrows - 0.4], color="0", clip_on=False)
-        plt.plot([x0, righttext_width], [nrows - 1.5, nrows - 1.5], color=".5", linewidth=.8, clip_on=False)
+        plt.plot([x0, righttext_width], [nrows - 0.4, nrows - 0.4], color="0", linewidth=upper_lw, clip_on=False)
+        plt.plot([x0, righttext_width], [nrows - 1.5, nrows - 1.5], color=".5", linewidth=lower_lw, clip_on=False)
     return ax
