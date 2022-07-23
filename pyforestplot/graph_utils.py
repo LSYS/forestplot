@@ -649,11 +649,11 @@ def draw_tablelines(
 
     nrows = len(dataframe)
     plt.plot([x0, x1], [nrows - 0.4, nrows - 0.4], color="0", clip_on=False)
-    plt.plot([x0, x1], [nrows - 1.5, nrows - 1.5], color="0.3", linewidth=1, clip_on=False)
+    plt.plot([x0, x1], [nrows - 1.5, nrows - 1.5], color="0.5", linewidth=.8, clip_on=False)
 
     if (right_annoteheaders is not None) or (pval is not None):
         extrapad = 0.05
         x0 = ax.get_xlim()[1] * (1 + extrapad)
         plt.plot([x0, righttext_width], [nrows - 0.4, nrows - 0.4], color="0", clip_on=False)
-        plt.plot([x0, righttext_width], [nrows - 1.5, nrows - 1.5], color=".3", clip_on=False)
+        plt.plot([x0, righttext_width], [nrows - 1.5, nrows - 1.5], color=".5", linewidth=.8, clip_on=False)
     return ax
