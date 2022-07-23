@@ -587,7 +587,7 @@ def draw_alt_row_colors(
 		Matplotlib Axes object.		
 	"""
     # Retrieve settings
-    row_color = kwargs.get("row_color", "black")
+    row_color = kwargs.get("row_color", "0.5")
 
     if (annoteheaders is not None) or (right_annoteheaders is not None):
         headers_exist = True
