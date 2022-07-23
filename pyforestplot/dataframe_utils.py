@@ -4,9 +4,9 @@ from typing import Optional, Union
 
 
 def insert_groups(
-	dataframe: pd.core.frame.DataFrame, groupvar: str, varlabel: str
+    dataframe: pd.core.frame.DataFrame, groupvar: str, varlabel: str
 ) -> pd.core.frame.DataFrame:
-	"""
+    """
 	Insert the name of variable groups as a psuedo variable in the dataframe.
 
 	Parameters
@@ -23,18 +23,18 @@ def insert_groups(
 	-------
 		pd.core.frame.DataFrame with group variable labels inserted as psuedo variables.
 	"""
-	df_groupsasvar = pd.DataFrame()
-	for group in dataframe[groupvar].unique():
-		_df = dataframe.query(f"{groupvar}==@group")
-		addgroupvar = pd.DataFrame({varlabel: [group], groupvar: [group]})
-		df_groupsasvar = pd.concat([df_groupsasvar, addgroupvar, _df], ignore_index=True)
-	return df_groupsasvar
+    df_groupsasvar = pd.DataFrame()
+    for group in dataframe[groupvar].unique():
+        _df = dataframe.query(f"{groupvar}==@group")
+        addgroupvar = pd.DataFrame({varlabel: [group], groupvar: [group]})
+        df_groupsasvar = pd.concat([df_groupsasvar, addgroupvar, _df], ignore_index=True)
+    return df_groupsasvar
 
 
 def sort_groups(
-	dataframe: pd.core.frame.DataFrame, groupvar: str, group_order: Union[list, tuple]
+    dataframe: pd.core.frame.DataFrame, groupvar: str, group_order: Union[list, tuple]
 ):
-	"""
+    """
 	Sort dataframe by list of groups implying order.
 
 	Parameters
@@ -51,21 +51,21 @@ def sort_groups(
 	-------
 		pd.core.frame.DataFrame	ordered by order in 'group_order'.
 	"""
-	dataframe[groupvar] = pd.Categorical(dataframe[groupvar], group_order)
-	dataframe.sort_values(groupvar, inplace=True)
-	return dataframe
+    dataframe[groupvar] = pd.Categorical(dataframe[groupvar], group_order)
+    dataframe.sort_values(groupvar, inplace=True)
+    return dataframe
 
 
 def sort_data(
-	dataframe: pd.core.frame.DataFrame,
-	estimate: str,
-	groupvar: str,
-	sort: bool = False,
-	sortby: Optional[str] = None,
-	sortascend: bool = True,
-	**kwargs,
+    dataframe: pd.core.frame.DataFrame,
+    estimate: str,
+    groupvar: str,
+    sort: bool = False,
+    sortby: Optional[str] = None,
+    sortascend: bool = True,
+    **kwargs,
 ) -> pd.core.frame.DataFrame:
-	"""
+    """
 	Sort the dataframe according to the stated options.
 
 	Parameters
@@ -89,34 +89,35 @@ def sort_data(
 	-------
 		pd.core.frame.DataFrame that is sorted by the stated options.
 	"""
-	if sort or (sortby is not None):
-		sortascend = not sortascend # reverse b/c plot stands from bottom of df
-		if sortby is None: sortby = estimate
+    if sort or (sortby is not None):
+        sortascend = not sortascend  # reverse b/c plot stands from bottom of df
+        if sortby is None:
+            sortby = estimate
 
-		if groupvar is not None:
-			dataframe.sort_values([groupvar, sortby], ascending=sortascend, inplace=True)
-		else:
-			dataframe.sort_values(sortby, ascending=sortascend, inplace=True)
-		return dataframe.reset_index(drop=True)
-	else:
-		return dataframe
+        if groupvar is not None:
+            dataframe.sort_values([groupvar, sortby], ascending=sortascend, inplace=True)
+        else:
+            dataframe.sort_values(sortby, ascending=sortascend, inplace=True)
+        return dataframe.reset_index(drop=True)
+    else:
+        return dataframe
 
 
 def reverse_dataframe(dataframe: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
-	"""Flip the dataframe so that last row is now first and so on."""
-	dataframe = dataframe[::-1]
-	return dataframe.reset_index(drop=True)
+    """Flip the dataframe so that last row is now first and so on."""
+    dataframe = dataframe[::-1]
+    return dataframe.reset_index(drop=True)
 
 
 def insert_empty_row(dataframe: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
-	"""Add an empty row to the top of the dataframe."""
-	_df = pd.DataFrame([[np.nan] * len(dataframe.columns)], columns=dataframe.columns)
-	dataframe = _df.append(dataframe, ignore_index=True)
-	return dataframe
+    """Add an empty row to the top of the dataframe."""
+    _df = pd.DataFrame([[np.nan] * len(dataframe.columns)], columns=dataframe.columns)
+    dataframe = _df.append(dataframe, ignore_index=True)
+    return dataframe
 
 
 def load_data(name: str, **param_dict) -> pd.core.frame.DataFrame:
-	"""
+    """
 	Load example dataset for quickstart.
 
 	Example data available now:
@@ -133,12 +134,12 @@ def load_data(name: str, **param_dict) -> pd.core.frame.DataFrame:
 	-------
 	pd.core.frame.DataFrame.
 	"""
-	available_data = ["mortality"]
-	name = name.lower().strip()
-	if name in available_data:
-		url = f"https://raw.githubusercontent.com/lsys/pyforestplot/main/examples/data/{name}.csv"
-		df = pd.read_csv(url, **param_dict)
-		return df
-	else:
-		available_data_str = ", ".join(available_data)
-		raise AssertionError(f"{name} not found. Should be one of '{available_data_str}'")
+    available_data = ["mortality"]
+    name = name.lower().strip()
+    if name in available_data:
+        url = f"https://raw.githubusercontent.com/lsys/pyforestplot/main/examples/data/{name}.csv"
+        df = pd.read_csv(url, **param_dict)
+        return df
+    else:
+        available_data_str = ", ".join(available_data)
+        raise AssertionError(f"{name} not found. Should be one of '{available_data_str}'")

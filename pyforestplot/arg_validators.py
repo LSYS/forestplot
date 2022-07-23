@@ -275,7 +275,8 @@ def check_groups(dataframe, groupvar, group_order):
         )
     # Check detected unique groups and group_order have same length
     groups = dataframe[groupvar].dropna().unique()
-    if group_order is not None: check_iterables_samelen(groups, group_order)
+    if group_order is not None:
+        check_iterables_samelen(groups, group_order)
     # Check that groups in group_order exists
     if (group_order is not None) and (groupvar is not None):
         try:
