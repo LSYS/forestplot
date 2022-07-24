@@ -139,7 +139,7 @@ def right_flush_yticklabels(
 	"""
     fontfamily = kwargs.get("fontfamily", "monospace")
     fontsize = kwargs.get("fontsize", 12)
-    # plt.draw()  
+    # plt.draw()
     fig = plt.gcf()
     if flush:
         ax.set_yticklabels(
