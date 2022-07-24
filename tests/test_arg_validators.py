@@ -249,20 +249,14 @@ def test_check_groups():
     )
 
     # Goes through if both groupvar and group_order provided
-    check_groups(
-        dataframe=input_df, groupvar="groupvar", group_order=["model1", "model2"]
-    )
+    check_groups(dataframe=input_df, groupvar="groupvar", group_order=["model1", "model2"])
 
     # Check assertion raised if group_order and detected unique groups have different lengths
     with pytest.raises(ValueError) as excinfo:
-        check_groups(
-            dataframe=input_df, groupvar="groupvar", group_order=["model1"]
-        )
+        check_groups(dataframe=input_df, groupvar="groupvar", group_order=["model1"])
     assert str(excinfo.value) == "Iterables not of the same length."
 
     # Check assert that groups in group_order can be found in data works
     with pytest.raises(AssertionError) as excinfo:
-        check_groups(
-            dataframe=input_df, groupvar="groupvar", group_order=["null", "model2"]
-        )
+        check_groups(dataframe=input_df, groupvar="groupvar", group_order=["null", "model2"])
     assert str(excinfo.value) == "Groups specified in `group_order` should exist in the data."
