@@ -16,28 +16,28 @@ def draw_ci(
     **kwargs: Any
 ) -> Axes:
     """
-	Draw the confidence intervals using the horizontal bar plot (barh) from the pandas API.
+    Draw the confidence intervals using the horizontal bar plot (barh) from the pandas API.
 
-	Parameters
-	----------
-	dataframe (pandas.core.frame.DataFrame)
-		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
-		margin of error, etc.
-	estimate (str)
-		Name of column containing the estimates (e.g. pearson correlation coefficient,
-		OR, regression estimates, etc.).
-	yticklabel (str)
-		Name of column in intermediate dataframe containing the formatted yticklabels.
-	moerror (str)
-		Name of column containing the margin of error in the confidence intervals.
-		Should be available if 'll' and 'hl' are left empty.
-	ax (Matplotlib Axes)
-		Axes to operate on.
-	
-	Returns
-	-------
-		Matplotlib Axes object.
-	"""
+    Parameters
+    ----------
+    dataframe (pandas.core.frame.DataFrame)
+            Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+            margin of error, etc.
+    estimate (str)
+            Name of column containing the estimates (e.g. pearson correlation coefficient,
+            OR, regression estimates, etc.).
+    yticklabel (str)
+            Name of column in intermediate dataframe containing the formatted yticklabels.
+    moerror (str)
+            Name of column containing the margin of error in the confidence intervals.
+            Should be available if 'll' and 'hl' are left empty.
+    ax (Matplotlib Axes)
+            Axes to operate on.
+
+    Returns
+    -------
+            Matplotlib Axes object.
+    """
     lw = kwargs.get("lw", 1.4)
     linecolor = kwargs.get("linecolor", ".6")
     ax = dataframe.plot(
@@ -58,25 +58,25 @@ def draw_est_markers(
     dataframe: pd.core.frame.DataFrame, estimate: str, yticklabel: str, ax: Axes, **kwargs: Any
 ) -> Axes:
     """
-	Draws the markers of the estimates using the Matplotlib plt.scatter API.
+    Draws the markers of the estimates using the Matplotlib plt.scatter API.
 
-	Parameters
-	----------
-	dataframe (pandas.core.frame.DataFrame)
-		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
-		margin of error, etc.
-	estimate (str)
-		Name of column containing the estimates (e.g. pearson correlation coefficient,
-		OR, regression estimates, etc.).
-	yticklabel (str)
-		Name of column in intermediate dataframe containing the formatted yticklabels.
-	ax (Matplotlib Axes)
-		Axes to operate on.
+    Parameters
+    ----------
+    dataframe (pandas.core.frame.DataFrame)
+            Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+            margin of error, etc.
+    estimate (str)
+            Name of column containing the estimates (e.g. pearson correlation coefficient,
+            OR, regression estimates, etc.).
+    yticklabel (str)
+            Name of column in intermediate dataframe containing the formatted yticklabels.
+    ax (Matplotlib Axes)
+            Axes to operate on.
 
-	Returns
-	-------
-		Matplotlib Axes object.
-	"""
+    Returns
+    -------
+            Matplotlib Axes object.
+    """
     marker = kwargs.get("marker", "s")
     markersize = kwargs.get("markersize", 40)
     markercolor = kwargs.get("markercolor", "darkslategray")
@@ -93,17 +93,17 @@ def draw_est_markers(
 
 def draw_ref_xline(ax: Axes, **kwargs: Any) -> Axes:
     """
-	Draw the vertical reference xline at zero. Unless defaults are overridden in kwargs.
+    Draw the vertical reference xline at zero. Unless defaults are overridden in kwargs.
 
-	Parameters
-	----------
-	ax (Matplotlib Axes)
-		Axes to operate on.
+    Parameters
+    ----------
+    ax (Matplotlib Axes)
+            Axes to operate on.
 
-	Returns
-	-------
-		Matplotlib Axes object.
-	"""
+    Returns
+    -------
+            Matplotlib Axes object.
+    """
     xline = kwargs.get("xline", 0)
     xlinestyle = kwargs.get("xlinestyle", "-")
     xlinecolor = kwargs.get("xlinecolor", ".2")
@@ -116,27 +116,27 @@ def right_flush_yticklabels(
     dataframe: pd.core.frame.DataFrame, yticklabel: str, flush: bool, ax: Axes, **kwargs: Any
 ) -> float:
     """
-	Flushes the formatted ytickers to the left. Also returns the amount of max padding in the
-	window width. Padding to be used for drawing the 2nd yticklabels and ylabels.
+    Flushes the formatted ytickers to the left. Also returns the amount of max padding in the
+    window width. Padding to be used for drawing the 2nd yticklabels and ylabels.
 
-	My reference: https://stackoverflow.com/questions/15882249/matplotlib-aligning-y-ticks-to-the-left
+    My reference: https://stackoverflow.com/questions/15882249/matplotlib-aligning-y-ticks-to-the-left
 
-	Parameters
-	----------
-	dataframe (pandas.core.frame.DataFrame)
-		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
-		margin of error, etc.
-	yticklabel (str)
-		Name of column in intermediate dataframe containing the formatted yticklabels.
-	flush (bool)
-		Left-flush the variable labels.
-	ax (Matplotlib Axes)
-		Axes to operate on.
+    Parameters
+    ----------
+    dataframe (pandas.core.frame.DataFrame)
+            Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+            margin of error, etc.
+    yticklabel (str)
+            Name of column in intermediate dataframe containing the formatted yticklabels.
+    flush (bool)
+            Left-flush the variable labels.
+    ax (Matplotlib Axes)
+            Axes to operate on.
 
-	Returns
-	-------
-		Window wdith of figure (float)
-	"""
+    Returns
+    -------
+            Window wdith of figure (float)
+    """
     fontfamily = kwargs.get("fontfamily", "monospace")
     fontsize = kwargs.get("fontsize", 12)
     # plt.draw()
@@ -170,28 +170,28 @@ def draw_pval_right(
     **kwargs: Any
 ) -> Tuple[Axes, float]:
     """
-	Draws the 2nd ytick labels on the right-hand side of the figure.
+    Draws the 2nd ytick labels on the right-hand side of the figure.
 
-	Parameters
-	----------
-	dataframe (pandas.core.frame.DataFrame)
-		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
-		margin of error, etc.
-	pval (str)
-		Name of column containing the p-values.
-	annoteheaders (list-like)
-		List of table headers to use as column headers for the additional annotations.
-	yticklabel (str)
-		Name of column in intermediate dataframe containing the formatted yticklabels.
-	pad (float)
-		Window wdith of figure
-	ax (Matplotlib Axes)
-		Axes to operate on.
+    Parameters
+    ----------
+    dataframe (pandas.core.frame.DataFrame)
+            Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+            margin of error, etc.
+    pval (str)
+            Name of column containing the p-values.
+    annoteheaders (list-like)
+            List of table headers to use as column headers for the additional annotations.
+    yticklabel (str)
+            Name of column in intermediate dataframe containing the formatted yticklabels.
+    pad (float)
+            Window wdith of figure
+    ax (Matplotlib Axes)
+            Axes to operate on.
 
-	Returns
-	-------
-		Matplotlib Axes object.		
-	"""
+    Returns
+    -------
+            Matplotlib Axes object.
+    """
     if pval is not None:
         inv = ax.transData.inverted()
         righttext_width = 0
@@ -252,20 +252,20 @@ def draw_yticklabel2(
     dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs: Any
 ) -> Tuple[Axes, float]:
     """
-	Draw the second ylabel title on the right-hand side y-axis.
+    Draw the second ylabel title on the right-hand side y-axis.
 
-	Parameters
-	----------
-	dataframe (pandas.core.frame.DataFrame)
-		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
-		margin of error, etc.
-	ax (Matplotlib Axes)
-		Axes to operate on.
+    Parameters
+    ----------
+    dataframe (pandas.core.frame.DataFrame)
+            Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+            margin of error, etc.
+    ax (Matplotlib Axes)
+            Axes to operate on.
 
-	Returns
-	-------
-		Matplotlib Axes object.
-	"""
+    Returns
+    -------
+            Matplotlib Axes object.
+    """
     grouplab_size = kwargs.get("grouplab_size", 12)
     grouplab_fontweight = kwargs.get("grouplab_fontweight", "bold")
     fontsize = kwargs.get("fontsize", 12)
@@ -310,21 +310,21 @@ def draw_yticklabel2(
 
 def draw_ylabel1(ylabel: str, pad: float, ax: Axes, **kwargs: Any) -> Axes:
     """
-	Draw ylabel title for the left-hand side y-axis.
+    Draw ylabel title for the left-hand side y-axis.
 
-	Parameters
-	----------
-	ylabel (str)
-		Title of the left-hand side y-axis.
-	pad (float)
-		Window wdith of figure
-	ax (Matplotlib Axes)
-		Axes to operate on.
+    Parameters
+    ----------
+    ylabel (str)
+            Title of the left-hand side y-axis.
+    pad (float)
+            Window wdith of figure
+    ax (Matplotlib Axes)
+            Axes to operate on.
 
-	Returns
-	-------	
-		Matplotlib Axes object.
-	"""
+    Returns
+    -------
+            Matplotlib Axes object.
+    """
     ylabel1_fontsize = kwargs.get("ylabel1_fontsize", 12)
     fontsize = kwargs.get("fontsize", 12)
     ax.set_ylabel("")
@@ -347,17 +347,17 @@ def draw_ylabel1(ylabel: str, pad: float, ax: Axes, **kwargs: Any) -> Axes:
 
 def remove_ticks(ax: Axes) -> Axes:
     """
-	Removes the tickers on the top, left, and right borders.
+    Removes the tickers on the top, left, and right borders.
 
-	Parameters
-	----------
-	ax (Matplotlib Axes)
-		Axes to operate on.
+    Parameters
+    ----------
+    ax (Matplotlib Axes)
+            Axes to operate on.
 
-	Returns
-	-------	
-		Matplotlib Axes object.
-	"""
+    Returns
+    -------
+            Matplotlib Axes object.
+    """
     ax.tick_params(
         top=False,
         bottom=True,
@@ -374,24 +374,24 @@ def format_grouplabels(
     dataframe: pd.core.frame.DataFrame, groupvar: str, ax: Axes, **kwargs: Any
 ) -> Axes:
     """
-	Bold the group variable labels.
+    Bold the group variable labels.
 
-	Fontweight options in Matplotlib: [ 'normal' | 'bold' | 'heavy' | 'light' | 'ultrabold' | 'ultralight' ]
+    Fontweight options in Matplotlib: [ 'normal' | 'bold' | 'heavy' | 'light' | 'ultrabold' | 'ultralight' ]
 
-	Parameters
-	----------
-	dataframe (pandas.core.frame.DataFrame)
-		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
-		margin of error, etc.
-	groupvar (str)
-		Name of column containing group of variables.
-	ax (Matplotlib Axes)
-		Axes to operate on.
+    Parameters
+    ----------
+    dataframe (pandas.core.frame.DataFrame)
+            Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+            margin of error, etc.
+    groupvar (str)
+            Name of column containing group of variables.
+    ax (Matplotlib Axes)
+            Axes to operate on.
 
-	Returns
-	-------	
-		Matplotlib Axes object.	
-	"""
+    Returns
+    -------
+            Matplotlib Axes object.
+    """
     grouplab_size = kwargs.get("grouplab_size", 12)
     grouplab_fontweight = kwargs.get("grouplab_fontweight", "bold")
     if groupvar is not None:
@@ -408,19 +408,19 @@ def format_grouplabels(
 
 def despineplot(despine: bool, ax: Axes) -> Axes:
     """
-	Despine the plot by removing the top, left, and right borders.
+    Despine the plot by removing the top, left, and right borders.
 
-	Parameters
-	----------
-	despine (bool)
-		If True, despine.
-	ax (Matplotlib Axes)
-		Axes to operate on.
+    Parameters
+    ----------
+    despine (bool)
+            If True, despine.
+    ax (Matplotlib Axes)
+            Axes to operate on.
 
-	Returns
-	-------	
-		Matplotlib Axes object.		
-	"""
+    Returns
+    -------
+            Matplotlib Axes object.
+    """
     if despine:
         ax.spines["top"].set_color("None")
         ax.spines["left"].set_color("None")
@@ -435,23 +435,23 @@ def format_tableheader(
     **kwargs: Any
 ) -> Axes:
     """
-	Format the tableheader as the first row in the data.
+    Format the tableheader as the first row in the data.
 
-	Parameters
-	----------
-	annoteheaders (list-like)
-		List of table headers to use as column headers for the additional annotations
-		on the left-hand side of the plot.
-	right_annoteheaders (list-like)
-		List of table headers to use as column headers for the additional annotations
-		on the right-hand side of the plot.
-	ax (Matplotlib Axes)
-		Axes to operate on.
+    Parameters
+    ----------
+    annoteheaders (list-like)
+            List of table headers to use as column headers for the additional annotations
+            on the left-hand side of the plot.
+    right_annoteheaders (list-like)
+            List of table headers to use as column headers for the additional annotations
+            on the right-hand side of the plot.
+    ax (Matplotlib Axes)
+            Axes to operate on.
 
-	Returns
-	-------
-		Matplotlib Axes object.
-	"""
+    Returns
+    -------
+            Matplotlib Axes object.
+    """
     if (annoteheaders is not None) or (right_annoteheaders is not None):
         tableheader_fontweight = kwargs.get("tableheader_fontweight", "bold")
         tableheader_fontsize = kwargs.get("fontsize", 12)
@@ -463,19 +463,19 @@ def format_tableheader(
 
 def format_xlabel(xlabel: str, ax: Axes, **kwargs: Any) -> Axes:
     """
-	Format the x-axis label
+    Format the x-axis label
 
-	Parameters
-	----------
-	xlabel (str)
-		Title of the left-hand side x-axis.
-	ax (Matplotlib Axes)
-		Axes to operate on.
-		
-	Returns
-	-------
-		Matplotlib Axes object.
-	"""
+    Parameters
+    ----------
+    xlabel (str)
+            Title of the left-hand side x-axis.
+    ax (Matplotlib Axes)
+            Axes to operate on.
+
+    Returns
+    -------
+            Matplotlib Axes object.
+    """
     if xlabel is not None:
         xlabel_size = kwargs.get("xlabel_size", 12)
         xlabel_fontweight = kwargs.get("xlabel_fontweight", "bold")
@@ -492,32 +492,32 @@ def format_xticks(
     **kwargs: Any
 ) -> Axes:
     """
-	Format the xtick labels.
+    Format the xtick labels.
 
-	This function sets the range of the x-axis using the lowest value and highest values 
-	in the confidence interval.
-	Sets the xticks according to the user-provided 'xticks' or just use 5 tickers.
+    This function sets the range of the x-axis using the lowest value and highest values
+    in the confidence interval.
+    Sets the xticks according to the user-provided 'xticks' or just use 5 tickers.
 
-	Parameters
-	----------
-	dataframe (pandas.core.frame.DataFrame)
-		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
-		margin of error, etc.
-	ll (str)
-		Name of column containing the lower limit of the confidence intervals. 
-		Optional
-	hl (str)
-		Name of column containing the upper limit of the confidence intervals. 
-		Optional		
-	xticks (list-like)
-		List of xtickers to print on the x-axis.
-	ax (Matplotlib Axes)
-		Axes to operate on.
-		
-	Returns
-	-------
-		Matplotlib Axes object.	
-	"""
+    Parameters
+    ----------
+    dataframe (pandas.core.frame.DataFrame)
+            Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+            margin of error, etc.
+    ll (str)
+            Name of column containing the lower limit of the confidence intervals.
+            Optional
+    hl (str)
+            Name of column containing the upper limit of the confidence intervals.
+            Optional
+    xticks (list-like)
+            List of xtickers to print on the x-axis.
+    ax (Matplotlib Axes)
+            Axes to operate on.
+
+    Returns
+    -------
+            Matplotlib Axes object.
+    """
     nticks = kwargs.get("nticks", 5)
     xtick_size = kwargs.get("xtick_size", 10)
     xlowerlimit = dataframe[ll].min()
@@ -534,19 +534,19 @@ def format_xticks(
 
 def draw_xticks(xticks: Union[list, tuple], ax: Axes, **kwargs: Any) -> Axes:
     """
-	Draws the xtick labels if 'xticks' is specified.
+    Draws the xtick labels if 'xticks' is specified.
 
-	Parameters
-	----------
-	xticks (list-like)
-		List of xtickers to print on the x-axis.
-	ax (Matplotlib Axes)
-		Axes to operate on.
+    Parameters
+    ----------
+    xticks (list-like)
+            List of xtickers to print on the x-axis.
+    ax (Matplotlib Axes)
+            Axes to operate on.
 
-	Returns
-	-------
-		Matplotlib Axes object.
-	"""
+    Returns
+    -------
+            Matplotlib Axes object.
+    """
     xtick_size = kwargs.get("xtick_size", 9)
     if xticks is not None:
         ax.set_xticklabels(xticks, fontsize=xtick_size)
@@ -564,31 +564,31 @@ def draw_alt_row_colors(
     **kwargs: Any
 ) -> Axes:
     """
-	Color alternating rows in the plot.
+    Color alternating rows in the plot.
 
-	Colors the even-numbered rows gray unless they are rows that indicate groups.
-	Breaks from groups will restart with gray.
+    Colors the even-numbered rows gray unless they are rows that indicate groups.
+    Breaks from groups will restart with gray.
 
-	Parameters
-	----------
-	dataframe (pandas.core.frame.DataFrame)
-		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
-		margin of error, etc.
-	groupvar (str)
-		Name of column containing group of variables.
-	annoteheaders (list-like)
-		List of table headers to use as column headers for the additional annotations
-		on the left-hand side of the plot.
-	right_annoteheaders (list-like)
-		List of table headers to use as column headers for the additional annotations
-		on the right-hand side of the plot.
-	ax (Matplotlib Axes)
-		Axes to operate on.
+    Parameters
+    ----------
+    dataframe (pandas.core.frame.DataFrame)
+            Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+            margin of error, etc.
+    groupvar (str)
+            Name of column containing group of variables.
+    annoteheaders (list-like)
+            List of table headers to use as column headers for the additional annotations
+            on the left-hand side of the plot.
+    right_annoteheaders (list-like)
+            List of table headers to use as column headers for the additional annotations
+            on the right-hand side of the plot.
+    ax (Matplotlib Axes)
+            Axes to operate on.
 
-	Returns
-	-------
-		Matplotlib Axes object.		
-	"""
+    Returns
+    -------
+            Matplotlib Axes object.
+    """
     # Retrieve settings
     row_color = kwargs.get("row_color", "0.5")
     if (annoteheaders is not None) or (right_annoteheaders is not None):
@@ -626,23 +626,23 @@ def draw_tablelines(
     ax: Axes,
 ) -> Axes:
     """
-	Plot horizontal lines as table lines.
+    Plot horizontal lines as table lines.
 
-	Cf. draw_ylabel2 for righttext_width.
+    Cf. draw_ylabel2 for righttext_width.
 
-	Parameters
-	----------
-	dataframe (pandas.core.frame.DataFrame)
-		Pandas DataFrame where rows are variables. Columns are variable name, estimates,
-		margin of error, etc.
-	righttext_width (float)
-		x-axis coordinate of the rightmost character of the right-side annotations.
-	ax: Axes
+    Parameters
+    ----------
+    dataframe (pandas.core.frame.DataFrame)
+            Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+            margin of error, etc.
+    righttext_width (float)
+            x-axis coordinate of the rightmost character of the right-side annotations.
+    ax: Axes
 
-	Returns
-	-------
-		Matplotlib Axes object.
-	"""
+    Returns
+    -------
+            Matplotlib Axes object.
+    """
     first_yticklab = ax.get_yaxis().majorTicks[-1]
     bbox_disp = first_yticklab.label.get_window_extent()
     (x0, _), (x1, _) = ax.transData.inverted().transform(bbox_disp)
