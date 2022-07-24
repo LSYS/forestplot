@@ -11,24 +11,14 @@ on:
     
 jobs:
   build:
-    name: Style test
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        python-version: [3.8]
+  linter_name:
+    name: runner / black formatter
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
+      - uses: actions/checkout@v2
+      - uses: rickstaa/action-black@v1
         with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install black
-      - name: Go black
-        run: |
-          black pyforestplot/ --check -l 95
+          black_args: "pyforestplot/ --check -l 95"
           
   build_linux:
     name: Build ubuntu wheel for python${{ matrix.python-version }}
