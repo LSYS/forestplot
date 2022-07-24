@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from typing import Union
+from typing import Union, Optional, Sequence, Any
 from pyforestplot.dataframe_utils import insert_empty_row
 from pyforestplot.arg_validators import check_iterables_samelen
 
@@ -9,8 +9,8 @@ def form_est_ci(
     dataframe: pd.core.frame.DataFrame,
     estimate: str,
     moerror: Union[str, None],
-    ll: Union[str, None],
-    hl: Union[str, None],
+    ll: str,
+    hl: str,
     decimal_precision: int,
     caps: Union[tuple, list, str] = "()",
     connector: str = " to ",
@@ -259,7 +259,7 @@ def format_varlabels(
 
 
 def _remove_est_ci(
-    dataframe: pd.core.frame.DataFrame, varlabel: str, groupvar: str,
+    dataframe: pd.core.frame.DataFrame, varlabel: str, groupvar: Optional[str],
 ) -> pd.core.frame.DataFrame:
     """
 	Make rows for 'est_ci' and 'ci_range' empty string '' if row is a group variable label.
@@ -311,11 +311,11 @@ def _get_max_varlen(dataframe: pd.core.frame.DataFrame, varlabel: str, extrapad:
 
 def prep_annote(
     dataframe: pd.core.frame.DataFrame,
-    annote: Union[tuple, list],
-    annoteheaders: Union[tuple, list],
+    annote: Optional[Union[Sequence[str], None]],
+    annoteheaders: Optional[Union[Sequence[str], None]],
     varlabel: str,
     groupvar: str,
-    **kwargs,
+    **kwargs: Any,
 ) -> pd.core.frame.DataFrame:
     """
 	Prepare the additional columns to be printed as annotations. 
@@ -381,11 +381,11 @@ def prep_annote(
 
 def prep_rightannnote(
     dataframe: pd.core.frame.DataFrame,
-    rightannote: Union[tuple, list],
-    right_annoteheaders: Union[tuple, list],
+    rightannote: Optional[Union[Sequence[str], None]],
+    right_annoteheaders: Optional[Union[Sequence[str], None]],
     varlabel: str,
     groupvar: str,
-    **kwargs,
+    **kwargs: Any,
 ) -> pd.core.frame.DataFrame:
     """
 	Prepare the additional columns to be printed as annotations on the right. 
@@ -454,11 +454,11 @@ def prep_rightannnote(
 def make_tableheaders(
     dataframe: pd.core.frame.DataFrame,
     varlabel: str,
-    annote: Union[tuple, list],
-    annoteheaders: Union[tuple, list],
-    rightannote: Union[tuple, list],
-    right_annoteheaders: Union[tuple, list],
-    **kwargs,
+    annote: Optional[Union[Sequence[str], None]],
+    annoteheaders: Optional[Union[Sequence[str], None]],
+    rightannote: Optional[Union[Sequence[str], None]],
+    right_annoteheaders: Optional[Union[Sequence[str], None]],
+    **kwargs: Any,
 ) -> pd.core.frame.DataFrame:
     """
 	Make the table headers from 'annoteheaders' and 'right_annoteheaders' as a row in the

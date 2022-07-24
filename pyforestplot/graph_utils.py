@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import Axes
-from typing import Optional, List, Union, Tuple
+from typing import Optional, List, Union, Tuple, Sequence, Any
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -13,7 +13,7 @@ def draw_ci(
     yticklabel: str,
     moerror: str,
     ax: Axes,
-    **kwargs
+    **kwargs: Any
 ) -> Axes:
     """
 	Draw the confidence intervals using the horizontal bar plot (barh) from the pandas API.
@@ -49,13 +49,13 @@ def draw_ci(
         error_kw={"lw": lw, "ecolor": linecolor},
         legend=False,
         ax=ax,
-        zorder=0
+        zorder=0,
     )
     return ax
 
 
 def draw_est_markers(
-    dataframe: pd.core.frame.DataFrame, estimate: str, yticklabel: str, ax, **kwargs
+    dataframe: pd.core.frame.DataFrame, estimate: str, yticklabel: str, ax: Axes, **kwargs: Any
 ) -> Axes:
     """
 	Draws the markers of the estimates using the Matplotlib plt.scatter API.
@@ -91,7 +91,7 @@ def draw_est_markers(
     return ax
 
 
-def draw_ref_xline(ax: Axes, **kwargs):
+def draw_ref_xline(ax: Axes, **kwargs: Any) -> Axes:
     """
 	Draw the vertical reference xline at zero. Unless defaults are overridden in kwargs.
 
@@ -113,7 +113,7 @@ def draw_ref_xline(ax: Axes, **kwargs):
 
 
 def right_flush_yticklabels(
-    dataframe: pd.core.frame.DataFrame, yticklabel: str, flush: bool, ax: Axes, **kwargs
+    dataframe: pd.core.frame.DataFrame, yticklabel: str, flush: bool, ax: Axes, **kwargs: Any
 ) -> float:
     """
 	Flushes the formatted ytickers to the left. Also returns the amount of max padding in the
@@ -139,8 +139,7 @@ def right_flush_yticklabels(
 	"""
     fontfamily = kwargs.get("fontfamily", "monospace")
     fontsize = kwargs.get("fontsize", 12)
-
-    plt.draw()  # this is needed because get_window_extent needs a renderer to work
+    # plt.draw()  
     fig = plt.gcf()
     if flush:
         ax.set_yticklabels(
@@ -164,12 +163,12 @@ def right_flush_yticklabels(
 def draw_pval_right(
     dataframe: pd.core.frame.DataFrame,
     pval: str,
-    annoteheaders: Union[list, tuple],
+    annoteheaders: Optional[Union[Sequence[str], None]],
     yticklabel: str,
     pad: float,
     ax: Axes,
-    **kwargs
-) -> Axes:
+    **kwargs: Any
+) -> Tuple[Axes, float]:
     """
 	Draws the 2nd ytick labels on the right-hand side of the figure.
 
@@ -249,7 +248,9 @@ def draw_pval_right(
         return ax, 0
 
 
-def draw_yticklabel2(dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs):
+def draw_yticklabel2(
+    dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs: Any
+) -> Tuple[Axes, float]:
     """
 	Draw the second ylabel title on the right-hand side y-axis.
 
@@ -298,7 +299,7 @@ def draw_yticklabel2(dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs):
                 fontfamily="monospace",
                 horizontalalignment="left",
                 verticalalignment="center",
-                fontsize=fontsize
+                fontsize=fontsize,
             )
         (_, _), (x1, _) = inv.transform(
             t.get_window_extent(renderer=fig.canvas.get_renderer())
@@ -307,7 +308,7 @@ def draw_yticklabel2(dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs):
     return ax, righttext_width
 
 
-def draw_ylabel1(ylabel: str, pad: float, ax: Axes, **kwargs) -> Axes:
+def draw_ylabel1(ylabel: str, pad: float, ax: Axes, **kwargs: Any) -> Axes:
     """
 	Draw ylabel title for the left-hand side y-axis.
 
@@ -325,11 +326,11 @@ def draw_ylabel1(ylabel: str, pad: float, ax: Axes, **kwargs) -> Axes:
 		Matplotlib Axes object.
 	"""
     ylabel1_fontsize = kwargs.get("ylabel1_fontsize", 12)
-    fontsize = kwargs.get('fontsize', 12)
+    fontsize = kwargs.get("fontsize", 12)
     ax.set_ylabel("")
     if ylabel is not None:
         # Retrieve settings from kwargs
-        ylabel1_size = kwargs.get("ylabel1_size", 1+fontsize)
+        ylabel1_size = kwargs.get("ylabel1_size", 1 + fontsize)
         ylabel1_fontweight = kwargs.get("ylabel1_fontweight", "bold")
         ylabel_loc = kwargs.get("ylabel_loc", "top")
         ylabel_angle = kwargs.get("ylabel_angle", "horizontal")
@@ -370,7 +371,7 @@ def remove_ticks(ax: Axes) -> Axes:
 
 
 def format_grouplabels(
-    dataframe: pd.core.frame.DataFrame, groupvar: str, ax: Axes, **kwargs
+    dataframe: pd.core.frame.DataFrame, groupvar: str, ax: Axes, **kwargs: Any
 ) -> Axes:
     """
 	Bold the group variable labels.
@@ -428,10 +429,10 @@ def despineplot(despine: bool, ax: Axes) -> Axes:
 
 
 def format_tableheader(
-    annoteheaders: Union[list, tuple],
-    right_annoteheaders: Union[list, tuple],
+    annoteheaders: Optional[Union[Sequence[str], None]],
+    right_annoteheaders: Optional[Union[Sequence[str], None]],
     ax: Axes,
-    **kwargs
+    **kwargs: Any
 ) -> Axes:
     """
 	Format the tableheader as the first row in the data.
@@ -454,14 +455,13 @@ def format_tableheader(
     if (annoteheaders is not None) or (right_annoteheaders is not None):
         tableheader_fontweight = kwargs.get("tableheader_fontweight", "bold")
         tableheader_fontsize = kwargs.get("fontsize", 12)
-
         nlast = len(ax.get_yticklabels())  # last row is table header
         ax.get_yticklabels()[nlast - 1].set_fontweight(tableheader_fontweight)
         ax.get_yticklabels()[nlast - 1].set_fontsize(tableheader_fontsize)
     return ax
 
 
-def format_xlabel(xlabel: str, ax: Axes, **kwargs) -> Axes:
+def format_xlabel(xlabel: str, ax: Axes, **kwargs: Any) -> Axes:
     """
 	Format the x-axis label
 
@@ -487,9 +487,9 @@ def format_xticks(
     dataframe: pd.core.frame.DataFrame,
     ll: str,
     hl: str,
-    xticks: Union[tuple, list],
+    xticks: Optional[Union[list, range]],
     ax: Axes,
-    **kwargs
+    **kwargs: Any
 ) -> Axes:
     """
 	Format the xtick labels.
@@ -522,7 +522,6 @@ def format_xticks(
     xtick_size = kwargs.get("xtick_size", 10)
     xlowerlimit = dataframe[ll].min()
     xupperlimit = dataframe[hl].max()
-
     ax.set_xlim(xlowerlimit, xupperlimit)
     if xticks is not None:
         ax.set_xticks(xticks)
@@ -533,7 +532,7 @@ def format_xticks(
     return ax
 
 
-def draw_xticks(xticks: Union[list, tuple], ax: Axes, **kwargs):
+def draw_xticks(xticks: Union[list, tuple], ax: Axes, **kwargs: Any) -> Axes:
     """
 	Draws the xtick labels if 'xticks' is specified.
 
@@ -559,11 +558,11 @@ def draw_xticks(xticks: Union[list, tuple], ax: Axes, **kwargs):
 def draw_alt_row_colors(
     dataframe: pd.core.frame.DataFrame,
     groupvar: str,
-    annoteheaders: Union[list, tuple],
-    right_annoteheaders: Union[list, tuple],
+    annoteheaders: Optional[Union[Sequence[str], None]],
+    right_annoteheaders: Optional[Union[Sequence[str], None]],
     ax: Axes,
-    **kwargs
-):
+    **kwargs: Any
+) -> Axes:
     """
 	Color alternating rows in the plot.
 
@@ -592,12 +591,10 @@ def draw_alt_row_colors(
 	"""
     # Retrieve settings
     row_color = kwargs.get("row_color", "0.5")
-
     if (annoteheaders is not None) or (right_annoteheaders is not None):
         headers_exist = True
     else:
         headers_exist = False
-
     yticklabels = ax.get_yticklabels()
     counter = 1
     if groupvar is not None:
@@ -608,7 +605,6 @@ def draw_alt_row_colors(
         ]
     else:
         groups = []
-
     for ix, ticklab in enumerate(yticklabels):
         if headers_exist and (ix == len(yticklabels) - 1):
             break
@@ -626,9 +622,9 @@ def draw_tablelines(
     dataframe: pd.core.frame.DataFrame,
     righttext_width: float,
     pval: str,
-    right_annoteheaders: Union[list, tuple],
+    right_annoteheaders: Optional[Union[Sequence[str], None]],
     ax: Axes,
-):
+) -> Axes:
     """
 	Plot horizontal lines as table lines.
 
@@ -652,12 +648,27 @@ def draw_tablelines(
     (x0, _), (x1, _) = ax.transData.inverted().transform(bbox_disp)
     upper_lw, lower_lw = 1.8, 1.3
     nrows = len(dataframe)
-    plt.plot([x0, x1], [nrows - 0.4, nrows - 0.4], color="0", linewidth=upper_lw, clip_on=False)
-    plt.plot([x0, x1], [nrows - 1.5, nrows - 1.5], color="0.5", linewidth=lower_lw, clip_on=False)
-
+    plt.plot(
+        [x0, x1], [nrows - 0.4, nrows - 0.4], color="0", linewidth=upper_lw, clip_on=False
+    )
+    plt.plot(
+        [x0, x1], [nrows - 1.5, nrows - 1.5], color="0.5", linewidth=lower_lw, clip_on=False
+    )
     if (right_annoteheaders is not None) or (pval is not None):
         extrapad = 0.05
         x0 = ax.get_xlim()[1] * (1 + extrapad)
-        plt.plot([x0, righttext_width], [nrows - 0.4, nrows - 0.4], color="0", linewidth=upper_lw, clip_on=False)
-        plt.plot([x0, righttext_width], [nrows - 1.5, nrows - 1.5], color=".5", linewidth=lower_lw, clip_on=False)
+        plt.plot(
+            [x0, righttext_width],
+            [nrows - 0.4, nrows - 0.4],
+            color="0",
+            linewidth=upper_lw,
+            clip_on=False,
+        )
+        plt.plot(
+            [x0, righttext_width],
+            [nrows - 1.5, nrows - 1.5],
+            color=".5",
+            linewidth=lower_lw,
+            clip_on=False,
+        )
     return ax

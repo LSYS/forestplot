@@ -1,6 +1,6 @@
 import pandas.api.types as ptypes
 import pandas as pd
-from typing import Optional, Union
+from typing import Optional, Union, Iterable, Sequence
 import warnings
 
 
@@ -9,14 +9,14 @@ def check_data(
     estimate: str,
     varlabel: str,
     groupvar: Optional[str] = None,
-    group_order: Optional[Union[list, tuple]] = None,
+    group_order: Optional[Sequence] = None,
     moerror: Optional[str] = None,
     ll: Optional[str] = None,
     hl: Optional[str] = None,
-    annote: Optional[Union[list, tuple]] = None,
-    annoteheaders: Optional[Union[list, tuple]] = None,
-    rightannote: Optional[Union[list, tuple]] = None,
-    right_annoteheaders: Optional[Union[list, tuple]] = None,
+    annote: Optional[Union[Sequence[str], None]] = None,
+    annoteheaders: Optional[Union[Sequence[str], None]] = None,
+    rightannote: Optional[Union[Sequence[str], None]] = None,
+    right_annoteheaders: Optional[Union[Sequence[str], None]] = None,
     pval: Optional[str] = None,
     ylabel2: Optional[str] = None,
 ) -> pd.core.frame.DataFrame:
@@ -243,7 +243,7 @@ def check_data(
     return dataframe
 
 
-def check_iterables_samelen(*args: Union[list, tuple]):
+def check_iterables_samelen(*args):  # type: ignore
     """Assert that provided iterables have same length"""
     try:
         assert all(len(args[0]) == len(_arg) for _arg in args[1:])
@@ -252,7 +252,9 @@ def check_iterables_samelen(*args: Union[list, tuple]):
     return None
 
 
-def check_groups(dataframe, groupvar, group_order):
+def check_groups(
+    dataframe: pd.core.frame.DataFrame, groupvar: str, group_order: Optional[Sequence]
+) -> None:
     """
     Check that provided group-related args are well-behaved.
     
@@ -274,7 +276,7 @@ def check_groups(dataframe, groupvar, group_order):
             "Group ordering ('group_order') provided but no group column provided ('groupvar')."
         )
     # Check detected unique groups and group_order have same length
-    groups = dataframe[groupvar].dropna().unique()
+    groups: Sequence = dataframe[groupvar].dropna().unique()
     if group_order is not None:
         check_iterables_samelen(groups, group_order)
     # Check that groups in group_order exists

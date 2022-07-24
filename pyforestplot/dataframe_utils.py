@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from typing import Optional, Union
+from typing import Optional, Union, Any
 
 
 def insert_groups(
@@ -33,7 +33,7 @@ def insert_groups(
 
 def sort_groups(
     dataframe: pd.core.frame.DataFrame, groupvar: str, group_order: Union[list, tuple]
-):
+) -> pd.core.frame.DataFrame:
     """
 	Sort dataframe by list of groups implying order.
 
@@ -63,7 +63,7 @@ def sort_data(
     sort: bool = False,
     sortby: Optional[str] = None,
     sortascend: bool = True,
-    **kwargs,
+    **kwargs: Any,
 ) -> pd.core.frame.DataFrame:
     """
 	Sort the dataframe according to the stated options.
@@ -116,7 +116,7 @@ def insert_empty_row(dataframe: pd.core.frame.DataFrame) -> pd.core.frame.DataFr
     return dataframe
 
 
-def load_data(name: str, **param_dict) -> pd.core.frame.DataFrame:
+def load_data(name: str, **param_dict: Optional[Any]) -> pd.core.frame.DataFrame:
     """
 	Load example dataset for quickstart.
 
