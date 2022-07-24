@@ -26,6 +26,7 @@ jobs:
       - name: Go black
         run: |
           black pyforestplot/ --check -l 95
+          black tests/ --check -l 95
           
   build_linux:
     name: Build ubuntu wheel for python${{ matrix.python-version }}
