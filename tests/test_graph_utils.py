@@ -34,7 +34,7 @@ def test_draw_ci():
     assert all(txt in xticklabels for txt in input_df["yticklabel"])
 
     # Assert yticks are integers
-    assert (all(tick, int) for tick in ax.get_yticks())
+    assert (all(isinstance(tick, int)) for tick in ax.get_yticks())
 
 
 def test_draw_est_markers():
@@ -48,7 +48,7 @@ def test_draw_est_markers():
     assert len_yticks == len_df  # each marker is a row in the df
 
     # Assert yticks are integers
-    assert (all(tick, int) for tick in ax.get_yticks())
+    assert (all(isinstance(tick, int)) for tick in ax.get_yticks())
 
     xmin, xmax = ax.get_xlim()
     assert xmin <= input_df["estimate"].min()
@@ -90,7 +90,13 @@ def test_draw_pval_right():
     x, y = [0, 1, 2], [0, 1, 2]
     str_vector = ["a", "b", "c"]
     input_df = pd.DataFrame(
-        {"yticklabel": x, "estimate": x, "moerror": y, "pval": y, "formatted_pval": y,}
+        {
+            "yticklabel": x,
+            "estimate": x,
+            "moerror": y,
+            "pval": y,
+            "formatted_pval": y,
+        }
     )
     _, ax = plt.subplots()
     payload1, payload2 = draw_pval_right(
@@ -111,7 +117,12 @@ def test_draw_pval_right():
 def test_draw_yticklabel2():
     x = [0, 1, 2]
     str_vector = ["a", "b", "c"]
-    input_df = pd.DataFrame({"yticklabel": x, "yticklabel2": str_vector,})
+    input_df = pd.DataFrame(
+        {
+            "yticklabel": x,
+            "yticklabel2": str_vector,
+        }
+    )
     _, ax = plt.subplots()
     payload1, payload2 = draw_yticklabel2(input_df, pad=None, ax=ax)
     assert isinstance(payload1, Axes)
@@ -246,9 +257,13 @@ def test_draw_alt_row_colors():
     # Group exists
     _, ax = plt.subplots()
     ax = draw_alt_row_colors(
-        input_df, groupvar="groupvar", annoteheaders=None, right_annoteheaders=None, ax=ax,
+        input_df,
+        groupvar="groupvar",
+        annoteheaders=None,
+        right_annoteheaders=None,
+        ax=ax,
     )
-    assert (all(tick, int) for tick in ax.get_yticks())
+    assert (all(isinstance(tick, int)) for tick in ax.get_yticks())
     assert isinstance(ax, Axes)
 
     # No Group
@@ -256,7 +271,7 @@ def test_draw_alt_row_colors():
     ax = draw_alt_row_colors(
         input_df, groupvar=None, annoteheaders=None, right_annoteheaders=None, ax=ax
     )
-    assert (all(tick, int) for tick in ax.get_yticks())
+    assert (all(isinstance(tick, int)) for tick in ax.get_yticks())
     assert isinstance(ax, Axes)
 
     # Group exists w/ headers
@@ -268,7 +283,7 @@ def test_draw_alt_row_colors():
         right_annoteheaders=["right head"],
         ax=ax,
     )
-    assert (all(tick, int) for tick in ax.get_yticks())
+    assert (all(isinstance(tick, int)) for tick in ax.get_yticks())
     assert isinstance(ax, Axes)
 
 
