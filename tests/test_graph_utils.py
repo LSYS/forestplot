@@ -1,12 +1,25 @@
 import warnings
 
 warnings.filterwarnings("ignore")
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import Axes
-from pyforestplot.graph_utils import *
-
+from pyforestplot.graph_utils import draw_ci
+from pyforestplot.graph_utils import draw_est_markers
+from pyforestplot.graph_utils import draw_ref_xline
+from pyforestplot.graph_utils import right_flush_yticklabels
+from pyforestplot.graph_utils import draw_pval_right
+from pyforestplot.graph_utils import draw_yticklabel2
+from pyforestplot.graph_utils import draw_ylabel1
+from pyforestplot.graph_utils import remove_ticks
+from pyforestplot.graph_utils import format_grouplabels
+from pyforestplot.graph_utils import despineplot
+from pyforestplot.graph_utils import format_tableheader
+from pyforestplot.graph_utils import format_xlabel
+from pyforestplot.graph_utils import format_xticks
+from pyforestplot.graph_utils import draw_xticks
+from pyforestplot.graph_utils import draw_alt_row_colors
+from pyforestplot.graph_utils import draw_tablelines
 
 x, y = [0, 1, 2], [0, 1, 2]
 str_vector = ["a", "b", "c"]
@@ -88,7 +101,6 @@ def test_right_flush_yticklabels():
 
 def test_draw_pval_right():
     x, y = [0, 1, 2], [0, 1, 2]
-    str_vector = ["a", "b", "c"]
     input_df = pd.DataFrame(
         {
             "yticklabel": x,

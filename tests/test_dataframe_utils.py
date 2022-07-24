@@ -105,15 +105,8 @@ def test_sort_groups():
         {"estimate": input_numeric, "varlabel": input_string, "group": group}
     )
     correct_df = pd.DataFrame(
-        {"estimate": input_numeric, "varlabel": input_string, "group": ["g1", "g1", "g2"]}
-    )
+        {"estimate": [-1, 3, 2], "varlabel": ["a", "c", "b"], "group": ["g1", "g1", "g2"]}
+    ).astype({"group": "category"})
 
     result_df = sort_groups(input_df, groupvar="group", group_order=["g1", "g2"])
-    assert_frame_equal(result_df, input_df)
-
-    # another test
-    correct_df = pd.DataFrame(
-        {"estimate": input_numeric, "varlabel": input_string, "group": ["g2", "g1", "g1"]}
-    )
-    result_df = sort_groups(input_df, groupvar="group", group_order=["g2", "g1"])
-    assert_frame_equal(result_df, input_df)
+    assert_frame_equal(result_df.reset_index(drop=True), correct_df)

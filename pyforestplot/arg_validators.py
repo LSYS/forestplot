@@ -1,6 +1,6 @@
 import pandas.api.types as ptypes
 import pandas as pd
-from typing import Optional, Union, Iterable, Sequence
+from typing import Optional, Union, Sequence
 import warnings
 
 

@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import Axes
-from typing import Optional, List, Union, Tuple, Sequence, Any
+from typing import Optional, Union, Tuple, Sequence, Any
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -325,7 +325,6 @@ def draw_ylabel1(ylabel: str, pad: float, ax: Axes, **kwargs: Any) -> Axes:
     -------
             Matplotlib Axes object.
     """
-    ylabel1_fontsize = kwargs.get("ylabel1_fontsize", 12)
     fontsize = kwargs.get("fontsize", 12)
     ax.set_ylabel("")
     if ylabel is not None:
