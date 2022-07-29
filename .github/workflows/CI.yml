@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Style and type linter
+    name: Style and type linter, Coverage
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install black pyflakes pytest coverage
+          pip install black pyflakes
       - name: Check black formatter and pyflakes
         run: |
           black pyforestplot/ --check -l 95
@@ -35,6 +35,8 @@ jobs:
           python -m pyflakes tests/
       - name: Generate coverage report
         run: |
+          pip install pytest coverage
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi        
           coverage run -m pytest
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v2          
