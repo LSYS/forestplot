@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install black pyflakes
+          pip install black pyflakes mypy
       - name: Check black formatter and pyflakes
         run: |
           black pyforestplot/ --check -l 95
@@ -33,6 +33,7 @@ jobs:
           python -m pyflakes pyforestplot/graph_utils.py 
           python -m pyflakes pyforestplot/text_utils.py 
           python -m pyflakes tests/
+          mypy
       - name: Generate coverage report
         run: |
           pip install pytest coverage
