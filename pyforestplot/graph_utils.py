@@ -80,6 +80,7 @@ def draw_est_markers(
     marker = kwargs.get("marker", "s")
     markersize = kwargs.get("markersize", 40)
     markercolor = kwargs.get("markercolor", "darkslategray")
+    markeralpha = kwargs.get("markeralpha", 0.8)
     ax.scatter(
         y=yticklabel,
         x=estimate,
@@ -87,6 +88,7 @@ def draw_est_markers(
         marker=marker,
         s=markersize,
         color=markercolor,
+        alpha=markeralpha,
     )
     return ax
 
@@ -531,29 +533,6 @@ def format_xticks(
     return ax
 
 
-def draw_xticks(xticks: Union[list, tuple], ax: Axes, **kwargs: Any) -> Axes:
-    """
-    Draws the xtick labels if 'xticks' is specified.
-
-    Parameters
-    ----------
-    xticks (list-like)
-            List of xtickers to print on the x-axis.
-    ax (Matplotlib Axes)
-            Axes to operate on.
-
-    Returns
-    -------
-            Matplotlib Axes object.
-    """
-    xtick_size = kwargs.get("xtick_size", 9)
-    if xticks is not None:
-        ax.set_xticklabels(xticks, fontsize=xtick_size)
-    else:
-        ax.tick_params(axis="x", labelsize=xtick_size)
-    return ax
-
-
 def draw_alt_row_colors(
     dataframe: pd.core.frame.DataFrame,
     groupvar: str,
@@ -645,13 +624,13 @@ def draw_tablelines(
     first_yticklab = ax.get_yaxis().majorTicks[-1]
     bbox_disp = first_yticklab.label.get_window_extent()
     (x0, _), (x1, _) = ax.transData.inverted().transform(bbox_disp)
-    upper_lw, lower_lw = 1.8, 1.3
+    upper_lw, lower_lw = 2, 1.3
     nrows = len(dataframe)
     plt.plot(
         [x0, x1], [nrows - 0.4, nrows - 0.4], color="0", linewidth=upper_lw, clip_on=False
     )
     plt.plot(
-        [x0, x1], [nrows - 1.5, nrows - 1.5], color="0.5", linewidth=lower_lw, clip_on=False
+        [x0, x1], [nrows - 1.45, nrows - 1.45], color="0.5", linewidth=lower_lw, clip_on=False
     )
     if (right_annoteheaders is not None) or (pval is not None):
         extrapad = 0.05
@@ -665,7 +644,7 @@ def draw_tablelines(
         )
         plt.plot(
             [x0, righttext_width],
-            [nrows - 1.5, nrows - 1.5],
+            [nrows - 1.45, nrows - 1.45],
             color=".5",
             linewidth=lower_lw,
             clip_on=False,

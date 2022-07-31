@@ -17,7 +17,6 @@ from pyforestplot.graph_utils import despineplot
 from pyforestplot.graph_utils import format_tableheader
 from pyforestplot.graph_utils import format_xlabel
 from pyforestplot.graph_utils import format_xticks
-from pyforestplot.graph_utils import draw_xticks
 from pyforestplot.graph_utils import draw_alt_row_colors
 from pyforestplot.graph_utils import draw_tablelines
 
@@ -251,16 +250,6 @@ def test_format_xticks():
     data_xmin, data_xmax = input_df.ll.min(), input_df.hl.max()
     assert ax_xmin <= data_xmin
     assert ax_xmax <= data_xmax
-
-
-def test_draw_xticks():
-    _, ax = plt.subplots()
-    ax = draw_xticks(xticks=None, ax=ax)
-    assert isinstance(ax, Axes)
-
-    _, ax = plt.subplots()
-    ax = draw_xticks(xticks=[1, 2, 3], ax=ax)
-    assert isinstance(ax, Axes)
 
 
 def test_draw_alt_row_colors():
