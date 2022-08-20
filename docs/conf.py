@@ -22,7 +22,7 @@ copyright = '2022, Lucas Shen'
 author = 'Lucas Shen'
 
 # The full version, including alpha/beta/rc tags
-release = 'Stable'
+release = ''
 
 
 # -- General configuration ---------------------------------------------------
