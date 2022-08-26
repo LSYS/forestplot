@@ -3,7 +3,7 @@
 # pyforestplot
 
 <!-- ABOUT THE PROJECT -->
-<img src="./examples/images/under.svg" width="180"/>
+<img src="https://raw.githubusercontent.com/lsys/pyforestplot/main/docs/images/under.svg" width="180"/>
 
 <!----------------- PROJECT STATUS SHIELDS ----------------->
 <table class="no-border">
