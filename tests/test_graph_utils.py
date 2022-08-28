@@ -135,7 +135,7 @@ def test_draw_yticklabel2():
         }
     )
     _, ax = plt.subplots()
-    payload1, payload2 = draw_yticklabel2(input_df, pad=None, ax=ax)
+    payload1, payload2 = draw_yticklabel2(input_df, annoteheaders=None, ax=ax)
     assert isinstance(payload1, Axes)
     assert isinstance(payload2, float)
 

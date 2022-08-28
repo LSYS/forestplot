@@ -251,7 +251,10 @@ def draw_pval_right(
 
 
 def draw_yticklabel2(
-    dataframe: pd.core.frame.DataFrame, ax: Axes, **kwargs: Any
+    dataframe: pd.core.frame.DataFrame,
+    annoteheaders: Union[Sequence[str], None],
+    ax: Axes,
+    **kwargs: Any
 ) -> Tuple[Axes, float]:
     """
     Draw the second ylabel title on the right-hand side y-axis.
@@ -282,7 +285,7 @@ def draw_yticklabel2(
 
         extrapad = 0.05
         pad = ax.get_xlim()[1] * (1 + extrapad)
-        if ix == group_row_ix:
+        if (ix == group_row_ix) and (annoteheaders is not None):
             t = ax.text(
                 x=pad,
                 y=yticklabel1,
