@@ -33,6 +33,8 @@ from pyforestplot.graph_utils import despineplot
 from pyforestplot.graph_utils import format_xticks
 from pyforestplot.graph_utils import draw_alt_row_colors
 from pyforestplot.graph_utils import draw_tablelines
+from matplotlib import rcParams
+rcParams['font.monospace'] = ['Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Courier New', 'Lucida Console']
 
 
 def forestplot(
