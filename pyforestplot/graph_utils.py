@@ -273,6 +273,7 @@ def draw_yticklabel2(
     """
     grouplab_size = kwargs.get("grouplab_size", 12)
     grouplab_fontweight = kwargs.get("grouplab_fontweight", "bold")
+    fontfamily = kwargs.get("fontfamily", "monospace")
     fontsize = kwargs.get("fontsize", 12)
 
     group_row_ix = len(dataframe) - 1
@@ -290,7 +291,7 @@ def draw_yticklabel2(
                 x=pad,
                 y=yticklabel1,
                 s=yticklabel2,
-                fontfamily="monospace",
+                fontfamily=fontfamily,
                 horizontalalignment="left",
                 verticalalignment="center",
                 fontweight=grouplab_fontweight,
@@ -301,7 +302,7 @@ def draw_yticklabel2(
                 x=pad,
                 y=yticklabel1,
                 s=yticklabel2,
-                fontfamily="monospace",
+                fontfamily=fontfamily,
                 horizontalalignment="left",
                 verticalalignment="center",
                 fontsize=fontsize,
@@ -405,6 +406,7 @@ def format_grouplabels(
                     if gr.lower() == ylabel.get_text().lower().strip():
                         ax.get_yticklabels()[ix].set_fontweight(grouplab_fontweight)
                         ax.get_yticklabels()[ix].set_fontsize(grouplab_size)
+                        ax.get_yticklabels()[ix].set_fontfamily('sans-serif')
                 except AttributeError:
                     pass
     return ax
@@ -533,6 +535,9 @@ def format_xticks(
     else:
         ax.xaxis.set_major_locator(plt.MaxNLocator(nticks))
     ax.tick_params(axis="x", labelsize=xtick_size)
+    # ax.xticks(fontname="sans-serif")
+    for xticklab in ax.get_xticklabels():
+        xticklab.set_fontfamily("sans-serif")
     return ax
 
 
