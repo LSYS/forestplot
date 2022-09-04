@@ -9,10 +9,10 @@ from setuptools import setup
 with open("README.md", "r") as fh:
     LONG_DESCRIPTION = fh.read()
 
-install_requires = ['nbformat', 'nbconvert']
+install_requires = ['pandas', 'numpy', 'matplotlib']
 setup(
     name="pyforestplot",
-    version="0.0.1",
+    version="0.0.2",
     license='MIT',
     author="Lucas Shen",
     author_email="lucas@lucasshen.com",
