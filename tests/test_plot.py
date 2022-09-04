@@ -45,6 +45,6 @@ def test_more_options():
                                   'xlinecolor': '.1',  # gray color for x-reference line
                                   'xtick_size': 12,  # adjust x-ticker fontsize
                                  }  
-                                   )
+                               )
     assert isinstance(ax, Axes)
     assert isinstance(output_df, pd.DataFrame)
