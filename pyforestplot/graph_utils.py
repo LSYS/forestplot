@@ -406,7 +406,7 @@ def format_grouplabels(
                     if gr.lower() == ylabel.get_text().lower().strip():
                         ax.get_yticklabels()[ix].set_fontweight(grouplab_fontweight)
                         ax.get_yticklabels()[ix].set_fontsize(grouplab_size)
-                        ax.get_yticklabels()[ix].set_fontfamily('sans-serif')
+                        ax.get_yticklabels()[ix].set_fontfamily("sans-serif")
                 except AttributeError:
                     pass
     return ax
