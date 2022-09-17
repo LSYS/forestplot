@@ -26,12 +26,12 @@ jobs:
           pip install black pyflakes mypy
       - name: Check black formatter and pyflakes
         run: |
-          black pyforestplot/ --check -l 95
+          black forestplot/ --check -l 95
           black tests/ --check -l 95
-          python -m pyflakes pyforestplot/arg_validators.py 
-          python -m pyflakes pyforestplot/dataframe_utils.py 
-          python -m pyflakes pyforestplot/graph_utils.py 
-          python -m pyflakes pyforestplot/text_utils.py 
+          python -m pyflakes forestplot/arg_validators.py 
+          python -m pyflakes forestplot/dataframe_utils.py 
+          python -m pyflakes forestplot/graph_utils.py 
+          python -m pyflakes forestplot/text_utils.py 
           python -m pyflakes tests/
           mypy
       - name: Generate coverage report
