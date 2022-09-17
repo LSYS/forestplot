@@ -3,6 +3,7 @@
 .PHONY: test
 test: # Run tests with pytest and coverage
 test: 
+	@echo "+ $@"
 	coverage erase
 	coverage run -m pytest -v --disable-warnings
 	coverage report -m
@@ -13,6 +14,7 @@ SRC_FILES := $(addprefix pyforestplot/, $(addsuffix .py, $(SRC_FILES)))
 .PHONY: lint
 lint: # Check with mypy, pyflakes, black
 lint: 
+	@echo "+ $@"
 	mypy $(SRC_FILES) --ignore-missing-imports
 	python -m pyflakes tests/*.py $(SRC_FILES)
 	black pyforestplot/*.py $(BLACK_OPTS)
@@ -21,6 +23,7 @@ lint:
 .PHONY: prepack
 prepack: # Prepare packaging for PyPi
 prepack:
+	@echo "+ $@"
 	@rm -rf dist/ pyforestplot.egg-info/
 	@python setup.py sdist
 	twine check dist/*
@@ -29,6 +32,7 @@ PACKAGE_FILES := build/ dist/ *.egg-info/ *.egg
 .PHONY: cleanpack
 cleanpack: # Remove distribution/packaging files
 cleanpack:
+	@echo "+ $@"
 	@rm -rf $(PACKAGE_FILES)
 
 .PHONY: help
