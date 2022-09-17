@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 import pandas as pd
-from pyforestplot import forestplot
+from forestplot import forestplot
 from matplotlib.pyplot import Axes
 
 dataname = "sleep"
