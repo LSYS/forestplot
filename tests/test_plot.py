@@ -5,7 +5,7 @@ from forestplot import forestplot
 from matplotlib.pyplot import Axes
 
 dataname = "sleep"
-data = f"https://raw.githubusercontent.com/lsys/forestplot/main/examples/data/{dataname}.csv"
+data = f"https://raw.githubusercontent.com/lsys/pyforestplot/main/examples/data/{dataname}.csv"
 df = pd.read_csv(data).assign(n=lambda df: df["n"].map(str))
 
 # fmt: off

@@ -72,24 +72,6 @@ def test_draw_ref_xline():
     ax = draw_ref_xline(ax, dataframe=input_df, annoteheaders=None, right_annoteheaders=None)
     assert isinstance(ax, Axes)
 
-    # Default is x = 0 line
-    # assert len(ax.get_lines()) == 1
-    # refline = ax.get_lines()[0]
-    # x0, x1 = refline.get_xdata()
-    # assert x0 == 0
-    # assert x1 == 0
-
-    # Add second x = 1 line
-    # ax = draw_ref_xline(ax, xline=1, dataframe=input_df, annoteheaders=None, right_annoteheaders=None)
-    # assert isinstance(ax, Axes)
-    # assert len(ax.get_lines()) == 2  # two lines now
-
-    # Assert second line is at x = 1
-    # refline = ax.get_lines()[1]
-    # x0, x1 = refline.get_xdata()
-    # assert x0 == 1
-    # assert x1 == 1
-
 
 def test_right_flush_yticklabels():
     _, ax = plt.subplots()

@@ -19,6 +19,7 @@ lint:
 	python -m pyflakes tests/*.py $(SRC_FILES)
 	python -m pyflakes setup.py
 	black forestplot/*.py $(BLACK_OPTS)
+	black pyforestplot/*.py $(BLACK_OPTS)
 	black tests/*.py $(BLACK_OPTS)
 	black setup.py $(BLACK_OPTS)
 
@@ -27,6 +28,7 @@ prepack: # Prepare packaging for PyPi
 prepack:
 	@echo "+ $@"
 	@rm -rf dist/ forestplot.egg-info/
+	@rm -rf dist/ pyforestplot.egg-info/
 	@python setup.py sdist
 	twine check dist/*
 
