@@ -134,7 +134,7 @@ def load_data(name: str, **param_dict: Optional[Any]) -> pd.core.frame.DataFrame
     -------
     pd.core.frame.DataFrame.
     """
-    available_data = ["mortality"]
+    available_data = ["mortality", "sleep", "sleep-untruncated"]
     name = name.lower().strip()
     if name in available_data:
         url = f"https://raw.githubusercontent.com/lsys/pyforestplot/main/examples/data/{name}.csv"
