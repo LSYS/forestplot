@@ -4,7 +4,7 @@
 test: # Run tests with pytest and coverage
 test: 
 	coverage erase
-	coverage run -m pytest -v
+	coverage run -m pytest -v --disable-warnings
 	coverage report -m
 
 BLACK_OPTS := -l 95
