@@ -93,7 +93,8 @@ def draw_est_markers(
     return ax
 
 
-def draw_ref_xline(ax: Axes, **kwargs: Any) -> Axes:
+def draw_ref_xline(ax: Axes, dataframe: pd.core.frame.DataFrame, annoteheaders: Optional[Union[Sequence[str], None]],
+right_annoteheaders: Optional[Union[Sequence[str], None]], **kwargs: Any) -> Axes:
     """
     Draw the vertical reference xline at zero. Unless defaults are overridden in kwargs.
 
@@ -107,10 +108,15 @@ def draw_ref_xline(ax: Axes, **kwargs: Any) -> Axes:
             Matplotlib Axes object.
     """
     xline = kwargs.get("xline", 0)
-    xlinestyle = kwargs.get("xlinestyle", "-")
-    xlinecolor = kwargs.get("xlinecolor", ".2")
-    xlinewidth = kwargs.get("xlinewidth", 1)
-    ax.axvline(x=xline, linestyle=xlinestyle, color=xlinecolor, linewidth=xlinewidth)
+    if xline is not None:
+        xlinestyle = kwargs.get("xlinestyle", "-")
+        xlinecolor = kwargs.get("xlinecolor", ".2")
+        xlinewidth = kwargs.get("xlinewidth", 1)
+        if (annoteheaders is None) and (right_annoteheaders is None):
+            _offset = .5
+        else:
+            _offset = 1.5
+        ax.vlines(x=xline, ymin=-.5, ymax=len(dataframe)-_offset, linestyle=xlinestyle, color=xlinecolor, linewidth=xlinewidth)
     return ax
 
 
@@ -253,6 +259,7 @@ def draw_pval_right(
 def draw_yticklabel2(
     dataframe: pd.core.frame.DataFrame,
     annoteheaders: Union[Sequence[str], None],
+    right_annoteheaders: Union[Sequence[str], None],
     ax: Axes,
     **kwargs: Any
 ) -> Tuple[Axes, float]:
@@ -276,7 +283,7 @@ def draw_yticklabel2(
     fontfamily = kwargs.get("fontfamily", "monospace")
     fontsize = kwargs.get("fontsize", 12)
 
-    group_row_ix = len(dataframe) - 1
+    top_row_ix = len(dataframe) - 1
     inv = ax.transData.inverted()
     righttext_width = 0
     fig = plt.gcf()
@@ -286,7 +293,7 @@ def draw_yticklabel2(
 
         extrapad = 0.05
         pad = ax.get_xlim()[1] * (1 + extrapad)
-        if (ix == group_row_ix) and (annoteheaders is not None):
+        if (ix == top_row_ix) and (annoteheaders is not None or right_annoteheaders is not None):
             t = ax.text(
                 x=pad,
                 y=yticklabel1,
@@ -294,8 +301,8 @@ def draw_yticklabel2(
                 fontfamily=fontfamily,
                 horizontalalignment="left",
                 verticalalignment="center",
+                fontsize=fontsize,
                 fontweight=grouplab_fontweight,
-                fontsize=grouplab_size,
             )
         else:
             t = ax.text(
