@@ -8,18 +8,18 @@ with open("README.md", "r") as fh:
 
 install_requires = ["pandas", "numpy", "matplotlib"]
 setup(
-    name="pyforestplot",
+    name="forestplot",
     version="0.0.2",
     license="MIT",
     author="Lucas Shen",
     author_email="lucas@lucasshen.com",
     maintainer="Lucas Shen",
     maintainer_email="lucas@lucasshen.com",
-    url="https://github.com/lsys/pyForestplot",
+    url="https://github.com/lsys/forestplot",
     description="A Python package to make publication-ready but customizable forest plots.",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
-    packages=["pyforestplot"],
+    packages=["forestplot"],
     install_requires=install_requires,
     keywords=[
         "visualization",

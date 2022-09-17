@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 from typing import Union, Optional, Sequence, Any
-from pyforestplot.dataframe_utils import insert_empty_row
-from pyforestplot.arg_validators import check_iterables_samelen
+from forestplot.dataframe_utils import insert_empty_row
+from forestplot.arg_validators import check_iterables_samelen
 
 
 def form_est_ci(

@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
-from pyforestplot.text_utils import (
+from forestplot.text_utils import (
     form_est_ci,
     star_pval,
     indent_nongroupvar,

@@ -10,7 +10,7 @@ test:
 
 BLACK_OPTS := -l 95
 SRC_FILES := arg_validators dataframe_utils graph_utils plot text_utils
-SRC_FILES := $(addprefix pyforestplot/, $(addsuffix .py, $(SRC_FILES))) 
+SRC_FILES := $(addprefix forestplot/, $(addsuffix .py, $(SRC_FILES))) 
 .PHONY: lint
 lint: # Check with mypy, pyflakes, black
 lint: 
@@ -18,7 +18,7 @@ lint:
 	mypy $(SRC_FILES) --ignore-missing-imports
 	python -m pyflakes tests/*.py $(SRC_FILES)
 	python -m pyflakes setup.py
-	black pyforestplot/*.py $(BLACK_OPTS)
+	black forestplot/*.py $(BLACK_OPTS)
 	black tests/*.py $(BLACK_OPTS)
 	black setup.py $(BLACK_OPTS)
 
@@ -26,11 +26,11 @@ lint:
 prepack: # Prepare packaging for PyPi
 prepack:
 	@echo "+ $@"
-	@rm -rf dist/ pyforestplot.egg-info/
+	@rm -rf dist/ forestplot.egg-info/
 	@python setup.py sdist
 	twine check dist/*
 
-PACKAGE_FILES := build/ dist/ *.egg-info/ *.egg
+PACKAGE_FILES := build/ dist/ *.egg-info/ *.egg-info *.egg
 .PHONY: cleanpack
 cleanpack: # Remove distribution/packaging files
 cleanpack:

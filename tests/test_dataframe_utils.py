@@ -1,5 +1,5 @@
 import pytest
-from pyforestplot.dataframe_utils import (
+from forestplot.dataframe_utils import (
     load_data,
     insert_groups,
     sort_groups,
