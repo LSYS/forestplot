@@ -267,9 +267,13 @@ def _preprocess_dataframe(
         sortascend=sortascend,
     )
     if groupvar is not None:  # Make groups
-        dataframe = normalize_varlabels(dataframe=dataframe, varlabel=groupvar, capitalize=capitalize)
+        dataframe = normalize_varlabels(
+            dataframe=dataframe, varlabel=groupvar, capitalize=capitalize
+        )
         dataframe = insert_groups(dataframe=dataframe, groupvar=groupvar, varlabel=varlabel)
-    dataframe = normalize_varlabels(dataframe=dataframe, varlabel=varlabel, capitalize=capitalize)
+    dataframe = normalize_varlabels(
+        dataframe=dataframe, varlabel=varlabel, capitalize=capitalize
+    )
     dataframe = indent_nongroupvar(dataframe=dataframe, varlabel=varlabel, groupvar=groupvar)
     if form_ci_report:
         dataframe = form_est_ci(
@@ -368,7 +372,13 @@ def _make_forestplot(
         dataframe=dataframe, estimate=estimate, yticklabel=yticklabel, ax=ax, **kwargs
     )
     format_xticks(dataframe=dataframe, ll=ll, hl=hl, xticks=xticks, ax=ax, **kwargs)
-    draw_ref_xline(ax=ax, dataframe=dataframe, annoteheaders=annoteheaders, right_annoteheaders=right_annoteheaders, **kwargs)
+    draw_ref_xline(
+        ax=ax,
+        dataframe=dataframe,
+        annoteheaders=annoteheaders,
+        right_annoteheaders=right_annoteheaders,
+        **kwargs,
+    )
     pad = right_flush_yticklabels(
         dataframe=dataframe, yticklabel=yticklabel, flush=flush, ax=ax, **kwargs
     )
@@ -386,7 +396,11 @@ def _make_forestplot(
         )
     else:
         ax, righttext_width = draw_yticklabel2(
-            dataframe=dataframe, annoteheaders=annoteheaders, right_annoteheaders=right_annoteheaders, ax=ax, **kwargs
+            dataframe=dataframe,
+            annoteheaders=annoteheaders,
+            right_annoteheaders=right_annoteheaders,
+            ax=ax,
+            **kwargs,
         )
 
     draw_ylabel1(ylabel=ylabel, pad=pad, ax=ax, **kwargs)

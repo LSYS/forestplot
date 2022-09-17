@@ -93,8 +93,13 @@ def draw_est_markers(
     return ax
 
 
-def draw_ref_xline(ax: Axes, dataframe: pd.core.frame.DataFrame, annoteheaders: Optional[Union[Sequence[str], None]],
-right_annoteheaders: Optional[Union[Sequence[str], None]], **kwargs: Any) -> Axes:
+def draw_ref_xline(
+    ax: Axes,
+    dataframe: pd.core.frame.DataFrame,
+    annoteheaders: Optional[Union[Sequence[str], None]],
+    right_annoteheaders: Optional[Union[Sequence[str], None]],
+    **kwargs: Any
+) -> Axes:
     """
     Draw the vertical reference xline at zero. Unless defaults are overridden in kwargs.
 
@@ -113,10 +118,17 @@ right_annoteheaders: Optional[Union[Sequence[str], None]], **kwargs: Any) -> Axe
         xlinecolor = kwargs.get("xlinecolor", ".2")
         xlinewidth = kwargs.get("xlinewidth", 1)
         if (annoteheaders is None) and (right_annoteheaders is None):
-            _offset = .5
+            _offset = 0.5
         else:
             _offset = 1.5
-        ax.vlines(x=xline, ymin=-.5, ymax=len(dataframe)-_offset, linestyle=xlinestyle, color=xlinecolor, linewidth=xlinewidth)
+        ax.vlines(
+            x=xline,
+            ymin=-0.5,
+            ymax=len(dataframe) - _offset,
+            linestyle=xlinestyle,
+            color=xlinecolor,
+            linewidth=xlinewidth,
+        )
     return ax
 
 
@@ -278,7 +290,6 @@ def draw_yticklabel2(
     -------
             Matplotlib Axes object.
     """
-    grouplab_size = kwargs.get("grouplab_size", 12)
     grouplab_fontweight = kwargs.get("grouplab_fontweight", "bold")
     fontfamily = kwargs.get("fontfamily", "monospace")
     fontsize = kwargs.get("fontsize", 12)
@@ -293,7 +304,9 @@ def draw_yticklabel2(
 
         extrapad = 0.05
         pad = ax.get_xlim()[1] * (1 + extrapad)
-        if (ix == top_row_ix) and (annoteheaders is not None or right_annoteheaders is not None):
+        if (ix == top_row_ix) and (
+            annoteheaders is not None or right_annoteheaders is not None
+        ):
             t = ax.text(
                 x=pad,
                 y=yticklabel1,
