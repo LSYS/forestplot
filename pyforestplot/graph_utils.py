@@ -93,7 +93,13 @@ def draw_est_markers(
     return ax
 
 
-def draw_ref_xline(ax: Axes, **kwargs: Any) -> Axes:
+def draw_ref_xline(
+    ax: Axes,
+    dataframe: pd.core.frame.DataFrame,
+    annoteheaders: Optional[Union[Sequence[str], None]],
+    right_annoteheaders: Optional[Union[Sequence[str], None]],
+    **kwargs: Any
+) -> Axes:
     """
     Draw the vertical reference xline at zero. Unless defaults are overridden in kwargs.
 
@@ -107,10 +113,22 @@ def draw_ref_xline(ax: Axes, **kwargs: Any) -> Axes:
             Matplotlib Axes object.
     """
     xline = kwargs.get("xline", 0)
-    xlinestyle = kwargs.get("xlinestyle", "-")
-    xlinecolor = kwargs.get("xlinecolor", ".2")
-    xlinewidth = kwargs.get("xlinewidth", 1)
-    ax.axvline(x=xline, linestyle=xlinestyle, color=xlinecolor, linewidth=xlinewidth)
+    if xline is not None:
+        xlinestyle = kwargs.get("xlinestyle", "-")
+        xlinecolor = kwargs.get("xlinecolor", ".2")
+        xlinewidth = kwargs.get("xlinewidth", 1)
+        if (annoteheaders is None) and (right_annoteheaders is None):
+            _offset = 0.5
+        else:
+            _offset = 1.5
+        ax.vlines(
+            x=xline,
+            ymin=-0.5,
+            ymax=len(dataframe) - _offset,
+            linestyle=xlinestyle,
+            color=xlinecolor,
+            linewidth=xlinewidth,
+        )
     return ax
 
 
@@ -253,6 +271,7 @@ def draw_pval_right(
 def draw_yticklabel2(
     dataframe: pd.core.frame.DataFrame,
     annoteheaders: Union[Sequence[str], None],
+    right_annoteheaders: Union[Sequence[str], None],
     ax: Axes,
     **kwargs: Any
 ) -> Tuple[Axes, float]:
@@ -271,11 +290,11 @@ def draw_yticklabel2(
     -------
             Matplotlib Axes object.
     """
-    grouplab_size = kwargs.get("grouplab_size", 12)
     grouplab_fontweight = kwargs.get("grouplab_fontweight", "bold")
+    fontfamily = kwargs.get("fontfamily", "monospace")
     fontsize = kwargs.get("fontsize", 12)
 
-    group_row_ix = len(dataframe) - 1
+    top_row_ix = len(dataframe) - 1
     inv = ax.transData.inverted()
     righttext_width = 0
     fig = plt.gcf()
@@ -285,23 +304,25 @@ def draw_yticklabel2(
 
         extrapad = 0.05
         pad = ax.get_xlim()[1] * (1 + extrapad)
-        if (ix == group_row_ix) and (annoteheaders is not None):
+        if (ix == top_row_ix) and (
+            annoteheaders is not None or right_annoteheaders is not None
+        ):
             t = ax.text(
                 x=pad,
                 y=yticklabel1,
                 s=yticklabel2,
-                fontfamily="monospace",
+                fontfamily=fontfamily,
                 horizontalalignment="left",
                 verticalalignment="center",
+                fontsize=fontsize,
                 fontweight=grouplab_fontweight,
-                fontsize=grouplab_size,
             )
         else:
             t = ax.text(
                 x=pad,
                 y=yticklabel1,
                 s=yticklabel2,
-                fontfamily="monospace",
+                fontfamily=fontfamily,
                 horizontalalignment="left",
                 verticalalignment="center",
                 fontsize=fontsize,
@@ -405,6 +426,7 @@ def format_grouplabels(
                     if gr.lower() == ylabel.get_text().lower().strip():
                         ax.get_yticklabels()[ix].set_fontweight(grouplab_fontweight)
                         ax.get_yticklabels()[ix].set_fontsize(grouplab_size)
+                        ax.get_yticklabels()[ix].set_fontfamily("sans-serif")
                 except AttributeError:
                     pass
     return ax
@@ -533,6 +555,9 @@ def format_xticks(
     else:
         ax.xaxis.set_major_locator(plt.MaxNLocator(nticks))
     ax.tick_params(axis="x", labelsize=xtick_size)
+    # ax.xticks(fontname="sans-serif")
+    for xticklab in ax.get_xticklabels():
+        xticklab.set_fontfamily("sans-serif")
     return ax
 
 
