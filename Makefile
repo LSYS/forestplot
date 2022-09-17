@@ -17,8 +17,10 @@ lint:
 	@echo "+ $@"
 	mypy $(SRC_FILES) --ignore-missing-imports
 	python -m pyflakes tests/*.py $(SRC_FILES)
+	python -m pyflakes setup.py
 	black pyforestplot/*.py $(BLACK_OPTS)
 	black tests/*.py $(BLACK_OPTS)
+	black setup.py $(BLACK_OPTS)
 
 .PHONY: prepack
 prepack: # Prepare packaging for PyPi
