@@ -119,7 +119,10 @@ def star_pval(
 
 
 def indent_nongroupvar(
-    dataframe: pd.core.frame.DataFrame, varlabel: str, groupvar: str, varindent: int = 2,
+    dataframe: pd.core.frame.DataFrame,
+    varlabel: str,
+    groupvar: str,
+    varindent: int = 2,
 ) -> pd.core.frame.DataFrame:
     """
     Indent the non-group variable labels when the 'form_ci_report' option is switched off.
@@ -156,7 +159,9 @@ def indent_nongroupvar(
 
 
 def normalize_varlabels(
-    dataframe: pd.core.frame.DataFrame, varlabel: str, capitalize: str = "capitalize",
+    dataframe: pd.core.frame.DataFrame,
+    varlabel: str,
+    capitalize: str = "capitalize",
 ) -> pd.core.frame.DataFrame:
     """
     Normalize variable labels to capitalize or title form.
@@ -259,7 +264,9 @@ def format_varlabels(
 
 
 def _remove_est_ci(
-    dataframe: pd.core.frame.DataFrame, varlabel: str, groupvar: Optional[str],
+    dataframe: pd.core.frame.DataFrame,
+    varlabel: str,
+    groupvar: Optional[str],
 ) -> pd.core.frame.DataFrame:
     """
     Make rows for 'est_ci' and 'ci_range' empty string '' if row is a group variable label.
@@ -287,7 +294,11 @@ def _remove_est_ci(
     return dataframe
 
 
-def _get_max_varlen(dataframe: pd.core.frame.DataFrame, varlabel: str, extrapad: int,) -> int:
+def _get_max_varlen(
+    dataframe: pd.core.frame.DataFrame,
+    varlabel: str,
+    extrapad: int,
+) -> int:
     """
     Get max variable length in dataframe.
 

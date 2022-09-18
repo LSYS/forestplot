@@ -285,7 +285,10 @@ def _preprocess_dataframe(
             decimal_precision=decimal_precision,
         )
     dataframe = star_pval(
-        dataframe=dataframe, pval=pval, starpval=starpval, decimal_precision=decimal_precision,
+        dataframe=dataframe,
+        pval=pval,
+        starpval=starpval,
+        decimal_precision=decimal_precision,
     )
     if annote is None:  # Form ytickers = formatted variable labels
         dataframe = format_varlabels(

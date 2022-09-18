@@ -43,7 +43,11 @@ def test_check_data():
 
     # Assert that conversion for numeric ll stored as string works
     _df = pd.DataFrame(
-        {"estimate": numeric_as_string, "ll": numeric_as_string, "hl": numeric_as_string,}
+        {
+            "estimate": numeric_as_string,
+            "ll": numeric_as_string,
+            "hl": numeric_as_string,
+        }
     )
     check_data(dataframe=_df, estimate="estimate", varlabel="estimate", ll="ll", hl="hl")
 
@@ -55,7 +59,11 @@ def test_check_data():
 
     # Assert that conversion for numeric hl stored as string works
     _df = pd.DataFrame(
-        {"estimate": numeric_as_string, "ll": numeric_as_string, "hl": numeric_as_string,}
+        {
+            "estimate": numeric_as_string,
+            "ll": numeric_as_string,
+            "hl": numeric_as_string,
+        }
     )
     check_data(dataframe=_df, estimate="estimate", varlabel="estimate", ll="ll", hl="hl")
 
@@ -72,7 +80,11 @@ def test_check_data():
     ##########################################################################
     # Assert moerror is created if ll and hl specified
     _df = pd.DataFrame(
-        {"estimate": numeric_as_string, "ll": numeric_as_string, "hl": numeric_as_string,}
+        {
+            "estimate": numeric_as_string,
+            "ll": numeric_as_string,
+            "hl": numeric_as_string,
+        }
     )
     processed_df = check_data(
         dataframe=_df, estimate="estimate", varlabel="estimate", ll="ll", hl="hl"
@@ -80,7 +92,12 @@ def test_check_data():
     assert "moerror" in processed_df
 
     # Assert ll and hl is created if only moerror specified
-    _df = pd.DataFrame({"estimate": numeric_as_string, "moerror": numeric_as_string,})
+    _df = pd.DataFrame(
+        {
+            "estimate": numeric_as_string,
+            "moerror": numeric_as_string,
+        }
+    )
     processed_df = check_data(
         dataframe=_df, estimate="estimate", varlabel="estimate", moerror="moerror"
     )
