@@ -250,19 +250,11 @@ def test_format_varlabels():
             "info": info,
             "ci_range": ci_range_grp,
             "est_ci": est_ci,
-            "yticklabel": [
-                "group",
-                "var1   2.00(2.00 to 2.00)",
-                "var2   3.00(3.00 to 3.00)",
-            ],
+            "yticklabel": ["group", "var1   2.00(2.00 to 2.00)", "var2   3.00(3.00 to 3.00)",],
         }
     )
     result_df = format_varlabels(
-        input_df,
-        varlabel="var",
-        form_ci_report=True,
-        ci_report=True,
-        groupvar="groupvar",
+        input_df, varlabel="var", form_ci_report=True, ci_report=True, groupvar="groupvar",
     )
     assert_frame_equal(result_df, correct_df)
 
@@ -284,11 +276,7 @@ def test_format_varlabels():
         }
     )
     result_df = format_varlabels(
-        input_df,
-        varlabel="var",
-        form_ci_report=False,
-        ci_report=False,
-        groupvar="groupvar",
+        input_df, varlabel="var", form_ci_report=False, ci_report=False, groupvar="groupvar",
     )
     assert_frame_equal(result_df, correct_df)
 
@@ -310,11 +298,7 @@ def test_format_varlabels():
         }
     )
     result_df = format_varlabels(
-        input_df,
-        varlabel="var",
-        form_ci_report=True,
-        ci_report=False,
-        groupvar="groupvar",
+        input_df, varlabel="var", form_ci_report=True, ci_report=False, groupvar="groupvar",
     )
     assert_frame_equal(result_df, correct_df)
 
@@ -327,12 +311,7 @@ def test_prep_annote():
     groupvar = ["group", "group", "group"]
     formatted_info = ["a   ", "b   ", "c   "]
     input_df = pd.DataFrame(
-        {
-            "var": var,
-            "groupvar": groupvar,
-            "estimate": numeric,
-            "info": info,
-        }
+        {"var": var, "groupvar": groupvar, "estimate": numeric, "info": info,}
     )
     correct_df = pd.DataFrame(
         {
@@ -345,11 +324,7 @@ def test_prep_annote():
         }
     )
     result_df = prep_annote(
-        input_df,
-        annote=["info"],
-        annoteheaders=["info"],
-        varlabel="var",
-        groupvar="groupvar",
+        input_df, annote=["info"], annoteheaders=["info"], varlabel="var", groupvar="groupvar",
     )
     assert_frame_equal(result_df, correct_df)
 
@@ -378,12 +353,7 @@ def test_prep_rightannote():
     groupvar = ["group", "group", "group"]
     formatted_info = ["a   ", "b   ", "c   "]
     input_df = pd.DataFrame(
-        {
-            "var": var,
-            "groupvar": groupvar,
-            "estimate": numeric,
-            "info": info,
-        }
+        {"var": var, "groupvar": groupvar, "estimate": numeric, "info": info,}
     )
     correct_df = pd.DataFrame(
         {

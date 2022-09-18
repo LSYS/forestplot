@@ -83,13 +83,7 @@ def test_right_flush_yticklabels():
 def test_draw_pval_right():
     x, y = [0, 1, 2], [0, 1, 2]
     input_df = pd.DataFrame(
-        {
-            "yticklabel": x,
-            "estimate": x,
-            "moerror": y,
-            "pval": y,
-            "formatted_pval": y,
-        }
+        {"yticklabel": x, "estimate": x, "moerror": y, "pval": y, "formatted_pval": y,}
     )
     _, ax = plt.subplots()
     payload1, payload2 = draw_pval_right(
@@ -110,12 +104,7 @@ def test_draw_pval_right():
 def test_draw_yticklabel2():
     x = [0, 1, 2]
     str_vector = ["a", "b", "c"]
-    input_df = pd.DataFrame(
-        {
-            "yticklabel": x,
-            "yticklabel2": str_vector,
-        }
-    )
+    input_df = pd.DataFrame({"yticklabel": x, "yticklabel2": str_vector,})
     _, ax = plt.subplots()
     payload1, payload2 = draw_yticklabel2(
         input_df, annoteheaders=None, right_annoteheaders=None, ax=ax
@@ -242,11 +231,7 @@ def test_draw_alt_row_colors():
     # Group exists
     _, ax = plt.subplots()
     ax = draw_alt_row_colors(
-        input_df,
-        groupvar="groupvar",
-        annoteheaders=None,
-        right_annoteheaders=None,
-        ax=ax,
+        input_df, groupvar="groupvar", annoteheaders=None, right_annoteheaders=None, ax=ax,
     )
     assert (all(isinstance(tick, int)) for tick in ax.get_yticks())
     assert isinstance(ax, Axes)

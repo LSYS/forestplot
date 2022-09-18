@@ -31,10 +31,7 @@ def test_load_data():
 def test_insert_groups():
     input_df = pd.DataFrame({"varlabel": ["var1", "var2"], "groupvar": ["group1", "group1"]})
     correct_df = pd.DataFrame(
-        {
-            "groupvar": ["group1", "group1", "group1"],
-            "varlabel": ["group1", "var1", "var2"],
-        }
+        {"groupvar": ["group1", "group1", "group1"], "varlabel": ["group1", "var1", "var2"],}
     )
     result_df = insert_groups(input_df, groupvar="groupvar", varlabel="varlabel")
     # assert_frame_equal(result_df, correct_df)
@@ -60,11 +57,7 @@ def test_sort_data():
         {"estimate": input_numeric, "sortval": input_numeric, "groupvar": input_string}
     )
     correct_df = pd.DataFrame(
-        {
-            "estimate": output_numeric,
-            "sortval": output_numeric,
-            "groupvar": output_string,
-        }
+        {"estimate": output_numeric, "sortval": output_numeric, "groupvar": output_string,}
     )
     result_df = sort_data(input_df, estimate="estimate", groupvar="groupvar", sortby="sortval")
     assert_frame_equal(result_df, correct_df)
