@@ -22,8 +22,8 @@
 <details open><summary><b>Table of Contents</b></summary><p>
 
 > - [Installation](#installation)
-> - [Quick start](#quick-start)
-> - [Examples with Customizations](#examples-with-customizations)
+> - [Quick Start](#quick-start)
+> - [Some Examples with Customizations](#some-examples-with-customizations)
 > - [Gallery and API Options](#gallery-and-api-options)
 > - [Known Issues](#known-issues)
 > - [Background and Additional Resources](#background-and-additional-resources)
