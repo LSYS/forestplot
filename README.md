@@ -157,3 +157,17 @@ fp.forestplot(df,  # the dataframe with results data
 ```
 
 <p align="left"><img width="80%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/leftannote-rightannote-table.png"></p>
+
+4. Strip down all bells and whistle
+```python
+fp.forestplot(df,  # the dataframe with results data
+              estimate="r",  # col containing estimated effect size 
+              ll="ll", hl="hl",  # lower & higher limits of conf. int.
+              varlabel="label",  # column containing the varlabels to be printed on far left
+              ci_report=False,  # Turn off conf. int. reporting
+              flush=False,  # Turn off left-flush of text
+              **{'fontfamily': 'sans-serif'}  # revert to sans-serif                              
+              )
+```               
+<p align="left"><img width="35%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vcoefplot.png"></p>
+
