@@ -31,7 +31,7 @@
 </p></details><p></p>
 
 <!------------------- INSTALLATION ------------------->
-## Installation[![](./examples/images/pin.svg)](#installation)
+## Installation[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#installation)
 Install from PyPI
 
 <a href="https://pypi.org/project/forestplot">
@@ -52,7 +52,7 @@ pip install .
 
 
 <!-------------------- QUICK START -------------------->
-## Quick start[![](./examples/images/pin.svg)](#quick-start)
+## Quick start[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#quick-start)
 
 ```python
 import forestplot as fp
@@ -83,3 +83,59 @@ The example input `dataframe` above have 4 key columns:
 (*If `ll` *and* `hl` are specified, then the `moerror` (margin of error) is not required.
 <br>
 See [Gallery and API Options](#gallery-and-api-options) for more details on required and optional arguments.)
+
+
+Make the forest plot
+```python
+fp.forestplot(df,  # the dataframe with results data
+               estimate="r",  # col containing estimated effect size 
+               ll="ll", hl="hl",  # columns containing conf. int. lower and higher limits
+               varlabel="label",  # column containing variable label
+               ylabel="Confidence interval",  # y-label title
+               xlabel="Pearson correlation"  # x-label title
+               )
+```
+<p align="left"><img width="65%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vanilla.png"></p>
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+<!----------------- EXAMPLES of CUSTOMIZATIONS ----------------->
+## Some examples with customizations[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#examples-with-customizations)
+
+
+1. Add variable groupings, add group order, and sort by estimate size.
+```python
+pfp.forestplot(df,  # the dataframe with results data
+               estimate="r",  # col containing estimated effect size 
+               moerror="moerror",  # columns containing conf. int. margin of error
+               varlabel="label",  # column containing variable label
+               groupvar="group",  #  Add variable groupings 
+               #  group ordering
+               group_order=["labor factors", "occupation", "age", "health factors", 
+                            "family factors", "area of residence", "other factors"],
+               sort=True  #  sort in ascending order (sorts within group if group is specified)               
+               )
+```
+<p align="left"><img width="65%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-sort.png"></p>
+
+2. Add p-values on the right and color alternate rows gray
+```python
+pfp.forestplot(df,  # the dataframe with results data
+               estimate="r",  # col containing estimated effect size 
+               ll="ll", hl="hl",  # columns containing conf. int. lower and higher limits
+               varlabel="label",  # column containing variable label
+               groupvar="group",  #  Add variable groupings 
+               #  group ordering
+               group_order=["labor factors", "occupation", "age", "health factors", 
+                            "family factors", "area of residence", "other factors"],
+               sort=True,  #  sort in ascending order (sorts within group if group is specified)               
+               pval="p-val",  # Column of p-value to be reported on right
+               color_alt_rows=True,  # Gray alternate rows
+               ylabel="Est.(95% Conf. Int.)",  # ylabel to print
+               **{"ylabel1_size": 11}  # control size of printed ylabel
+               )
+```
+
+<p align="left"><img width="70%" src="examples/images/group-grouporder-pvalue-sort-colorrows.png"></p>
+
