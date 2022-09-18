@@ -68,6 +68,7 @@ pip install .
 
 ```python
 import forestplot as fp
+
 df = fp.load_data("sleep")
 df.head(3)
 ```
