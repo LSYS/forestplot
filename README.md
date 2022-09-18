@@ -139,3 +139,21 @@ fp.forestplot(df,  # the dataframe with results data
 
 <p align="left"><img width="70%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-pvalue-sort-colorrows.png"></p>
 
+
+3. Customize annotations and make it a table
+```python
+fp.forestplot(df,  # the dataframe with results data
+              estimate="r",  # col containing estimated effect size 
+              ll="ll", hl="hl",  # lower & higher limits of conf. int.
+              varlabel="label",  # column containing the varlabels to be printed on far left
+              pval="p-val",  # column containing p-values to be formatted
+              annote=["n", "power", "est_ci"],  # columns to report on left of plot
+              annoteheaders=["N", "Power", "Est. (95% Conf. Int.)"],  # ^corresponding headers
+              rightannote=["formatted_pval", "group"],  # columns to report on right of plot 
+              right_annoteheaders=["P-value", "Variable group"],  # ^corresponding headers
+              xlabel="Pearson correlation coefficient",  # x-label title
+              table=True,  # Format as a table
+              )
+```
+
+<p align="left"><img width="80%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/leftannote-rightannote-table.png"></p>
