@@ -110,11 +110,11 @@ fp.forestplot(df,  # the dataframe with results data
               estimate="r",  # col containing estimated effect size 
               moerror="moerror",  # columns containing conf. int. margin of error
               varlabel="label",  # column containing variable label
-              groupvar="group",  #  Add variable groupings 
-              #  group ordering
+              groupvar="group",  # Add variable groupings 
+              # group ordering
               group_order=["labor factors", "occupation", "age", "health factors", 
                            "family factors", "area of residence", "other factors"],
-              sort=True  #  sort in ascending order (sorts within group if group is specified)               
+              sort=True  # sort in ascending order (sorts within group if group is specified)               
               )
 ```
 <p align="left"><img width="65%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-sort.png"></p>
@@ -125,11 +125,11 @@ fp.forestplot(df,  # the dataframe with results data
               estimate="r",  # col containing estimated effect size 
               ll="ll", hl="hl",  # columns containing conf. int. lower and higher limits
               varlabel="label",  # column containing variable label
-              groupvar="group",  #  Add variable groupings 
-              #  group ordering
+              groupvar="group",  # Add variable groupings 
+              # group ordering
               group_order=["labor factors", "occupation", "age", "health factors", 
                            "family factors", "area of residence", "other factors"],
-              sort=True,  #  sort in ascending order (sorts within group if group is specified)               
+              sort=True,  # sort in ascending order (sorts within group if group is specified)               
               pval="p-val",  # Column of p-value to be reported on right
               color_alt_rows=True,  # Gray alternate rows
               ylabel="Est.(95% Conf. Int.)",  # ylabel to print
