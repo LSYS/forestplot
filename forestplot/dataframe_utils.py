@@ -123,7 +123,7 @@ def load_data(name: str, **param_dict: Optional[Any]) -> pd.core.frame.DataFrame
     Example data available now:
             - mortality
 
-    The source of these data will be from: https://github.com/LSYS/pyforestplot/tree/main/examples/data.
+    The source of these data will be from: https://github.com/LSYS/forestplot/tree/main/examples/data.
 
     Parameters
     ----------
@@ -137,7 +137,7 @@ def load_data(name: str, **param_dict: Optional[Any]) -> pd.core.frame.DataFrame
     available_data = ["mortality", "sleep", "sleep-untruncated"]
     name = name.lower().strip()
     if name in available_data:
-        url = f"https://raw.githubusercontent.com/lsys/pyforestplot/main/examples/data/{name}.csv"
+        url = f"https://raw.githubusercontent.com/lsys/forestplot/main/examples/data/{name}.csv"
         df = pd.read_csv(url, **param_dict)
         if name == "sleep":
             df["n"] = df["n"].astype("str")
