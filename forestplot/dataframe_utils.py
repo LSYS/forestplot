@@ -140,7 +140,7 @@ def load_data(name: str, **param_dict: Optional[Any]) -> pd.core.frame.DataFrame
         url = f"https://raw.githubusercontent.com/lsys/pyforestplot/main/examples/data/{name}.csv"
         df = pd.read_csv(url, **param_dict)
         if name == "sleep":
-            df["n"] = df["n"].map(object)
+            df["n"] = df["n"].astype("str")
         return df
     else:
         available_data_str = ", ".join(available_data)
