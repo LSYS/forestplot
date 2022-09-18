@@ -29,6 +29,6 @@ jobs:
         if [ -f examples/requirements.txt ]; then pip install -r examples/requirements.txt; fi
     - name: Test notebook(s)
       run: |
-        cd examples 
+        cd examples
         runpynb get-sleep
-        runpynb readme-examples        
+        runpynb readme-examples
