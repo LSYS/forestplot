@@ -1,0 +1,3 @@
+pingouin
+pandas
+numpy
