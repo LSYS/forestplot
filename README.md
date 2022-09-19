@@ -308,7 +308,7 @@ This layout is similar to coefficient plots ([coefplots](http://repec.sowi.unibe
 
 <details><summary>Related packages:</summary><p>
 
-* [[1]](https://journals.sagepub.com/doi/10.1177/1536867X1401400402) [Stata] Jann, Ben (2014). Plotting regression coefficients and other estimates. The Stata Journal 14(4): 708-737. 
+* [[1]](https://www.stata-journal.com/article.html?article=gr0059) [Stata] Jann, Ben (2014). Plotting regression coefficients and other estimates. The Stata Journal 14(4): 708-737. 
 * [[2]](https://www.statsmodels.org/devel/examples/notebooks/generated/metaanalysis1.html) [Python] Meta-Analysis in statsmodels
 * [[3]](https://github.com/seafloor/forestplot) [Python] Matt Bracher-Smith's Forestplot
 * [[4]](https://github.com/fsolt/dotwhisker) [R] Solt, Frederick and Hu, Yue (2021) dotwhisker: Dot-and-Whisker Plots of Regression Results
