@@ -29,5 +29,5 @@ jobs:
     - name: Test notebook(s)
       run: |
         cd examples
-        runpynb get-sleep
-        runpynb readme-examples
+        runpynb get-sleep --sequence
+        runpynb readme-examples --sequence
