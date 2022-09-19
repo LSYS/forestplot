@@ -181,3 +181,54 @@ fp.forestplot(df,  # the dataframe with results data
 ```               
 <p align="left"><img width="35%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vcoefplot.png"></p>
 
+5. Example with more customizations
+```python
+fp.forestplot(df,  # the dataframe with results data
+              estimate="r",  # col containing estimated effect size 
+              ll="ll", hl="hl",  # lower & higher limits of conf. int.
+              varlabel="label",  # column containing the varlabels to be printed on far left
+              pval="p-val",  # column containing p-values to be formatted
+              annote=["n", "power", "est_ci"],  # columns to report on left of plot
+              annoteheaders=["N", "Power", "Est. (95% Conf. Int.)"],  # ^corresponding headers
+              rightannote=["formatted_pval", "group"],  # columns to report on right of plot 
+              right_annoteheaders=["P-value", "Variable group"],  # ^corresponding headers
+              groupvar="group",  # column containing group labels
+              group_order=["labor factors", "occupation", "age", "health factors", 
+                           "family factors', "area of residence", "other factors"],                   
+              xlabel="Pearson correlation coefficient",  # x-label title
+              xticks=[-.4,-.2,0, .2],  # x-ticks to be printed
+              sort=True,  # sort estimates in ascending order
+              table=True,  # Format as a table
+              # Additional kwargs for customizations
+              **{"marker": "D",  # set maker symbol as diamond
+                 "markersize": 35,  # adjust marker size
+                 "xlinestyle": (0, (10, 5)),  # long dash for x-reference line 
+                 "xlinecolor": ".1",  # gray color for x-reference line
+                 "xtick_size": 12,  # adjust x-ticker fontsize
+                }  
+              )
+```
+<p align="left"><img width="75%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/main.png"></p>
+
+<details><summary><i>Annotations arguments allowed include:</i></summary>
+  
+  * `ci_range`: Confidence interval range (e.g. (-0.39 to -0.25)).
+  * `est_ci`: Estimate and CI (e.g. -0.32(-0.39 to -0.25)).
+  * `formatted_pval`: Formatted p-values (e.g. 0.01**).
+  
+  To confirm what columns are available, you can do:
+  
+  ```python
+  processed_df, ax = fp.forestplot(df, 
+                                   ...
+                                   return_df=True # return processed dataframe with processed columns
+                                  )
+  processed_df.head(3)
+  ```
+  
+  |    | label                | group         |   n |          r | CI95%         |       p-val |      BF10 |   power | var    |    hl |    ll |   moerror |   formatted_r |   formatted_ll |   formatted_hl | ci_range         | est_ci                | formatted_pval   |   formatted_n |   formatted_power | formatted_est_ci      | yticklabel                                                        | formatted_formatted_pval   | formatted_group   | yticklabel2            |
+|---:|:---------------------|:--------------|----:|-----------:|:--------------|------------:|----------:|--------:|:-------|------:|------:|----------:|--------------:|---------------:|---------------:|:-----------------|:----------------------|:-----------------|--------------:|------------------:|:----------------------|:------------------------------------------------------------------|:---------------------------|:------------------|:-----------------------|
+|  0 | Mins worked per week | Labor factors | 706 | -0.321384  | [-0.39 -0.25] | 1.99409e-18 | 1.961e+15 |    1    | totwrk | -0.25 | -0.39 | 0.0686165 |         -0.32 |          -0.39 |          -0.25 | (-0.39 to -0.25) | -0.32(-0.39 to -0.25) | 0.0***           |           706 |              1    | -0.32(-0.39 to -0.25) | Mins worked per week            706  1.0    -0.32(-0.39 to -0.25) | 0.0***                     | Labor factors     | 0.0***   Labor factors |
+|  1 | Years of schooling   | Labor factors | 706 | -0.0950039 | [-0.17 -0.02] | 0.0115515   | 1.137     |    0.72 | educ   | -0.02 | -0.17 | 0.0749961 |         -0.1  |          -0.17 |          -0.02 | (-0.17 to -0.02) | -0.10(-0.17 to -0.02) | 0.01**           |           706 |              0.72 | -0.10(-0.17 to -0.02) | Years of schooling              706  0.72   -0.10(-0.17 to -0.02) | 0.01**                     | Labor factors     | 0.01**   Labor factors |
+  
+</details>
