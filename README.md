@@ -40,17 +40,15 @@ Additional options allow easy addition of columns in the `dataframe` as annotati
 
 <!------------------------- INSTALLATION ------------------------->
 ## Installation[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#installation)
-Install from PyPI
 
-<a href="https://pypi.org/project/forestplot">
-  <img alt="PyPI" src="https://img.shields.io/pypi/v/forestplot?color=blue&label=PyPI&logo=pypi&logoColor=white">
-</a>
-
+Install from PyPI<br>
+ [![PyPI](https://img.shields.io/pypi/v/forestplot?color=blue&label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/forestplot/)
 ```bash
 pip install pyforestplot
 ```
 
-Install from source
+Install from source<br>
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/lsys/forestplot?color=blue&label=Latest%20release)](https://github.com/LSYS/forestplot/releases)<br>
 ```bash
 git clone https://github.com/LSYS/forestplot.git
 cd forestplot
@@ -74,7 +72,7 @@ df.head(3)
 |  1 | black    | -0.0270573 | 0.0770573 | =1 if black               | other factors | -0.1  |  0.05 | 706 | 0.110805 | 0.472889  |
 |  2 | clerical |  0.0480811 | 0.0719189 | =1 if clerical worker     | occupation    | -0.03 |  0.12 | 706 | 0.247768 | 0.201948  |
 
-(* This is a toy example of how certain factors are correlate with the amount of sleep an individual gets. See the [notebook that generates the data](https://nbviewer.org/github/LSYS/forestplot/blob/main/examples/get-sleep.ipynb).)
+(* This is a toy example of how certain factors correlate with the amount of sleep one gets. See the [notebook that generates the data](https://nbviewer.org/github/LSYS/forestplot/blob/main/examples/get-sleep.ipynb).)
 
 The example input `dataframe` above have 4 key columns:
 
@@ -214,9 +212,9 @@ fp.forestplot(df,  # the dataframe with results data
 
 <details><summary><i>Annotations arguments allowed include:</i></summary>
   
-  * `ci_range`: Confidence interval range (e.g. (-0.39 to -0.25)).
-  * `est_ci`: Estimate and CI (e.g. -0.32(-0.39 to -0.25)).
-  * `formatted_pval`: Formatted p-values (e.g. 0.01**).
+  * `ci_range`: Confidence interval range (e.g. `(-0.39 to -0.25)`).
+  * `est_ci`: Estimate and CI (e.g. `-0.32(-0.39 to -0.25)`).
+  * `formatted_pval`: Formatted p-values (e.g. `0.01**`).
   
   To confirm what columns are available, you can do:
   
@@ -290,3 +288,61 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 * Plot can get cluttered with too many variables/rows (~30 onwards) 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+<!----------------- BACKGROUND AND ADDITIONAL RESOURCES ----------------->
+## Background and Additional Resources[![](./examples/images/pin.svg)](#background-and-additional-resources)
+
+**More about forest plots:**
+
+[Forest plots](https://en.wikipedia.org/wiki/Forest_plot) have many aliases (h/t Chris Alexiuk). Other names include coefplots, coefficient plots, meta-analysis plots, dot-and-whisker plots, blobbograms, margins plots, regression plots, and ropeladder plots. 
+
+[Forest plots](https://en.wikipedia.org/wiki/Forest_plot) in the medical and health sciences literature are plots that report results from different studies as a meta-analysis. Markers are centered on the estimated effect and horizontal lines running through each marker depicts the confidence intervals.
+
+The simplest version of a forest plot has two columns: one for the variables/studies, and the second for the estimated coefficients and confidence intervals.
+This layout is similar to coefficient plots ([coefplots](http://repec.sowi.unibe.ch/stata/coefplot/getting-started.html)) and is thus useful for more than meta-analyses.
+
+<details><summary>Here are more resources about forest plots:</summary><p>
+
+* [[1]](https://doi.org/10.1038/s41433-021-01867-6) Chang, Y., Phillips, M.R., Guymer, R.H. et al. The 5 min meta-analysis: understanding how to read and interpret a forest plot. Eye 36, 673–675 (2022).
+* [[2]](https://doi.org/10.1136/bmj.322.7300.1479) Lewis S, Clarke M. Forest plots: trying to see the wood and the trees BMJ 2001; 322 :1479 
+</p></details><p></p>
+
+<details><summary>Related packages:</summary><p>
+
+* [[1]](https://doi.org/10.1177/1536867X1401400402) [Stata] Jann, Ben (2014). Plotting regression coefficients and other estimates. The Stata Journal 14(4): 708-737. 
+* [[2]](https://www.statsmodels.org/devel/examples/notebooks/generated/metaanalysis1.html) [Python] Meta-Analysis in statsmodels
+* [[3]](https://github.com/seafloor/forestplot) [Python] Matt Bracher-Smith's Forestplot
+* [[4]](https://github.com/fsolt/dotwhisker) [R] Solt, Frederick and Hu, Yue (2021) dotwhisker: Dot-and-Whisker Plots of Regression Results
+* [[5]](https://rpubs.com/mbounthavong/forest_plots_r) [R] Bounthavong, Mark (2021) Forest plots. RPubs by RStudio
+</p></details><p></p>
+
+**More about this package:**
+
+[![Powered by NumFOCUS](https://img.shields.io/badge/powered%20by-NumFOCUS-orange.svg?style=flat&colorA=E1523D&colorB=007D8A)](http://numfocus.org)
+
+The package is lightweight, built on `pandas`, `numpy`, and `matplotlib`.
+
+It is slightly opinioniated in that the aesthetics of the plot inherits some of my sensibilities about what makes a nice figure.
+You can however easily override most defaults for the look of the graph. This is possible via `**kwargs` in the `forestplot` API (see [Gallery and API options](#gallery-and-api-options)) and the `matplotlib` API.
+
+**Planned enhancements** include forest plots each row can have multiple coefficients (e.g. from multiple models). 
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+<!----------------------- CONTRIBUTING ----------------------->
+## Contributing[![](./examples/images/pin.svg)](#contributing)
+
+Contributions are welcome, and they are greatly appreciated!
+
+**Potential ways to contribute:**
+
+* Raise issues/bugs/questions
+* Write tests for missing coverage
+* Add features (see [examples notebook](https://nbviewer.org/github/LSYS/forestplot/blob/main/examples/readme-examples.ipynb) for a fuller enumeration of existing features)
+
+**Issues**
+
+Please submit bugs, questions, or issues you encounter to the [GitHub Issue Tracker](https://github.com/lsys/forestplot/issues).
+For bugs, please provide a minimal reproducible example demonstrating the problem.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
