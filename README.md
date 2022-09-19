@@ -2,7 +2,6 @@
 <h1 align="center" >
   <strong>Forestplot</strong>
 </h1>
-<!----------------- PROJECT SHIELDS ----------------->
 <p align="center">
   <a href="https://pypi.org/project/forestplot">
   <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/forestplot?label=Python&logo=python&logoColor=white">
@@ -27,7 +26,7 @@ Additional options allow easy addition of columns in the `dataframe` as annotati
 | Python | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/forestplot?label=Python%203.6%2B&logo=python&logoColor=white)](https://pypi.org/project/forestplot/) |
 | Meta | [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![types - Mypy](https://img.shields.io/badge/types-Mypy-blue.svg)](https://github.com/python/mypy) |
 
-<!----------------- TABLE OF CONTENT ----------------->
+<!---------------------- TABLE OF CONTENT ---------------------->
 <details open><summary><b>Table of Contents</b></summary><p>
 
 > - [Installation](#installation)
@@ -39,7 +38,7 @@ Additional options allow easy addition of columns in the `dataframe` as annotati
 > - [Contributing](#contributing)
 </p></details><p></p>
 
-<!------------------- INSTALLATION ------------------->
+<!------------------------- INSTALLATION ------------------------->
 ## Installation[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#installation)
 Install from PyPI
 
@@ -60,7 +59,7 @@ pip install .
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-<!-------------------- QUICK START -------------------->
+<!------------------------- QUICK START ------------------------->
 ## Quick start[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#quick-start)
 
 ```python
@@ -74,6 +73,8 @@ df.head(3)
 |  0 | age      |  0.0903729 | 0.0696271 | in years                  | age           |  0.02 |  0.16 | 706 | 0.671578 | 0.0163089 |
 |  1 | black    | -0.0270573 | 0.0770573 | =1 if black               | other factors | -0.1  |  0.05 | 706 | 0.110805 | 0.472889  |
 |  2 | clerical |  0.0480811 | 0.0719189 | =1 if clerical worker     | occupation    | -0.03 |  0.12 | 706 | 0.247768 | 0.201948  |
+
+(* This is a toy example of how certain factors are correlate with the amount of sleep an individual gets. See the [notebook that generates the data](https://nbviewer.org/github/LSYS/forestplot/blob/main/examples/get-sleep.ipynb).)
 
 The example input `dataframe` above have 4 key columns:
 
@@ -95,6 +96,7 @@ The example input `dataframe` above have 4 key columns:
 See [Gallery and API Options](#gallery-and-api-options) for more details on required and optional arguments.)
 
 
+
 Make the forest plot
 ```python
 fp.forestplot(df,  # the dataframe with results data
@@ -110,7 +112,7 @@ fp.forestplot(df,  # the dataframe with results data
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-<!----------------- EXAMPLES of CUSTOMIZATIONS ----------------->
+<!------------------ EXAMPLES of CUSTOMIZATIONS ------------------>
 ## Some examples with customizations[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#examples-with-customizations)
 
 
@@ -127,7 +129,7 @@ fp.forestplot(df,  # the dataframe with results data
               sort=True  # sort in ascending order (sorts within group if group is specified)               
               )
 ```
-<p align="left"><img width="50%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-sort.png"></p>
+<p align="left"><img width="65%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-sort.png"></p>
 
 2. Add p-values on the right and color alternate rows gray
 ```python
@@ -147,7 +149,7 @@ fp.forestplot(df,  # the dataframe with results data
               )
 ```
 
-<p align="left"><img width="55%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-pvalue-sort-colorrows.png"></p>
+<p align="left"><img width="70%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-pvalue-sort-colorrows.png"></p>
 
 
 3. Customize annotations and make it a table
@@ -166,7 +168,7 @@ fp.forestplot(df,  # the dataframe with results data
               )
 ```
 
-<p align="left"><img width="60%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/leftannote-rightannote-table.png"></p>
+<p align="left"><img width="75%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/leftannote-rightannote-table.png"></p>
 
 4. Strip down all bells and whistle
 ```python
@@ -179,7 +181,7 @@ fp.forestplot(df,  # the dataframe with results data
               **{'fontfamily': 'sans-serif'}  # revert to sans-serif                              
               )
 ```               
-<p align="left"><img width="30%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vcoefplot.png"></p>
+<p align="left"><img width="40%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vcoefplot.png"></p>
 
 5. Example with more customizations
 ```python
@@ -208,7 +210,7 @@ fp.forestplot(df,  # the dataframe with results data
                 }  
               )
 ```
-<p align="left"><img width="65%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/main.png"></p>
+<p align="left"><img width="70%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/main.png"></p>
 
 <details><summary><i>Annotations arguments allowed include:</i></summary>
   
@@ -232,3 +234,59 @@ fp.forestplot(df,  # the dataframe with results data
 |  1 | Years of schooling   | Labor factors | 706 | -0.0950039 | [-0.17 -0.02] | 0.0115515   | 1.137     |    0.72 | educ   | -0.02 | -0.17 | 0.0749961 |         -0.1  |          -0.17 |          -0.02 | (-0.17 to -0.02) | -0.10(-0.17 to -0.02) | 0.01**           |           706 |              0.72 | -0.10(-0.17 to -0.02) | Years of schooling              706  0.72   -0.10(-0.17 to -0.02) | 0.01**                     | Labor factors     | 0.01**   Labor factors |
   
 </details>
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+
+<!------------------- GALLERY AND API OPTIONS ------------------->
+## Gallery and API Options[![](./examples/images/pin.svg)](#gallery-and-api-options)
+
+[![Notebooks](https://github.com/LSYS/forestplot/actions/workflows/nb.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/nb.yml)
+
+Check out [this jupyter notebook](https://nbviewer.org/github/LSYS/forestplot/blob/main/examples/readme-examples.ipynb) for a gallery variations of forest plots possible out-of-the-box.
+The table below shows the list of arguments users can pass in.
+More fined-grained control for base plot options (eg font sizes, marker colors) can be inferred from the [example notebook gallery](https://nbviewer.org/github/LSYS/forestplot/blob/main/examples/readme-examples.ipynb). 
+
+
+| Option      | Description                                                                                                                                                 | Required   |
+|:-------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------|:---|
+| `dataframe`           | Pandas dataframe where rows are variables (or studies for meta-analyses) and columns include estimated effect sizes, labels, and confidence intervals, etc. | &check; |
+| `estimate`            | Name of column in `dataframe` containing the *estimates*.                                                                                                   | &check; |
+| `varlabel`            | Name of column in `dataframe` containing the *variable labels* (study labels if meta-analyses).                                                             | &check; |
+| `ll`                  | Name of column in `dataframe` containing the conf. int. *lower limits*.                                                                                     | &check;* |
+| `hl`                  | Name of column in `dataframe` containing the conf. int. *higher limits*.                                                                                    | &check;* |
+| `moerror`             | Name of column in `dataframe` containing the conf. int. *margin of errors*.                                                                                 | &check;* |
+| `form_ci_report`      | If True (default), report the estimates and confidence interval beside the variable labels.                                                                 |          |
+| `ci_report`           | If True (default), format the confidence interval as a string.                                                                                              |          |
+| `groupvar`            | Name of column in `dataframe` containing the variable *grouping labels*.                                                                                    |       |
+| `group_order`         | List of group labels indicating the order of groups to report in the plot.                                                                                  |       |
+| `annote`              | List of columns to add as annotations on the left-hand side of the plot.                                                                                    |       |
+| `annoteheaders`       | List of column headers for the left-hand side annotations.                                                                                                  |       |
+| `rightannote`         | List of columns to add as annotations on the right-hand side of the plot.                                                                                   |       |
+| `right_annoteheaders` | List of column headers for the right-hand side annotations.                                                                                                 |       |
+| `pval`                | Name of column in `dataframe` containing the p-values.                                                                                                      |       |
+| `starpval`            | If True (default), format p-values with stars indicating statistical significance.                                                                          |          |
+| `sort`                | If True, sort variables by `estimate` values in ascending order.                                                                                            |          |
+| `sortby`              | Name of column to sort by. Default is `estimate`.                                                                                                           |       |
+| `flush`               | If True (default), left-flush variable labels and annotations.                                                                                              |          |
+| `decimal_precision`   | Number of decimal places to print. (Default = 2)                                                                                                            |          |
+| `figsize`             | Tuple indicating core figure size. Default is (4, 8)                                                                                                        |          |
+| `xticks`              | List of xticklabels to print on x-axis.                                                                                                                     |       |
+| `ylabel`              | Y-label title.                                                                                                                                              |      |
+| `xlabel`              | X-label title.                                                                                                                                              |       |
+| `color_alt_rows`      | If True, shade out alternating rows in gray.                                                                                                                |          |
+| `preprocess`          | If True (default), preprocess the `dataframe` before plotting.                                                                                              |          |
+| `return_df`           | If True, returned the preprocessed `dataframe`.                                                                                                             |          |
+
+(*If `ll` *and* `hl` are specified, then the `moerror` (margin of error) is not required, and vice versa.)
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!------------------------ KNOWN ISSUES ------------------------>
+## Known Issues[![](./examples/images/pin.svg)](#known-issues)
+* Variable labels coinciding with group variables may lead to unexpected formatting issues in the graph.
+* Horizontal CI lines cannot be recast as capped horizontal lines because of the backend `Matplotlib` API used.
+* Left-flushing of annotations relies on the `monospace` font.
+* Plot can get cluttered with too many variables/rows (~30 onwards) 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
