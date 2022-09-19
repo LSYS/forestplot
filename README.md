@@ -105,7 +105,7 @@ fp.forestplot(df,  # the dataframe with results data
                xlabel="Pearson correlation"  # x-label title
                )
 ```
-<p align="left"><img width="65%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vanilla.png"></p>
+<p align="left"><img width="55%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vanilla.png"></p>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -127,7 +127,7 @@ fp.forestplot(df,  # the dataframe with results data
               sort=True  # sort in ascending order (sorts within group if group is specified)               
               )
 ```
-<p align="left"><img width="65%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-sort.png"></p>
+<p align="left"><img width="50%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-sort.png"></p>
 
 2. Add p-values on the right and color alternate rows gray
 ```python
@@ -147,7 +147,7 @@ fp.forestplot(df,  # the dataframe with results data
               )
 ```
 
-<p align="left"><img width="70%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-pvalue-sort-colorrows.png"></p>
+<p align="left"><img width="55%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-pvalue-sort-colorrows.png"></p>
 
 
 3. Customize annotations and make it a table
@@ -166,7 +166,7 @@ fp.forestplot(df,  # the dataframe with results data
               )
 ```
 
-<p align="left"><img width="80%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/leftannote-rightannote-table.png"></p>
+<p align="left"><img width="60%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/leftannote-rightannote-table.png"></p>
 
 4. Strip down all bells and whistle
 ```python
@@ -179,7 +179,7 @@ fp.forestplot(df,  # the dataframe with results data
               **{'fontfamily': 'sans-serif'}  # revert to sans-serif                              
               )
 ```               
-<p align="left"><img width="35%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vcoefplot.png"></p>
+<p align="left"><img width="30%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vcoefplot.png"></p>
 
 5. Example with more customizations
 ```python
@@ -208,7 +208,7 @@ fp.forestplot(df,  # the dataframe with results data
                 }  
               )
 ```
-<p align="left"><img width="75%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/main.png"></p>
+<p align="left"><img width="65%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/main.png"></p>
 
 <details><summary><i>Annotations arguments allowed include:</i></summary>
   
