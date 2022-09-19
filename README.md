@@ -2,16 +2,16 @@
 <h1 align="center" >
   <strong>Forestplot</strong>
 </h1>
-<h4 align="center">Easy API for forest plots.</h3>
-<p align="center">A python package to make publication-ready but customizable forest plots.</p>
-
 <!----------------- PROJECT SHIELDS ----------------->
 <p align="center">
   <a href="https://pypi.org/project/forestplot">
   <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/forestplot?label=Python&logo=python&logoColor=white">
   </a>
-  <br>
 </p>
+<h4 align="center">Easy API for forest plots.</h3>
+<p align="center">A Python package to make publication-ready but customizable forest plots.</p>
+
+
 
 
 <p align="center"><img width="100%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/main.png"></p>
