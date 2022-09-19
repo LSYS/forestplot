@@ -238,7 +238,7 @@ fp.forestplot(df,  # the dataframe with results data
 
 
 <!------------------- GALLERY AND API OPTIONS ------------------->
-## Gallery and API Options[![](./examples/images/pin.svg)](#gallery-and-api-options)
+## Gallery and API Options[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#gallery-and-api-options)
 
 [![Notebooks](https://github.com/LSYS/forestplot/actions/workflows/nb.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/nb.yml)
 
@@ -281,7 +281,7 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!------------------------ KNOWN ISSUES ------------------------>
-## Known Issues[![](./examples/images/pin.svg)](#known-issues)
+## Known Issues[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#known-issues)
 * Variable labels coinciding with group variables may lead to unexpected formatting issues in the graph.
 * Horizontal CI lines cannot be recast as capped horizontal lines because of the backend `Matplotlib` API used.
 * Left-flushing of annotations relies on the `monospace` font.
@@ -289,7 +289,7 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!----------------- BACKGROUND AND ADDITIONAL RESOURCES ----------------->
-## Background and Additional Resources[![](./examples/images/pin.svg)](#background-and-additional-resources)
+## Background and Additional Resources[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#background-and-additional-resources)
 
 **More about forest plots:**
 
@@ -308,7 +308,7 @@ This layout is similar to coefficient plots ([coefplots](http://repec.sowi.unibe
 
 <details><summary>Related packages:</summary><p>
 
-* [[1]](https://doi.org/10.1177/1536867X1401400402) [Stata] Jann, Ben (2014). Plotting regression coefficients and other estimates. The Stata Journal 14(4): 708-737. 
+* [[1]](https://journals.sagepub.com/doi/10.1177/1536867X1401400402) [Stata] Jann, Ben (2014). Plotting regression coefficients and other estimates. The Stata Journal 14(4): 708-737. 
 * [[2]](https://www.statsmodels.org/devel/examples/notebooks/generated/metaanalysis1.html) [Python] Meta-Analysis in statsmodels
 * [[3]](https://github.com/seafloor/forestplot) [Python] Matt Bracher-Smith's Forestplot
 * [[4]](https://github.com/fsolt/dotwhisker) [R] Solt, Frederick and Hu, Yue (2021) dotwhisker: Dot-and-Whisker Plots of Regression Results
@@ -330,7 +330,7 @@ You can however easily override most defaults for the look of the graph. This is
 
 
 <!----------------------- CONTRIBUTING ----------------------->
-## Contributing[![](./examples/images/pin.svg)](#contributing)
+## Contributing[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#contributing)
 
 Contributions are welcome, and they are greatly appreciated!
 
