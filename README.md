@@ -14,7 +14,7 @@
 
 -----------------------------------------------------------
 
-This package makes publication-ready forest plots easy to make out-of-the-box. Users provide a `dataframe` (eg from a spreadsheet) where rows correspond to a variable/study with columns for estimates, confidence intervals, etc. (see below for example).
+This package makes publication-ready forest plots easy to make out-of-the-box. Users provide a `dataframe` (e.g. from a spreadsheet) where rows correspond to a variable/study with columns including estimates, variable labels, and lower and upper confidence interval limits.
 Additional options allow easy addition of columns in the `dataframe` as annotations in the plot.
 
 <!---------------------- Project shields ---------------------->
@@ -76,26 +76,25 @@ df.head(3)
 
 (* This is a toy example of how certain factors correlate with the amount of sleep one gets. See the [notebook that generates the data](https://nbviewer.org/github/LSYS/forestplot/blob/main/examples/get-sleep.ipynb).)
 
-The example input `dataframe` above have 4 key columns:
+<details><summary><i>The example input dataframe above have 4 key columns</i></summary>
 
-| Column    | Description                                     | Required  |
-|:----------|:------------------------------------------------|:----------|
-| `var`     | Variable field                                  |           |
-| `r`       | Correlation coefficients (estimates to plot)    | &check;   |
-| `moerror` | Conf. int.'s *margin of error*.                 |           |
-| `label`   | Variable labels                                 | &check;   |
-| `group`   | Variable grouping labels                        |           |
-| `ll`      | Conf. int. *lower limits*                       | &check;*  |
-| `hl`      | Containing the conf. int. *higher limits*       | &check;*  |
-| `n`       | Sample size                                     |           |
-| `power`   | Statistical power                               |           |
-| `p-val`   | P-value                                         |           |
+  | Column    | Description                                     | Required  |
+  |:----------|:------------------------------------------------|:----------|
+  | `var`     | Variable field                                  |           |
+  | `r`       | Correlation coefficients (estimates to plot)    | &check;   |
+  | `moerror` | Conf. int.'s *margin of error*.                 |           |
+  | `label`   | Variable labels                                 | &check;   |
+  | `group`   | Variable grouping labels                        |           |
+  | `ll`      | Conf. int. *lower limits*                       | &check;*  |
+  | `hl`      | Containing the conf. int. *higher limits*       | &check;*  |
+  | `n`       | Sample size                                     |           |
+  | `power`   | Statistical power                               |           |
+  | `p-val`   | P-value                                         |           |
 
-(*If `ll` *and* `hl` are specified, then the `moerror` (margin of error) is not required.
-<br>
-See [Gallery and API Options](#gallery-and-api-options) for more details on required and optional arguments.)
-
-
+  (*If `ll` *and* `hl` are specified, then the `moerror` (margin of error) is not required.
+  <br>
+  See [Gallery and API Options](#gallery-and-api-options) for more details on required and optional arguments.)  
+</details>
 
 Make the forest plot
 ```python
@@ -222,8 +221,8 @@ fp.forestplot(df,  # the dataframe with results data
   
   ```python
   processed_df, ax = fp.forestplot(df, 
-                                   ...
-                                   return_df=True # return processed dataframe with processed columns
+                                   ...  # other arguments here
+                                   return_df=True  # return processed dataframe with processed columns
                                   )
   processed_df.head(3)
   ```
