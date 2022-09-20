@@ -217,7 +217,7 @@ fp.forestplot(df,  # the dataframe with results data
   * `est_ci`: Estimate and CI (e.g. `-0.32(-0.39 to -0.25)`).
   * `formatted_pval`: Formatted p-values (e.g. `0.01**`).
   
-  To confirm what columns are available, you can do:
+  To confirm what processed `columns` are available as annotations, you can do:
   
   ```python
   processed_df, ax = fp.forestplot(df, 
