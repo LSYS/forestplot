@@ -46,8 +46,8 @@ def test_sort_data():
     input_string = ["c", "a", "b"]
     input_numeric = [3, -1, 2]
 
-    output_string = ["c", "b", "a"]
-    output_numeric = [3, 2, -1]
+    output_string = ["a", "b", "c"]
+    output_numeric = [-1, 2, 3]
 
     # Vanilla sort
     input_df = pd.DataFrame({"estimate": input_numeric, "groupvar": input_string})
