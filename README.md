@@ -307,15 +307,6 @@ This layout is similar to coefficient plots ([coefplots](http://repec.sowi.unibe
 * [[2]](https://doi.org/10.1136/bmj.322.7300.1479) Lewis S, Clarke M. Forest plots: trying to see the wood and the trees BMJ 2001; 322 :1479 
 </p></details><p></p>
 
-<details><summary>Related packages:</summary><p>
-
-* [[1]](https://www.stata-journal.com/article.html?article=gr0059) [Stata] Jann, Ben (2014). Plotting regression coefficients and other estimates. The Stata Journal 14(4): 708-737. 
-* [[2]](https://www.statsmodels.org/devel/examples/notebooks/generated/metaanalysis1.html) [Python] Meta-Analysis in statsmodels
-* [[3]](https://github.com/seafloor/forestplot) [Python] Matt Bracher-Smith's Forestplot
-* [[4]](https://github.com/fsolt/dotwhisker) [R] Solt, Frederick and Hu, Yue (2021) dotwhisker: Dot-and-Whisker Plots of Regression Results
-* [[5]](https://rpubs.com/mbounthavong/forest_plots_r) [R] Bounthavong, Mark (2021) Forest plots. RPubs by RStudio
-</p></details><p></p>
-
 **More about this package:**
 
 [![Powered by NumFOCUS](https://img.shields.io/badge/powered%20by-NumFOCUS-orange.svg?style=flat&colorA=E1523D&colorB=007D8A)](http://numfocus.org)
@@ -326,6 +317,15 @@ It is slightly opinioniated in that the aesthetics of the plot inherits some of 
 You can however easily override most defaults for the look of the graph. This is possible via `**kwargs` in the `forestplot` API (see [Gallery and API options](#gallery-and-api-options)) and the `matplotlib` API.
 
 **Planned enhancements** include forest plots each row can have multiple coefficients (e.g. from multiple models). 
+
+<details><summary>Related packages:</summary><p>
+
+* [[1]](https://www.stata-journal.com/article.html?article=gr0059) [Stata] Jann, Ben (2014). Plotting regression coefficients and other estimates. The Stata Journal 14(4): 708-737. 
+* [[2]](https://www.statsmodels.org/devel/examples/notebooks/generated/metaanalysis1.html) [Python] Meta-Analysis in statsmodels
+* [[3]](https://github.com/seafloor/forestplot) [Python] Matt Bracher-Smith's Forestplot
+* [[4]](https://github.com/fsolt/dotwhisker) [R] Solt, Frederick and Hu, Yue (2021) dotwhisker: Dot-and-Whisker Plots of Regression Results
+* [[5]](https://rpubs.com/mbounthavong/forest_plots_r) [R] Bounthavong, Mark (2021) Forest plots. RPubs by RStudio
+</p></details><p></p>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -339,7 +339,9 @@ Contributions are welcome, and they are greatly appreciated!
 
 * Raise issues/bugs/questions
 * Write tests for missing coverage
-* Add features (see [examples notebook](https://nbviewer.org/github/LSYS/forestplot/blob/main/examples/readme-examples.ipynb) for a fuller enumeration of existing features)
+* Add features (see [examples notebook](https://nbviewer.org/github/LSYS/forestplot/blob/main/examples/readme-examples.ipynb) for a survey of  existing features)
+* Add example datasets with companion graphs
+* Add your graphs with companion code
 
 **Issues**
 
