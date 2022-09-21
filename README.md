@@ -46,7 +46,7 @@ Additional options allow easy addition of columns in the `dataframe` as annotati
 Install from PyPI<br>
  [![PyPI](https://img.shields.io/pypi/v/forestplot?color=blue&label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/forestplot/)
 ```bash
-pip install pyforestplot
+pip install forestplot
 ```
 
 Install from source<br>
