@@ -99,12 +99,12 @@ df.head(3)
 Make the forest plot
 ```python
 fp.forestplot(df,  # the dataframe with results data
-               estimate="r",  # col containing estimated effect size 
-               ll="ll", hl="hl",  # columns containing conf. int. lower and higher limits
-               varlabel="label",  # column containing variable label
-               ylabel="Confidence interval",  # y-label title
-               xlabel="Pearson correlation"  # x-label title
-               )
+              estimate="r",  # col containing estimated effect size 
+              ll="ll", hl="hl",  # columns containing conf. int. lower and higher limits
+              varlabel="label",  # column containing variable label
+              ylabel="Confidence interval",  # y-label title
+              xlabel="Pearson correlation"  # x-label title
+              )
 ```
 <p align="left"><img width="55%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vanilla.png"></p>
 
