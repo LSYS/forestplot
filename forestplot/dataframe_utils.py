@@ -95,7 +95,9 @@ def sort_data(
             sortby = estimate
 
         if groupvar is not None:
-            dataframe.sort_values([groupvar, sortby], ascending=[True, sortascend], inplace=True)
+            dataframe.sort_values(
+                [groupvar, sortby], ascending=[True, sortascend], inplace=True
+            )
         else:
             dataframe.sort_values(sortby, ascending=sortascend, inplace=True)
         return dataframe.reset_index(drop=True)
