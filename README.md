@@ -301,7 +301,7 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 The simplest version of a forest plot has two columns: one for the variables/studies, and the second for the estimated coefficients and confidence intervals.
 This layout is similar to coefficient plots ([coefplots](http://repec.sowi.unibe.ch/stata/coefplot/getting-started.html)) and is thus useful for more than meta-analyses.
 
-<details><summary>Here are more resources about forest plots:</summary><p>
+<details><summary><i>Here are more resources about forest plots:</i></summary><p>
 
 * [[1]](https://doi.org/10.1038/s41433-021-01867-6) Chang, Y., Phillips, M.R., Guymer, R.H. et al. The 5 min meta-analysis: understanding how to read and interpret a forest plot. Eye 36, 673–675 (2022).
 * [[2]](https://doi.org/10.1136/bmj.322.7300.1479) Lewis S, Clarke M. Forest plots: trying to see the wood and the trees BMJ 2001; 322 :1479 
@@ -318,7 +318,7 @@ You can however easily override most defaults for the look of the graph. This is
 
 **Planned enhancements** include forest plots each row can have multiple coefficients (e.g. from multiple models). 
 
-<details><summary>Related packages:</summary><p>
+<details><summary><i>Related packages:</i></summary><p>
 
 * [[1]](https://www.stata-journal.com/article.html?article=gr0059) [Stata] Jann, Ben (2014). Plotting regression coefficients and other estimates. The Stata Journal 14(4): 708-737. 
 * [[2]](https://www.statsmodels.org/devel/examples/notebooks/generated/metaanalysis1.html) [Python] Meta-Analysis in statsmodels
