@@ -22,11 +22,11 @@ Additional options allow easy addition of columns in the `dataframe` as annotati
 |    |    |
 | --- | --- |
 | Release | [![PyPI](https://img.shields.io/pypi/v/forestplot?color=blue&label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/forestplot/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/lsys/forestplot?color=blue&label=Latest%20release)](https://github.com/LSYS/forestplot/releases) |
-| Status | [![Notebooks](https://github.com/LSYS/forestplot/actions/workflows/nb.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/nb.yml) [![CI](https://github.com/LSYS/forestplot/actions/workflows/CI.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/CI.yml)  |
-| Coverage |  [![Codecov](https://img.shields.io/codecov/c/github/lsys/forestplot?logo=codecov&logoColor=white)](https://app.codecov.io/gh/LSYS/forestplot) |
-| Docs | [![Read the Docs (version)](https://img.shields.io/readthedocs/forestplot/stable?label=docs&logo=readthedocs&logoColor=white)](https://forestplot.readthedocs.io/en/latest/?badge=latest) [![DocLinks](https://github.com/LSYS/forestplot/actions/workflows/links.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/links.yml)|
+| Status | [![CI](https://github.com/LSYS/forestplot/actions/workflows/CI.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/CI.yml) [![Notebooks](https://github.com/LSYS/forestplot/actions/workflows/nb.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/nb.yml) |
+| Coverage |  [![Codecov](https://img.shields.io/codecov/c/github/lsys/forestplot?logo=codecov&logoColor=white&label=codecov)](https://app.codecov.io/gh/LSYS/forestplot) |
 | Python | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/forestplot?label=Python%203.6%2B&logo=python&logoColor=white)](https://pypi.org/project/forestplot/) |
-| Meta | ![GitHub](https://img.shields.io/github/license/lsys/forestplot?color=purple&label=License) ![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/lsys/forestplot?label=CodeFactor&logo=codefactor&logoColor=red) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/LSYS/forestplot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/LSYS/forestplot/context:python) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![types - Mypy](https://img.shields.io/badge/types-Mypy-blue.svg)](https://github.com/python/mypy) |
+| Docs | [![Read the Docs (version)](https://img.shields.io/readthedocs/forestplot/stable?label=docs&logo=readthedocs&logoColor=white)](https://forestplot.readthedocs.io/en/latest/?badge=latest) [![DocLinks](https://github.com/LSYS/forestplot/actions/workflows/links.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/links.yml)|
+| Meta | ![GitHub](https://img.shields.io/github/license/lsys/forestplot?color=purple&label=License) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/LSYS/forestplot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/LSYS/forestplot/context:python) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![types - Mypy](https://img.shields.io/badge/types-Mypy-blue.svg)](https://github.com/python/mypy) [![DOI](https://zenodo.org/badge/510013191.svg)](https://zenodo.org/badge/latestdoi/510013191) |
 
 <!---------------------- TABLE OF CONTENT ---------------------->
 <details open><summary><b>Table of Contents</b></summary><p>
@@ -65,7 +65,7 @@ pip install .
 ```python
 import forestplot as fp
 
-df = fp.load_data("sleep")
+df = fp.load_data("sleep")  # companion example data
 df.head(3)
 ```
 |    | var      |          r |   moerror | label                     | group         |    ll |    hl |   n |    power |     p-val |
