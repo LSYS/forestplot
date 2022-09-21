@@ -1,0 +1,5 @@
+pingouin
+jupyter
+runpynb
+pandas
+numpy
