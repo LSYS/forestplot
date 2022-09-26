@@ -331,7 +331,7 @@ You can however easily override most defaults for the look of the graph. This is
 
 
 <!----------------------- CONTRIBUTING ----------------------->
-## Contributing[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#contributing)
+## Contributing[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#contributing) [![Join the chat at https://gitter.im/LSYS/forestplot](https://badges.gitter.im/LSYS/forestplot.svg)](https://gitter.im/LSYS/forestplot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Contributions are welcome, and they are greatly appreciated!
 
