@@ -92,6 +92,10 @@ def test_normalize_varlabels():
     _df = pd.DataFrame({"col": lowercase_lst})
     uppercase_lst = ["ROW NUMBER 1", "ROW NUMBER 2"]
 
+    # Default = No capitalize
+    result_df = normalize_varlabels(_df, varlabel="col", capitalize=None)
+    assert_frame_equal(result_df, _df)
+
     # No capitalize
     result_df = normalize_varlabels(_df, varlabel="col", capitalize="lower")
     assert_frame_equal(result_df, _df)

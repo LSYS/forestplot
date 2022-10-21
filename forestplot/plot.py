@@ -237,7 +237,7 @@ def _preprocess_dataframe(
     annoteheaders: Optional[Union[Sequence[str], None]] = None,
     rightannote: Optional[Union[Sequence[str], None]] = None,
     right_annoteheaders: Optional[Union[Sequence[str], None]] = None,
-    capitalize: str = "capitalize",
+    capitalize: Optional[str] = None,
     pval: Optional[str] = None,
     starpval: bool = True,
     sort: bool = False,
