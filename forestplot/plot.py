@@ -93,10 +93,8 @@ def forestplot(
             Should be available if 'll' and 'hl' are left empty.
     ll (str)
             Name of column containing the lower limit of the confidence intervals.
-            Optional
     hl (str)
             Name of column containing the upper limit of the confidence intervals.
-            Optional
     form_ci_report (bool)
             If True, form the formatted confidence interval as a string.
     ci_report (bool)
@@ -364,7 +362,8 @@ def _make_forestplot(
         dataframe=dataframe,
         estimate=estimate,
         yticklabel=yticklabel,
-        moerror=moerror,
+        ll=ll,
+        hl=hl,
         ax=ax,
         **kwargs,
     )

@@ -11,12 +11,13 @@ def draw_ci(
     dataframe: pd.core.frame.DataFrame,
     estimate: str,
     yticklabel: str,
-    moerror: str,
+    ll: str,
+    hl: str,
     ax: Axes,
     **kwargs: Any
 ) -> Axes:
     """
-    Draw the confidence intervals using the horizontal bar plot (barh) from the pandas API.
+    Draw the confidence intervals using the Matplotlib errorbar API.
 
     Parameters
     ----------
@@ -28,9 +29,10 @@ def draw_ci(
             OR, regression estimates, etc.).
     yticklabel (str)
             Name of column in intermediate dataframe containing the formatted yticklabels.
-    moerror (str)
-            Name of column containing the margin of error in the confidence intervals.
-            Should be available if 'll' and 'hl' are left empty.
+    ll (str)
+            Name of column containing the lower limit of the confidence intervals.
+    hl (str)
+            Name of column containing the upper limit of the confidence intervals.
     ax (Matplotlib Axes)
             Axes to operate on.
 
@@ -40,15 +42,13 @@ def draw_ci(
     """
     lw = kwargs.get("lw", 1.4)
     linecolor = kwargs.get("linecolor", ".6")
-    ax = dataframe.plot(
-        y=estimate,
-        x=yticklabel,
-        kind="barh",
-        xerr=moerror,
-        color="none",
-        error_kw={"lw": lw, "ecolor": linecolor},
-        legend=False,
-        ax=ax,
+    ax.errorbar(
+        x=dataframe[estimate],
+        y=dataframe[yticklabel],
+        xerr=[dataframe[estimate] - dataframe[ll], dataframe[hl] - dataframe[estimate]],
+        ecolor=linecolor,
+        elinewidth=lw,
+        ls="none",
         zorder=0,
     )
     return ax
