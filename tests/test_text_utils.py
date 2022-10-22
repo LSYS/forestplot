@@ -164,9 +164,7 @@ def test_form_est_ci():
             "est_ci": ["1.00(1.00 to 1.00)", "2.00(2.00 to 2.00)"],
         }
     )
-    result_df = form_est_ci(
-        _df, estimate="estimate", moerror=None, ll="ll", hl="hl", decimal_precision=2
-    )
+    result_df = form_est_ci(_df, estimate="estimate", ll="ll", hl="hl", decimal_precision=2)
     assert_frame_equal(result_df, correct_df)
 
 

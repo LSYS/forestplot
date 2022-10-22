@@ -47,7 +47,6 @@ def forestplot(
     dataframe: pd.core.frame.DataFrame,
     estimate: str,
     varlabel: str,
-    moerror: Optional[str] = None,
     ll: Optional[str] = None,
     hl: Optional[str] = None,
     form_ci_report: bool = True,
@@ -88,9 +87,6 @@ def forestplot(
             OR, regression estimates, etc.).
     varlabel (str)
             Name of column containing the variable label to be printed out.
-    moerror (str)
-            Name of column containing the margin of error in the confidence intervals.
-            Should be available if 'll' and 'hl' are left empty.
     ll (str)
             Name of column containing the lower limit of the confidence intervals.
     hl (str)
@@ -156,7 +152,6 @@ def forestplot(
         dataframe=_local_df,
         estimate=estimate,
         varlabel=varlabel,
-        moerror=moerror,
         pval=pval,
         ll=ll,
         hl=hl,
@@ -176,7 +171,6 @@ def forestplot(
             dataframe=_local_df,
             estimate=estimate,
             varlabel=varlabel,
-            moerror=moerror,
             ll=ll,
             hl=hl,
             form_ci_report=form_ci_report,
@@ -199,7 +193,6 @@ def forestplot(
         dataframe=_local_df,
         yticklabel="yticklabel",
         estimate=estimate,
-        moerror=moerror,
         groupvar=groupvar,
         annoteheaders=annoteheaders,
         rightannote=rightannote,
@@ -224,7 +217,6 @@ def _preprocess_dataframe(
     dataframe: pd.core.frame.DataFrame,
     estimate: str,
     varlabel: str,
-    moerror: Optional[str],
     ll: Optional[str] = None,
     hl: Optional[str] = None,
     form_ci_report: Optional[bool] = False,
@@ -277,7 +269,6 @@ def _preprocess_dataframe(
         dataframe = form_est_ci(
             dataframe=dataframe,
             estimate=estimate,
-            moerror=moerror,
             ll=ll,
             hl=hl,
             decimal_precision=decimal_precision,
@@ -329,7 +320,6 @@ def _make_forestplot(
     dataframe: pd.core.frame.DataFrame,
     yticklabel: str,
     estimate: str,
-    moerror: str,
     groupvar: str,
     pval: str,
     xticks: Optional[Union[list, range]],
@@ -356,8 +346,6 @@ def _make_forestplot(
             Matplotlib Axes object.
     """
     _, ax = plt.subplots(figsize=figsize, facecolor="white")
-    if moerror is None:
-        moerror = "moerror"
     ax = draw_ci(
         dataframe=dataframe,
         estimate=estimate,
