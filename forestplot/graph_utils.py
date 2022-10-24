@@ -13,6 +13,7 @@ def draw_ci(
     yticklabel: str,
     ll: str,
     hl: str,
+    logscale: bool,
     ax: Axes,
     **kwargs: Any
 ) -> Axes:
@@ -51,6 +52,8 @@ def draw_ci(
         ls="none",
         zorder=0,
     )
+    if logscale:
+        ax.set_xscale("log", base=10)
     return ax
 
 
@@ -546,6 +549,7 @@ def format_xticks(
     """
     nticks = kwargs.get("nticks", 5)
     xtick_size = kwargs.get("xtick_size", 10)
+    xticklabels = kwargs.get("xticklabels", None)
     xlowerlimit = dataframe[ll].min()
     xupperlimit = dataframe[hl].max()
     ax.set_xlim(xlowerlimit, xupperlimit)
@@ -555,7 +559,8 @@ def format_xticks(
     else:
         ax.xaxis.set_major_locator(plt.MaxNLocator(nticks))
     ax.tick_params(axis="x", labelsize=xtick_size)
-    # ax.xticks(fontname="sans-serif")
+    if xticklabels:
+        ax.set_xticklabels(xticklabels)
     for xticklab in ax.get_xticklabels():
         xticklab.set_fontfamily("sans-serif")
     return ax

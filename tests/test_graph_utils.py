@@ -45,6 +45,7 @@ def test_draw_ci():
         yticklabel="yticklabel",
         ll="ll",
         hl="hl",
+        logscale=False,
         ax=ax,
     )
     assert isinstance(ax, Axes)

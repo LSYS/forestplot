@@ -53,6 +53,7 @@ def forestplot(
     ci_report: bool = True,
     groupvar: Optional[str] = None,
     group_order: Optional[Union[list, tuple]] = None,
+    logscale: bool = False,
     annote: Optional[Union[Sequence[str], None]] = None,
     annoteheaders: Optional[Union[Sequence[str], None]] = None,
     rightannote: Optional[Union[Sequence[str], None]] = None,
@@ -100,6 +101,8 @@ def forestplot(
             Name of column containing group of variables.
     group_order (list-like)
             List of groups by order to report in the figure.
+    logscale (bool)
+            If True, plot the x-axis on log scale (base 10).
     annote (list-like)
             List of columns to add as additional annotation on the left-hand side of the plot.
     annoteheaders (list-like)
@@ -196,6 +199,7 @@ def forestplot(
         yticklabel="yticklabel",
         estimate=estimate,
         groupvar=groupvar,
+        logscale=logscale,
         annoteheaders=annoteheaders,
         rightannote=rightannote,
         right_annoteheaders=right_annoteheaders,
@@ -327,6 +331,7 @@ def _make_forestplot(
     xticks: Optional[Union[list, range]],
     ll: str,
     hl: str,
+    logscale: bool,
     flush: bool,
     annoteheaders: Optional[Union[Sequence[str], None]],
     rightannote: Optional[Union[Sequence[str], None]],
@@ -354,6 +359,7 @@ def _make_forestplot(
         yticklabel=yticklabel,
         ll=ll,
         hl=hl,
+        logscale=logscale,
         ax=ax,
         **kwargs,
     )
@@ -419,4 +425,5 @@ def _make_forestplot(
                 right_annoteheaders=right_annoteheaders,
                 ax=ax,
             )
+    ax.set_ylim(-.5, ax.get_ylim()[1])
     return ax
