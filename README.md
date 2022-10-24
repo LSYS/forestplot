@@ -282,7 +282,6 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 <!------------------------ KNOWN ISSUES ------------------------>
 ## Known Issues[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#known-issues)
 * Variable labels coinciding with group variables may lead to unexpected formatting issues in the graph.
-* Horizontal CI lines cannot be recast as capped horizontal lines because of the backend `Matplotlib` API used.
 * Left-flushing of annotations relies on the `monospace` font.
 * Plot can get cluttered with too many variables/rows (~30 onwards) 
 <p align="right">(<a href="#top">back to top</a>)</p>
