@@ -253,9 +253,10 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 | `dataframe`           | Pandas dataframe where rows are variables (or studies for meta-analyses) and columns include estimated effect sizes, labels, and confidence intervals, etc. | &check; |
 | `estimate`            | Name of column in `dataframe` containing the *estimates*.                                                                                                   | &check; |
 | `varlabel`            | Name of column in `dataframe` containing the *variable labels* (study labels if meta-analyses).                                                             | &check; |
-| `ll`                  | Name of column in `dataframe` containing the conf. int. *lower limits*.                                                                                     | &check;* |
-| `hl`                  | Name of column in `dataframe` containing the conf. int. *higher limits*.                                                                                    | &check;* |
-| `moerror`             | Name of column in `dataframe` containing the conf. int. *margin of errors*.                                                                                 | &check;* |
+| `ll`                  | Name of column in `dataframe` containing the conf. int. *lower limits*.                                                                                     | &check; |
+| `hl`                  | Name of column in `dataframe` containing the conf. int. *higher limits*.                                                                                    | &check; |
+| `logscale`            | If True, make the x-axis log scale. Default is False.                                                                                                     |  |
+| `capitalize`          | How to capitalize strings. Default is None. One of "capitalize", "title", "lower", "upper", "swapcase".                                                      | |
 | `form_ci_report`      | If True (default), report the estimates and confidence interval beside the variable labels.                                                                 |          |
 | `ci_report`           | If True (default), format the confidence interval as a string.                                                                                              |          |
 | `groupvar`            | Name of column in `dataframe` containing the variable *grouping labels*.                                                                                    |       |
