@@ -85,15 +85,13 @@ df.head(3)
   | `moerror` | Conf. int.'s *margin of error*.                 |           |
   | `label`   | Variable labels                                 | &check;   |
   | `group`   | Variable grouping labels                        |           |
-  | `ll`      | Conf. int. *lower limits*                       | &check;*  |
-  | `hl`      | Containing the conf. int. *higher limits*       | &check;*  |
+  | `ll`      | Conf. int. *lower limits*                       | &check;  |
+  | `hl`      | Containing the conf. int. *higher limits*       | &check;  |
   | `n`       | Sample size                                     |           |
   | `power`   | Statistical power                               |           |
   | `p-val`   | P-value                                         |           |
 
-  (*If `ll` *and* `hl` are specified, then the `moerror` (margin of error) is not required.
-  <br>
-  See [Gallery and API Options](#gallery-and-api-options) for more details on required and optional arguments.)  
+  (See [Gallery and API Options](#gallery-and-api-options) for more details on required and optional arguments.)  
 </details>
 
 Make the forest plot
@@ -279,7 +277,6 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 | `preprocess`          | If True (default), preprocess the `dataframe` before plotting.                                                                                              |          |
 | `return_df`           | If True, returned the preprocessed `dataframe`.                                                                                                             |          |
 
-(*If `ll` *and* `hl` are specified, then the `moerror` (margin of error) is not required, and vice versa.)
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!------------------------ KNOWN ISSUES ------------------------>
