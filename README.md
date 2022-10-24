@@ -31,7 +31,7 @@ Additional options allow easy addition of columns in the `dataframe` as annotati
 <!---------------------- TABLE OF CONTENT ---------------------->
 <details open><summary><b>Table of Contents</b></summary><p>
 
-> - [Installation](#installation)
+> - [Installation](./README.md#installation)
 > - [Quick Start](#quick-start)
 > - [Some Examples with Customizations](#some-examples-with-customizations)
 > - [Gallery and API Options](#gallery-and-api-options)
