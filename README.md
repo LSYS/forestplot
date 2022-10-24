@@ -27,6 +27,7 @@ Additional options allow easy addition of columns in the `dataframe` as annotati
 | Python | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/forestplot?label=Python%203.6%2B&logo=python&logoColor=white)](https://pypi.org/project/forestplot/) |
 | Docs | [![Read the Docs (version)](https://img.shields.io/readthedocs/forestplot/stable?label=docs&logo=readthedocs&logoColor=white)](https://forestplot.readthedocs.io/en/latest/?badge=latest) [![DocLinks](https://github.com/LSYS/forestplot/actions/workflows/links.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/links.yml)|
 | Meta | ![GitHub](https://img.shields.io/github/license/lsys/forestplot?color=purple&label=License) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/LSYS/forestplot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/LSYS/forestplot/context:python) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![types - Mypy](https://img.shields.io/badge/types-Mypy-blue.svg)](https://github.com/python/mypy) [![DOI](https://zenodo.org/badge/510013191.svg)](https://zenodo.org/badge/latestdoi/510013191) |
+| Binder| [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/lsys/forestplot/main?labpath=examples%2Freadme-examples.ipynb) |
 
 <!---------------------- TABLE OF CONTENT ---------------------->
 <details open><summary><b>Table of Contents</b></summary><p>
@@ -305,8 +306,6 @@ This layout is similar to coefficient plots ([coefplots](http://repec.sowi.unibe
 </p></details><p></p>
 
 **More about this package:**
-
-[![Powered by NumFOCUS](https://img.shields.io/badge/powered%20by-NumFOCUS-orange.svg?style=flat&colorA=E1523D&colorB=007D8A)](http://numfocus.org)
 
 The package is lightweight, built on `pandas`, `numpy`, and `matplotlib`.
 
