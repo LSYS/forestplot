@@ -425,5 +425,5 @@ def _make_forestplot(
                 right_annoteheaders=right_annoteheaders,
                 ax=ax,
             )
-    ax.set_ylim(-.5, ax.get_ylim()[1])
+    ax.set_ylim(-0.5, ax.get_ylim()[1])
     return ax
