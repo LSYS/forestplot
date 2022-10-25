@@ -204,7 +204,7 @@ fp.forestplot(df,  # the dataframe with results data
               **{"marker": "D",  # set maker symbol as diamond
                  "markersize": 35,  # adjust marker size
                  "xlinestyle": (0, (10, 5)),  # long dash for x-reference line 
-                 "xlinecolor": ".1",  # gray color for x-reference line
+                 "xlinecolor": "#808080",  # gray color for x-reference line
                  "xtick_size": 12,  # adjust x-ticker fontsize
                 }  
               )
