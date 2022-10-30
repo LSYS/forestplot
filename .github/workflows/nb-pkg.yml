@@ -29,14 +29,16 @@ jobs:
         if [ -f examples/requirements.txt ]; then pip install -r examples/requirements.txt; fi
     - name: Test notebook(s) from PyPI
       run: |
-        python -m pip install forestplot
-        cd examples && runpynb readme-examples --sequence
-    - name: Test notebook(s) from conda-forge
-      run: |
-        pip uninstall forestplot -y
         conda config --add channels conda-forge
-        conda config --set channel_priority strict
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        if [ -f examples/requirements.txt ]; then pip install -r examples/requirements.txt; fi        
+        conda config --set channel_priority strict        
         conda install forestplot
         cd examples && runpynb readme-examples --sequence
+#     - name: Test notebook(s) from conda-forge
+#       run: |
+#         pip uninstall forestplot -y
+#         conda config --add channels conda-forge
+#         conda config --set channel_priority strict
+#         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+#         if [ -f examples/requirements.txt ]; then pip install -r examples/requirements.txt; fi        
+#         conda install forestplot
+#         cd examples && runpynb readme-examples --sequence
