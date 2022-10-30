@@ -14,7 +14,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11']
+#         python-version: ['3.8', '3.9', '3.10', '3.11']
+        python-version: ['3.8']
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -35,6 +36,7 @@ jobs:
         pip uninstall forestplot -y
         conda config --add channels conda-forge
         conda config --set channel_priority strict
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [ -f examples/requirements.txt ]; then pip install -r examples/requirements.txt; fi        
         conda install forestplot
-        conda install matplotlib
         cd examples && runpynb readme-examples --sequence
