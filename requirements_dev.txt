@@ -1,0 +1,16 @@
+-r requirements.txt
+
+# build
+wheel
+
+# test
+coverage
+pytest
+
+# lint
+black
+flake8
+mypy
+
+# package in local install
+-e .

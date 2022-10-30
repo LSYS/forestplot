@@ -29,7 +29,7 @@ prepack:
 	@echo "+ $@"
 	@rm -rf dist/ forestplot.egg-info/
 	@rm -rf dist/ pyforestplot.egg-info/
-	@python setup.py sdist
+	@python setup.py sdist bdist_wheel
 	twine check dist/*
 
 PACKAGE_FILES := build/ dist/ *.egg-info/ *.egg-info *.egg
