@@ -301,7 +301,7 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 <!----------------- BACKGROUND AND ADDITIONAL RESOURCES ----------------->
 ## Background and Additional Resources[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#background-and-additional-resources)
 
-**More about forest plots:**
+**More about forest plots**
 
 [Forest plots](https://en.wikipedia.org/wiki/Forest_plot) have many aliases (h/t Chris Alexiuk). Other names include coefplots, coefficient plots, meta-analysis plots, dot-and-whisker plots, blobbograms, margins plots, regression plots, and ropeladder plots. 
 
@@ -310,22 +310,22 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 The simplest version of a forest plot has two columns: one for the variables/studies, and the second for the estimated coefficients and confidence intervals.
 This layout is similar to coefficient plots ([coefplots](http://repec.sowi.unibe.ch/stata/coefplot/getting-started.html)) and is thus useful for more than meta-analyses.
 
-<details><summary><i>Here are more resources about forest plots:</i></summary><p>
+<details><summary><i>More resources about forest plots</i></summary><p>
 
 * [[1]](https://doi.org/10.1038/s41433-021-01867-6) Chang, Y., Phillips, M.R., Guymer, R.H. et al. The 5 min meta-analysis: understanding how to read and interpret a forest plot. Eye 36, 673–675 (2022).
 * [[2]](https://doi.org/10.1136/bmj.322.7300.1479) Lewis S, Clarke M. Forest plots: trying to see the wood and the trees BMJ 2001; 322 :1479 
 </p></details><p></p>
 
-**More about this package:**
+**More about this package**
 
 The package is lightweight, built on `pandas`, `numpy`, and `matplotlib`.
 
 It is slightly opinioniated in that the aesthetics of the plot inherits some of my sensibilities about what makes a nice figure.
 You can however easily override most defaults for the look of the graph. This is possible via `**kwargs` in the `forestplot` API (see [Gallery and API options](#gallery-and-api-options)) and the `matplotlib` API.
 
-**Planned enhancements** include forest plots each row can have multiple coefficients (e.g. from multiple models). 
+**Planned enhancements** include forest plots where each row can have multiple coefficients (e.g. from multiple models). 
 
-<details><summary><i>Related packages:</i></summary><p>
+<details><summary><i>Related packages</i></summary><p>
 
 * [[1]](https://www.stata-journal.com/article.html?article=gr0059) [Stata] Jann, Ben (2014). Plotting regression coefficients and other estimates. The Stata Journal 14(4): 708-737. 
 * [[2]](https://www.statsmodels.org/devel/examples/notebooks/generated/metaanalysis1.html) [Python] Meta-Analysis in statsmodels
