@@ -32,6 +32,6 @@ jobs:
         cd examples && runpynb readme-examples --sequence
     - name: Test notebook(s) from conda-forge
       run: |
-        pip uninstall forestplot
+        pip uninstall forestplot -y
         conda install forestplot
         cd examples && runpynb readme-examples --sequence
