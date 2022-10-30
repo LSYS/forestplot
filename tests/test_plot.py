@@ -27,6 +27,7 @@ def test_more_options():
                                ll='ll', hl='hl',  # lower & higher limits of conf. int.
                                varlabel='label',  # column containing the varlabels to be printed on far left
                                pval='p-val',  # column containing p-values to be formatted
+                               logscale=True,  # x-axis in logscale
                                annote=['n', 'power', "est_ci"],  # columns to report on left of plot
                                annoteheaders=['N', 'Power', 'Est. (95% Conf. Int.)'],  # ^corresponding headers
                                rightannote=['formatted_pval', 'group'],  # columns to report on right of plot 
