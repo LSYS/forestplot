@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you wish to cite this package, please cite it as below."
+preferred-citation:
+  authors:
+  - family-names: "Shen"
+    given-names: "Lucas"
+  title: "Forestplot"
+  year: 2022
+  url: "https://pypi.org/project/forestplot/"
+  repository-code: "https://github.com/LSYS/forestplot"
+  license:  MIT license
+  identifiers:
+  - description: "This is from the archived snapshot of the code, supported by Zenodo."
+    type: doi
+    value: 10.5281/zenodo.7029377
+  doi: 10.5281/zenodo.7029377
