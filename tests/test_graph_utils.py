@@ -27,6 +27,8 @@ input_df = pd.DataFrame(
         "yticklabel": str_vector,
         "estimate": x,
         "moerror": y,
+        "ll": x,
+        "hl": y,
         "pval": y,
         "formatted_pval": y,
         "yticklabel1": str_vector,
@@ -38,12 +40,18 @@ input_df = pd.DataFrame(
 def test_draw_ci():
     _, ax = plt.subplots()
     ax = draw_ci(
-        input_df, estimate="estimate", yticklabel="yticklabel", moerror="moerror", ax=ax
+        dataframe=input_df,
+        estimate="estimate",
+        yticklabel="yticklabel",
+        ll="ll",
+        hl="hl",
+        logscale=False,
+        ax=ax,
     )
     assert isinstance(ax, Axes)
 
-    xticklabels = [lab.get_text() for lab in ax.get_yticklabels()]
-    assert all(txt in xticklabels for txt in input_df["yticklabel"])
+    # Assert yticklabels are of correct length
+    assert len(ax.get_yticklabels()) == len(input_df["yticklabel"])
 
     # Assert yticks are integers
     assert (all(isinstance(tick, int)) for tick in ax.get_yticks())

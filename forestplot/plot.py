@@ -47,18 +47,19 @@ def forestplot(
     dataframe: pd.core.frame.DataFrame,
     estimate: str,
     varlabel: str,
-    moerror: Optional[str] = None,
     ll: Optional[str] = None,
     hl: Optional[str] = None,
     form_ci_report: bool = True,
     ci_report: bool = True,
     groupvar: Optional[str] = None,
     group_order: Optional[Union[list, tuple]] = None,
+    logscale: bool = False,
     annote: Optional[Union[Sequence[str], None]] = None,
     annoteheaders: Optional[Union[Sequence[str], None]] = None,
     rightannote: Optional[Union[Sequence[str], None]] = None,
     right_annoteheaders: Optional[Union[Sequence[str], None]] = None,
     pval: Optional[str] = None,
+    capitalize: Optional[str] = None,
     starpval: bool = True,
     sort: bool = False,
     sortby: Optional[str] = None,
@@ -88,15 +89,10 @@ def forestplot(
             OR, regression estimates, etc.).
     varlabel (str)
             Name of column containing the variable label to be printed out.
-    moerror (str)
-            Name of column containing the margin of error in the confidence intervals.
-            Should be available if 'll' and 'hl' are left empty.
     ll (str)
             Name of column containing the lower limit of the confidence intervals.
-            Optional
     hl (str)
             Name of column containing the upper limit of the confidence intervals.
-            Optional
     form_ci_report (bool)
             If True, form the formatted confidence interval as a string.
     ci_report (bool)
@@ -105,6 +101,8 @@ def forestplot(
             Name of column containing group of variables.
     group_order (list-like)
             List of groups by order to report in the figure.
+    logscale (bool)
+            If True, plot the x-axis on log scale (base 10).
     annote (list-like)
             List of columns to add as additional annotation on the left-hand side of the plot.
     annoteheaders (list-like)
@@ -158,7 +156,6 @@ def forestplot(
         dataframe=_local_df,
         estimate=estimate,
         varlabel=varlabel,
-        moerror=moerror,
         pval=pval,
         ll=ll,
         hl=hl,
@@ -178,11 +175,11 @@ def forestplot(
             dataframe=_local_df,
             estimate=estimate,
             varlabel=varlabel,
-            moerror=moerror,
             ll=ll,
             hl=hl,
             form_ci_report=form_ci_report,
             ci_report=ci_report,
+            capitalize=capitalize,
             groupvar=groupvar,
             group_order=group_order,
             annote=annote,
@@ -201,8 +198,8 @@ def forestplot(
         dataframe=_local_df,
         yticklabel="yticklabel",
         estimate=estimate,
-        moerror=moerror,
         groupvar=groupvar,
+        logscale=logscale,
         annoteheaders=annoteheaders,
         rightannote=rightannote,
         right_annoteheaders=right_annoteheaders,
@@ -226,7 +223,6 @@ def _preprocess_dataframe(
     dataframe: pd.core.frame.DataFrame,
     estimate: str,
     varlabel: str,
-    moerror: Optional[str],
     ll: Optional[str] = None,
     hl: Optional[str] = None,
     form_ci_report: Optional[bool] = False,
@@ -237,7 +233,7 @@ def _preprocess_dataframe(
     annoteheaders: Optional[Union[Sequence[str], None]] = None,
     rightannote: Optional[Union[Sequence[str], None]] = None,
     right_annoteheaders: Optional[Union[Sequence[str], None]] = None,
-    capitalize: str = "capitalize",
+    capitalize: Optional[str] = None,
     pval: Optional[str] = None,
     starpval: bool = True,
     sort: bool = False,
@@ -279,7 +275,6 @@ def _preprocess_dataframe(
         dataframe = form_est_ci(
             dataframe=dataframe,
             estimate=estimate,
-            moerror=moerror,
             ll=ll,
             hl=hl,
             decimal_precision=decimal_precision,
@@ -331,12 +326,12 @@ def _make_forestplot(
     dataframe: pd.core.frame.DataFrame,
     yticklabel: str,
     estimate: str,
-    moerror: str,
     groupvar: str,
     pval: str,
     xticks: Optional[Union[list, range]],
     ll: str,
     hl: str,
+    logscale: bool,
     flush: bool,
     annoteheaders: Optional[Union[Sequence[str], None]],
     rightannote: Optional[Union[Sequence[str], None]],
@@ -358,13 +353,13 @@ def _make_forestplot(
             Matplotlib Axes object.
     """
     _, ax = plt.subplots(figsize=figsize, facecolor="white")
-    if moerror is None:
-        moerror = "moerror"
     ax = draw_ci(
         dataframe=dataframe,
         estimate=estimate,
         yticklabel=yticklabel,
-        moerror=moerror,
+        ll=ll,
+        hl=hl,
+        logscale=logscale,
         ax=ax,
         **kwargs,
     )
@@ -430,4 +425,5 @@ def _make_forestplot(
                 right_annoteheaders=right_annoteheaders,
                 ax=ax,
             )
+    ax.set_ylim(-0.5, ax.get_ylim()[1])
     return ax

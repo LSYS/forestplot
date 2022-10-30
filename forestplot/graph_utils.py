@@ -11,12 +11,14 @@ def draw_ci(
     dataframe: pd.core.frame.DataFrame,
     estimate: str,
     yticklabel: str,
-    moerror: str,
+    ll: str,
+    hl: str,
+    logscale: bool,
     ax: Axes,
     **kwargs: Any
 ) -> Axes:
     """
-    Draw the confidence intervals using the horizontal bar plot (barh) from the pandas API.
+    Draw the confidence intervals using the Matplotlib errorbar API.
 
     Parameters
     ----------
@@ -28,9 +30,10 @@ def draw_ci(
             OR, regression estimates, etc.).
     yticklabel (str)
             Name of column in intermediate dataframe containing the formatted yticklabels.
-    moerror (str)
-            Name of column containing the margin of error in the confidence intervals.
-            Should be available if 'll' and 'hl' are left empty.
+    ll (str)
+            Name of column containing the lower limit of the confidence intervals.
+    hl (str)
+            Name of column containing the upper limit of the confidence intervals.
     ax (Matplotlib Axes)
             Axes to operate on.
 
@@ -40,17 +43,17 @@ def draw_ci(
     """
     lw = kwargs.get("lw", 1.4)
     linecolor = kwargs.get("linecolor", ".6")
-    ax = dataframe.plot(
-        y=estimate,
-        x=yticklabel,
-        kind="barh",
-        xerr=moerror,
-        color="none",
-        error_kw={"lw": lw, "ecolor": linecolor},
-        legend=False,
-        ax=ax,
+    ax.errorbar(
+        x=dataframe[estimate],
+        y=dataframe[yticklabel],
+        xerr=[dataframe[estimate] - dataframe[ll], dataframe[hl] - dataframe[estimate]],
+        ecolor=linecolor,
+        elinewidth=lw,
+        ls="none",
         zorder=0,
     )
+    if logscale:
+        ax.set_xscale("log", base=10)
     return ax
 
 
@@ -546,6 +549,7 @@ def format_xticks(
     """
     nticks = kwargs.get("nticks", 5)
     xtick_size = kwargs.get("xtick_size", 10)
+    xticklabels = kwargs.get("xticklabels", None)
     xlowerlimit = dataframe[ll].min()
     xupperlimit = dataframe[hl].max()
     ax.set_xlim(xlowerlimit, xupperlimit)
@@ -555,7 +559,8 @@ def format_xticks(
     else:
         ax.xaxis.set_major_locator(plt.MaxNLocator(nticks))
     ax.tick_params(axis="x", labelsize=xtick_size)
-    # ax.xticks(fontname="sans-serif")
+    if xticklabels:
+        ax.set_xticklabels(xticklabels)
     for xticklab in ax.get_xticklabels():
         xticklab.set_fontfamily("sans-serif")
     return ax

@@ -8,7 +8,6 @@ from forestplot.arg_validators import check_iterables_samelen
 def form_est_ci(
     dataframe: pd.core.frame.DataFrame,
     estimate: str,
-    moerror: Union[str, None],
     ll: str,
     hl: str,
     decimal_precision: int,
@@ -27,15 +26,10 @@ def form_est_ci(
     estimate (str)
             Name of column containing the estimates (e.g. pearson correlation coefficient,
             OR, regression estimates, etc.).
-    moerror (str)
-            Name of column containing the margin of error in the confidence intervals.
-            Should be available if 'll' and 'hl' are left empty.
     ll (str)
             Name of column containing the lower limit of the confidence intervals.
-            Optional
     hl (str)
             Name of column containing the upper limit of the confidence intervals.
-            Optional
     decimal_precision (int)
             Precision of 2 means we go from '0.1234' -> '0.12'.
     caps (iterable)

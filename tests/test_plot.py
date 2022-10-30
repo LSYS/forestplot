@@ -37,6 +37,7 @@ def test_more_options():
                                'family factors', 'area of residence', 'other factors'],                   
                                xlabel='Pearson correlation coefficient',  # x-label title
                                xticks=[-.4,-.2,0, .2],  # x-ticks to be printed
+                               xticklabels=[-.4,-.2,0, .2],  # set xticklabels
                                sort=True,  # sort estimates in ascending order
                                table=True,  # Format as a table
                                return_df=True, 

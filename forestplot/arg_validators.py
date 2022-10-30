@@ -10,7 +10,6 @@ def check_data(
     varlabel: str,
     groupvar: Optional[str] = None,
     group_order: Optional[Sequence] = None,
-    moerror: Optional[str] = None,
     ll: Optional[str] = None,
     hl: Optional[str] = None,
     annote: Optional[Union[Sequence[str], None]] = None,
@@ -33,33 +32,29 @@ def check_data(
         estimate (str)
                 Name of column containing the estimates (e.g. pearson correlation coefficient,
                 OR, regression estimates, etc.).
-    varlabel (str)
-        Name of column containing the variable label to be printed out.
-        moerror (str)
-                Name of column containing the margin of error in the confidence intervals.
-                Should be available if 'll' and 'hl' are left empty.
-    groupvar (str)
-        Name of column containing group of variables.
-    group_order (list-like)
-        List of groups by order to report in the figure.
+        varlabel (str)
+                Name of column containing the variable label to be printed out.
+        groupvar (str)
+                Name of column containing group of variables.
+        group_order (list-like)
+                List of groups by order to report in the figure.
         ll (str)
                 Name of column containing the lower limit of the confidence intervals.
-                Optional
         hl (str)
                 Name of column containing the upper limit of the confidence intervals.
         annote (list-like)
                 List of columns to add as additional annotation in the plot.
         annoteheaders (list-like)
                 List of table headers to use as column headers for the additional annotations.
-    rightannote (list-like)
-        List of columns to add as additional annotation on the right-hand side of the plot.
-    right_annoteheaders (list-like)
-        List of table headers to use as column headers for the additional annotations
-        on the right-hand side of the plot.
-    pval (str)
-        Name of column containing the p-values.
-    ylabel2 (str)
-        Title of the right-hand side y-axis.
+        rightannote (list-like)
+                List of columns to add as additional annotation on the right-hand side of the plot.
+        right_annoteheaders (list-like)
+                List of table headers to use as column headers for the additional annotations
+                on the right-hand side of the plot.
+        pval (str)
+                Name of column containing the p-values.
+        ylabel2 (str)
+                Title of the right-hand side y-axis.
 
         Returns
         -------
@@ -77,12 +72,6 @@ def check_data(
         except ValueError:
             raise TypeError("Estimates should be float or int")
 
-    if (moerror is not None) and (not ptypes.is_numeric_dtype(dataframe[moerror])):
-        try:
-            dataframe[moerror] = dataframe[moerror].astype(float)
-        except ValueError:
-            raise TypeError("Margin of error values should be float or int")
-
     if (ll is not None) and (not ptypes.is_numeric_dtype(dataframe[ll])):
         try:
             dataframe[ll] = dataframe[ll].astype(float)
@@ -94,36 +83,6 @@ def check_data(
             dataframe[hl] = dataframe[hl].astype(float)
         except ValueError:
             raise TypeError("CI higherlimit values should be float or int")
-
-    ##########################################################################
-    ## Check that either moerror or ll, hl are specified.
-    ## Create the missing data from what is available
-    ##########################################################################
-    if moerror is None:
-        try:
-            assert (ll is not None) & (hl is not None)
-        except Exception:
-            raise AssertionError(
-                'If "moerror" is not provided, then "ll" and "hl" must be provided.'
-            )
-
-    if (ll is None) or (hl is None):
-        try:
-            assert moerror is not None
-        except Exception:
-            raise AssertionError(
-                'If "ll, hl" is not provided, then "moerror" must be provided.'
-            )
-
-    # if moerror not there make it
-    if moerror is None:
-        dataframe["moerror"] = dataframe[estimate] - dataframe[ll]
-
-    # if ll, hl not there make it
-    if ll is None:
-        dataframe["ll"] = dataframe[estimate] - dataframe[moerror]
-    if hl is None:
-        dataframe["hl"] = dataframe[estimate] + dataframe[moerror]
 
     ##########################################################################
     ## Check that the annotations and headers specified are list-like

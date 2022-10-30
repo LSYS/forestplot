@@ -21,12 +21,13 @@ Additional options allow easy addition of columns in the `dataframe` as annotati
 
 |    |    |
 | --- | --- |
-| Release | [![PyPI](https://img.shields.io/pypi/v/forestplot?color=blue&label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/forestplot/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/lsys/forestplot?color=blue&label=Latest%20release)](https://github.com/LSYS/forestplot/releases) |
+| Release | [![PyPI](https://img.shields.io/pypi/v/forestplot?color=blue&label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/forestplot/) ![Conda (channel only)](https://img.shields.io/conda/vn/conda-forge/forestplot?logo=conda-forge&logoColor=white) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/lsys/forestplot?color=blue&label=Latest%20release)](https://github.com/LSYS/forestplot/releases) |
 | Status | [![CI](https://github.com/LSYS/forestplot/actions/workflows/CI.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/CI.yml) [![Notebooks](https://github.com/LSYS/forestplot/actions/workflows/nb.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/nb.yml) |
 | Coverage |  [![Codecov](https://img.shields.io/codecov/c/github/lsys/forestplot?logo=codecov&logoColor=white&label=codecov)](https://app.codecov.io/gh/LSYS/forestplot) |
 | Python | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/forestplot?label=Python%203.6%2B&logo=python&logoColor=white)](https://pypi.org/project/forestplot/) |
 | Docs | [![Read the Docs (version)](https://img.shields.io/readthedocs/forestplot/stable?label=docs&logo=readthedocs&logoColor=white)](https://forestplot.readthedocs.io/en/latest/?badge=latest) [![DocLinks](https://github.com/LSYS/forestplot/actions/workflows/links.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/links.yml)|
 | Meta | ![GitHub](https://img.shields.io/github/license/lsys/forestplot?color=purple&label=License) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/LSYS/forestplot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/LSYS/forestplot/context:python) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![types - Mypy](https://img.shields.io/badge/types-Mypy-blue.svg)](https://github.com/python/mypy) [![DOI](https://zenodo.org/badge/510013191.svg)](https://zenodo.org/badge/latestdoi/510013191) |
+| Binder| [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/lsys/forestplot/main?labpath=examples%2Freadme-examples.ipynb) |
 
 <!---------------------- TABLE OF CONTENT ---------------------->
 <details open><summary><b>Table of Contents</b></summary><p>
@@ -47,6 +48,12 @@ Install from PyPI<br>
  [![PyPI](https://img.shields.io/pypi/v/forestplot?color=blue&label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/forestplot/)
 ```bash
 pip install forestplot
+```
+
+Install from conda-forge<br>
+![Conda (channel only)](https://img.shields.io/conda/vn/conda-forge/forestplot?logo=conda-forge&logoColor=white)
+```bash
+conda install forestplot
 ```
 
 Install from source<br>
@@ -85,15 +92,13 @@ df.head(3)
   | `moerror` | Conf. int.'s *margin of error*.                 |           |
   | `label`   | Variable labels                                 | &check;   |
   | `group`   | Variable grouping labels                        |           |
-  | `ll`      | Conf. int. *lower limits*                       | &check;*  |
-  | `hl`      | Containing the conf. int. *higher limits*       | &check;*  |
+  | `ll`      | Conf. int. *lower limits*                       | &check;  |
+  | `hl`      | Containing the conf. int. *higher limits*       | &check;  |
   | `n`       | Sample size                                     |           |
   | `power`   | Statistical power                               |           |
   | `p-val`   | P-value                                         |           |
 
-  (*If `ll` *and* `hl` are specified, then the `moerror` (margin of error) is not required.
-  <br>
-  See [Gallery and API Options](#gallery-and-api-options) for more details on required and optional arguments.)  
+  (See [Gallery and API Options](#gallery-and-api-options) for more details on required and optional arguments.)  
 </details>
 
 Make the forest plot
@@ -121,6 +126,7 @@ fp.forestplot(df,  # the dataframe with results data
               estimate="r",  # col containing estimated effect size 
               moerror="moerror",  # columns containing conf. int. margin of error
               varlabel="label",  # column containing variable label
+              capitalize="capitalize",  # Capitalize labels
               groupvar="group",  # Add variable groupings 
               # group ordering
               group_order=["labor factors", "occupation", "age", "health factors", 
@@ -136,6 +142,7 @@ fp.forestplot(df,  # the dataframe with results data
               estimate="r",  # col containing estimated effect size 
               ll="ll", hl="hl",  # columns containing conf. int. lower and higher limits
               varlabel="label",  # column containing variable label
+              capitalize="capitalize",  # Capitalize labels
               groupvar="group",  # Add variable groupings 
               # group ordering
               group_order=["labor factors", "occupation", "age", "health factors", 
@@ -157,6 +164,7 @@ fp.forestplot(df,  # the dataframe with results data
               estimate="r",  # col containing estimated effect size 
               ll="ll", hl="hl",  # lower & higher limits of conf. int.
               varlabel="label",  # column containing the varlabels to be printed on far left
+              capitalize="capitalize",  # Capitalize labels
               pval="p-val",  # column containing p-values to be formatted
               annote=["n", "power", "est_ci"],  # columns to report on left of plot
               annoteheaders=["N", "Power", "Est. (95% Conf. Int.)"],  # ^corresponding headers
@@ -175,6 +183,7 @@ fp.forestplot(df,  # the dataframe with results data
               estimate="r",  # col containing estimated effect size 
               ll="ll", hl="hl",  # lower & higher limits of conf. int.
               varlabel="label",  # column containing the varlabels to be printed on far left
+              capitalize="capitalize",  # Capitalize labels
               ci_report=False,  # Turn off conf. int. reporting
               flush=False,  # Turn off left-flush of text
               **{'fontfamily': 'sans-serif'}  # revert to sans-serif                              
@@ -188,6 +197,7 @@ fp.forestplot(df,  # the dataframe with results data
               estimate="r",  # col containing estimated effect size 
               ll="ll", hl="hl",  # lower & higher limits of conf. int.
               varlabel="label",  # column containing the varlabels to be printed on far left
+              capitalize="capitalize",  # Capitalize labels
               pval="p-val",  # column containing p-values to be formatted
               annote=["n", "power", "est_ci"],  # columns to report on left of plot
               annoteheaders=["N", "Power", "Est. (95% Conf. Int.)"],  # ^corresponding headers
@@ -253,9 +263,10 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 | `dataframe`           | Pandas dataframe where rows are variables (or studies for meta-analyses) and columns include estimated effect sizes, labels, and confidence intervals, etc. | &check; |
 | `estimate`            | Name of column in `dataframe` containing the *estimates*.                                                                                                   | &check; |
 | `varlabel`            | Name of column in `dataframe` containing the *variable labels* (study labels if meta-analyses).                                                             | &check; |
-| `ll`                  | Name of column in `dataframe` containing the conf. int. *lower limits*.                                                                                     | &check;* |
-| `hl`                  | Name of column in `dataframe` containing the conf. int. *higher limits*.                                                                                    | &check;* |
-| `moerror`             | Name of column in `dataframe` containing the conf. int. *margin of errors*.                                                                                 | &check;* |
+| `ll`                  | Name of column in `dataframe` containing the conf. int. *lower limits*.                                                                                     | &check; |
+| `hl`                  | Name of column in `dataframe` containing the conf. int. *higher limits*.                                                                                    | &check; |
+| `logscale`            | If True, make the x-axis log scale. Default is False.                                                                                                     |  |
+| `capitalize`          | How to capitalize strings. Default is None. One of "capitalize", "title", "lower", "upper", "swapcase".                                                      | |
 | `form_ci_report`      | If True (default), report the estimates and confidence interval beside the variable labels.                                                                 |          |
 | `ci_report`           | If True (default), format the confidence interval as a string.                                                                                              |          |
 | `groupvar`            | Name of column in `dataframe` containing the variable *grouping labels*.                                                                                    |       |
@@ -278,13 +289,11 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 | `preprocess`          | If True (default), preprocess the `dataframe` before plotting.                                                                                              |          |
 | `return_df`           | If True, returned the preprocessed `dataframe`.                                                                                                             |          |
 
-(*If `ll` *and* `hl` are specified, then the `moerror` (margin of error) is not required, and vice versa.)
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!------------------------ KNOWN ISSUES ------------------------>
 ## Known Issues[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#known-issues)
 * Variable labels coinciding with group variables may lead to unexpected formatting issues in the graph.
-* Horizontal CI lines cannot be recast as capped horizontal lines because of the backend `Matplotlib` API used.
 * Left-flushing of annotations relies on the `monospace` font.
 * Plot can get cluttered with too many variables/rows (~30 onwards) 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -292,7 +301,7 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 <!----------------- BACKGROUND AND ADDITIONAL RESOURCES ----------------->
 ## Background and Additional Resources[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#background-and-additional-resources)
 
-**More about forest plots:**
+**More about forest plots**
 
 [Forest plots](https://en.wikipedia.org/wiki/Forest_plot) have many aliases (h/t Chris Alexiuk). Other names include coefplots, coefficient plots, meta-analysis plots, dot-and-whisker plots, blobbograms, margins plots, regression plots, and ropeladder plots. 
 
@@ -301,24 +310,22 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 The simplest version of a forest plot has two columns: one for the variables/studies, and the second for the estimated coefficients and confidence intervals.
 This layout is similar to coefficient plots ([coefplots](http://repec.sowi.unibe.ch/stata/coefplot/getting-started.html)) and is thus useful for more than meta-analyses.
 
-<details><summary><i>Here are more resources about forest plots:</i></summary><p>
+<details><summary><i>More resources about forest plots</i></summary><p>
 
 * [[1]](https://doi.org/10.1038/s41433-021-01867-6) Chang, Y., Phillips, M.R., Guymer, R.H. et al. The 5 min meta-analysis: understanding how to read and interpret a forest plot. Eye 36, 673–675 (2022).
 * [[2]](https://doi.org/10.1136/bmj.322.7300.1479) Lewis S, Clarke M. Forest plots: trying to see the wood and the trees BMJ 2001; 322 :1479 
 </p></details><p></p>
 
-**More about this package:**
-
-[![Powered by NumFOCUS](https://img.shields.io/badge/powered%20by-NumFOCUS-orange.svg?style=flat&colorA=E1523D&colorB=007D8A)](http://numfocus.org)
+**More about this package**
 
 The package is lightweight, built on `pandas`, `numpy`, and `matplotlib`.
 
 It is slightly opinioniated in that the aesthetics of the plot inherits some of my sensibilities about what makes a nice figure.
 You can however easily override most defaults for the look of the graph. This is possible via `**kwargs` in the `forestplot` API (see [Gallery and API options](#gallery-and-api-options)) and the `matplotlib` API.
 
-**Planned enhancements** include forest plots each row can have multiple coefficients (e.g. from multiple models). 
+**Planned enhancements** include forest plots where each row can have multiple coefficients (e.g. from multiple models). 
 
-<details><summary><i>Related packages:</i></summary><p>
+<details><summary><i>Related packages</i></summary><p>
 
 * [[1]](https://www.stata-journal.com/article.html?article=gr0059) [Stata] Jann, Ben (2014). Plotting regression coefficients and other estimates. The Stata Journal 14(4): 708-737. 
 * [[2]](https://www.statsmodels.org/devel/examples/notebooks/generated/metaanalysis1.html) [Python] Meta-Analysis in statsmodels
@@ -347,5 +354,9 @@ Contributions are welcome, and they are greatly appreciated!
 
 Please submit bugs, questions, or issues you encounter to the [GitHub Issue Tracker](https://github.com/lsys/forestplot/issues).
 For bugs, please provide a minimal reproducible example demonstrating the problem.
+
+**Pull Requests**
+
+Please feel free to open an issue on the [Issue Tracker](https://github.com/lsys/forestplot/issues) if you'd like to discuss potential contributions via PRs.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
