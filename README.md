@@ -21,7 +21,7 @@ Additional options allow easy addition of columns in the `dataframe` as annotati
 
 |    |    |
 | --- | --- |
-| Release | [![PyPI](https://img.shields.io/pypi/v/forestplot?color=blue&label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/forestplot/) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/lsys/forestplot?color=blue&label=Latest%20release)](https://github.com/LSYS/forestplot/releases) |
+| Release | [![PyPI](https://img.shields.io/pypi/v/forestplot?color=blue&label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/forestplot/) ![Conda (channel only)](https://img.shields.io/conda/vn/conda-forge/forestplot?logo=conda-forge&logoColor=white) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/lsys/forestplot?color=blue&label=Latest%20release)](https://github.com/LSYS/forestplot/releases) |
 | Status | [![CI](https://github.com/LSYS/forestplot/actions/workflows/CI.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/CI.yml) [![Notebooks](https://github.com/LSYS/forestplot/actions/workflows/nb.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/nb.yml) |
 | Coverage |  [![Codecov](https://img.shields.io/codecov/c/github/lsys/forestplot?logo=codecov&logoColor=white&label=codecov)](https://app.codecov.io/gh/LSYS/forestplot) |
 | Python | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/forestplot?label=Python%203.6%2B&logo=python&logoColor=white)](https://pypi.org/project/forestplot/) |
@@ -48,6 +48,12 @@ Install from PyPI<br>
  [![PyPI](https://img.shields.io/pypi/v/forestplot?color=blue&label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/forestplot/)
 ```bash
 pip install forestplot
+```
+
+Install from conda-forge<br>
+![Conda (channel only)](https://img.shields.io/conda/vn/conda-forge/forestplot?logo=conda-forge&logoColor=white)
+```bash
+conda install forestplot
 ```
 
 Install from source<br>
@@ -120,6 +126,7 @@ fp.forestplot(df,  # the dataframe with results data
               estimate="r",  # col containing estimated effect size 
               moerror="moerror",  # columns containing conf. int. margin of error
               varlabel="label",  # column containing variable label
+              capitalize="capitalize",  # Capitalize labels
               groupvar="group",  # Add variable groupings 
               # group ordering
               group_order=["labor factors", "occupation", "age", "health factors", 
@@ -135,6 +142,7 @@ fp.forestplot(df,  # the dataframe with results data
               estimate="r",  # col containing estimated effect size 
               ll="ll", hl="hl",  # columns containing conf. int. lower and higher limits
               varlabel="label",  # column containing variable label
+              capitalize="capitalize",  # Capitalize labels
               groupvar="group",  # Add variable groupings 
               # group ordering
               group_order=["labor factors", "occupation", "age", "health factors", 
@@ -156,6 +164,7 @@ fp.forestplot(df,  # the dataframe with results data
               estimate="r",  # col containing estimated effect size 
               ll="ll", hl="hl",  # lower & higher limits of conf. int.
               varlabel="label",  # column containing the varlabels to be printed on far left
+              capitalize="capitalize",  # Capitalize labels
               pval="p-val",  # column containing p-values to be formatted
               annote=["n", "power", "est_ci"],  # columns to report on left of plot
               annoteheaders=["N", "Power", "Est. (95% Conf. Int.)"],  # ^corresponding headers
@@ -174,6 +183,7 @@ fp.forestplot(df,  # the dataframe with results data
               estimate="r",  # col containing estimated effect size 
               ll="ll", hl="hl",  # lower & higher limits of conf. int.
               varlabel="label",  # column containing the varlabels to be printed on far left
+              capitalize="capitalize",  # Capitalize labels
               ci_report=False,  # Turn off conf. int. reporting
               flush=False,  # Turn off left-flush of text
               **{'fontfamily': 'sans-serif'}  # revert to sans-serif                              
@@ -187,6 +197,7 @@ fp.forestplot(df,  # the dataframe with results data
               estimate="r",  # col containing estimated effect size 
               ll="ll", hl="hl",  # lower & higher limits of conf. int.
               varlabel="label",  # column containing the varlabels to be printed on far left
+              capitalize="capitalize",  # Capitalize labels
               pval="p-val",  # column containing p-values to be formatted
               annote=["n", "power", "est_ci"],  # columns to report on left of plot
               annoteheaders=["N", "Power", "Est. (95% Conf. Int.)"],  # ^corresponding headers
@@ -343,5 +354,9 @@ Contributions are welcome, and they are greatly appreciated!
 
 Please submit bugs, questions, or issues you encounter to the [GitHub Issue Tracker](https://github.com/lsys/forestplot/issues).
 For bugs, please provide a minimal reproducible example demonstrating the problem.
+
+**Pull Requests**
+
+Please feel free to open an issue on the [Issue Tracker](https://github.com/lsys/forestplot/issues) if you'd like to discuss potential contributions via PRs.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
