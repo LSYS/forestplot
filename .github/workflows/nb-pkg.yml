@@ -1,11 +1,6 @@
 name: Notebooks-pkg
 
-# on: workflow_dispatch
-on:
-  push:
-    branches: [ "main", "patch", "feature" ]
-  pull_request:
-    branches: [ "main" ]
+on: workflow_dispatch
 
 jobs:
   build_linux:
@@ -14,8 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-#         python-version: ['3.8', '3.9', '3.10', '3.11']
-        python-version: ['3.8']
+        python-version: ['3.8', '3.9', '3.10']
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -25,20 +19,9 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        python -m pip install forestplot
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         if [ -f examples/requirements.txt ]; then pip install -r examples/requirements.txt; fi
-    - name: Test notebook(s) from PyPI
+    - name: Test notebook(s)
       run: |
-        conda config --add channels conda-forge
-        conda config --set channel_priority strict        
-        conda install forestplot
         cd examples && runpynb readme-examples --sequence
-#     - name: Test notebook(s) from conda-forge
-#       run: |
-#         pip uninstall forestplot -y
-#         conda config --add channels conda-forge
-#         conda config --set channel_priority strict
-#         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-#         if [ -f examples/requirements.txt ]; then pip install -r examples/requirements.txt; fi        
-#         conda install forestplot
-#         cd examples && runpynb readme-examples --sequence
