@@ -33,5 +33,7 @@ jobs:
     - name: Test notebook(s) from conda-forge
       run: |
         pip uninstall forestplot -y
+        conda config --add channels conda-forge
+        conda config --set channel_priority strict
         conda install forestplot
         cd examples && runpynb readme-examples --sequence
