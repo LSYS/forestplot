@@ -216,7 +216,7 @@ fp.forestplot(df,  # the dataframe with results data
               right_annoteheaders=["P-value", "Variable group"],  # ^corresponding headers
               groupvar="group",  # column containing group labels
               group_order=["labor factors", "occupation", "age", "health factors", 
-                           "family factors', "area of residence", "other factors"],                   
+                           "family factors", "area of residence", "other factors"],                   
               xlabel="Pearson correlation coefficient",  # x-label title
               xticks=[-.4,-.2,0, .2],  # x-ticks to be printed
               sort=True,  # sort estimates in ascending order
@@ -225,7 +225,7 @@ fp.forestplot(df,  # the dataframe with results data
               **{"marker": "D",  # set maker symbol as diamond
                  "markersize": 35,  # adjust marker size
                  "xlinestyle": (0, (10, 5)),  # long dash for x-reference line 
-                 "xlinecolor": ".1",  # gray color for x-reference line
+                 "xlinecolor": "#808080",  # gray color for x-reference line
                  "xtick_size": 12,  # adjust x-ticker fontsize
                 }  
               )
