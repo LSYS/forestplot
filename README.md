@@ -63,6 +63,17 @@ git clone https://github.com/LSYS/forestplot.git
 cd forestplot
 pip install .
 ```
+
+Developer installation<br>
+```bash
+git clone https://github.com/LSYS/forestplot.git
+cd forestplot
+pip install -r requirements_dev.txt
+
+make lint
+make test
+```
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
