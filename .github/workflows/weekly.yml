@@ -1,0 +1,16 @@
+name: 'Binder build'
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * 0'
+    
+jobs:
+  trigger-binder-build:
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: s-weigand/trigger-mybinder-build@v1
+        with:
+          target-repo: LSYS/forestplot
+          target-state: main
