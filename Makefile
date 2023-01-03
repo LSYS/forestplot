@@ -7,6 +7,12 @@ test:
 	coverage erase
 	coverage run -m pytest -v --disable-warnings
 	coverage report -m
+	
+.PHONY: notebook
+notebook: # Run notebook with runpynb
+notebook:
+	@echo "+ $@"
+	cd examples && runpynb readme-examples.ipynb
 
 BLACK_OPTS := -l 95
 SRC_FILES := arg_validators dataframe_utils graph_utils plot text_utils
