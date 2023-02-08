@@ -119,7 +119,7 @@ fp.forestplot(df,  # the dataframe with results data
               ll="ll", hl="hl",  # columns containing conf. int. lower and higher limits
               varlabel="label",  # column containing variable label
               ylabel="Confidence interval",  # y-label title
-              xlabel="Pearson correlation"  # x-label title
+              xlabel="Pearson correlation",  # x-label title
               )
 ```
 <p align="left"><img width="55%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vanilla.png"></p>
@@ -145,7 +145,7 @@ fp.forestplot(df,  # the dataframe with results data
               # group ordering
               group_order=["labor factors", "occupation", "age", "health factors", 
                            "family factors", "area of residence", "other factors"],
-              sort=True  # sort in ascending order (sorts within group if group is specified)               
+              sort=True,  # sort in ascending order (sorts within group if group is specified)               
               )
 ```
 <p align="left"><img width="65%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-sort.png"></p>
@@ -309,6 +309,7 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 ## Known Issues[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#known-issues)
 * Variable labels coinciding with group variables may lead to unexpected formatting issues in the graph.
 * Left-flushing of annotations relies on the `monospace` font.
+* Plot may give strange behavior for few rows of data (six rows or fewer)
 * Plot can get cluttered with too many variables/rows (~30 onwards) 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
