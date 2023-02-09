@@ -284,6 +284,7 @@ def _preprocess_dataframe(
         pval=pval,
         starpval=starpval,
         decimal_precision=decimal_precision,
+        **kwargs,
     )
     if annote is None:  # Form ytickers = formatted variable labels
         dataframe = format_varlabels(

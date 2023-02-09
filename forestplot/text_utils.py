@@ -64,8 +64,7 @@ def star_pval(
     pval: str,
     starpval: bool,
     decimal_precision: int,
-    thresholds: Union[list, tuple] = (0.01, 0.05, 0.1),
-    symbols: Union[list, tuple] = ("***", "**", "*"),
+    **kwargs: Any,
 ) -> pd.core.frame.DataFrame:
     """
     Star the p-values according to the thresholds and symbols.
@@ -94,6 +93,9 @@ def star_pval(
             pd.core.frame.DataFrame with additional column for 'formatted_pval'.
     """
     if pval is not None:
+        thresholds = kwargs.get("thresholds", (0.01, 0.05, 0.1))
+        symbols = kwargs.get("symbols", ("***", "**", "*"))
+
         check_iterables_samelen(thresholds, symbols)
         for ix, row in dataframe.iterrows():
             val = row[pval]
