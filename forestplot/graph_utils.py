@@ -1,8 +1,9 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-from matplotlib.pyplot import Axes
-from typing import Optional, Union, Tuple, Sequence, Any
 import warnings
+from typing import Any, Optional, Sequence, Tuple, Union
+
+import matplotlib.pyplot as plt
+import pandas as pd
+from matplotlib.pyplot import Axes
 
 warnings.filterwarnings("ignore")
 

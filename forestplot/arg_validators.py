@@ -1,7 +1,8 @@
-import pandas.api.types as ptypes
-import pandas as pd
-from typing import Optional, Union, Sequence
 import warnings
+from typing import Optional, Sequence, Union
+
+import pandas as pd
+import pandas.api.types as ptypes
 
 
 def check_data(

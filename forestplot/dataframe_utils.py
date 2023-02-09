@@ -1,6 +1,7 @@
-import pandas as pd
+from typing import Any, Optional, Union
+
 import numpy as np
-from typing import Optional, Union, Any
+import pandas as pd
 
 
 def insert_groups(

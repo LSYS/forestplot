@@ -1,39 +1,42 @@
-import pandas as pd
-from typing import Optional, List, Union, Tuple, Sequence, Any
+from typing import Any, List, Optional, Sequence, Tuple, Union
+
 import numpy as np
+import pandas as pd
 
 np.seterr(all="ignore")
 import matplotlib.pyplot as plt
-from matplotlib.pyplot import Axes
-from forestplot.arg_validators import check_data
-from forestplot.text_utils import form_est_ci
-from forestplot.text_utils import normalize_varlabels
-from forestplot.text_utils import indent_nongroupvar
-from forestplot.text_utils import format_varlabels
-from forestplot.text_utils import star_pval
-from forestplot.text_utils import prep_annote
-from forestplot.text_utils import prep_rightannnote
-from forestplot.text_utils import make_tableheaders
-from forestplot.dataframe_utils import insert_groups
-from forestplot.dataframe_utils import sort_groups
-from forestplot.dataframe_utils import sort_data
-from forestplot.dataframe_utils import reverse_dataframe
-from forestplot.graph_utils import right_flush_yticklabels
-from forestplot.graph_utils import draw_pval_right
-from forestplot.graph_utils import draw_ylabel1
-from forestplot.graph_utils import format_xlabel
-from forestplot.graph_utils import format_tableheader
-from forestplot.graph_utils import draw_yticklabel2
-from forestplot.graph_utils import remove_ticks
-from forestplot.graph_utils import format_grouplabels
-from forestplot.graph_utils import draw_ci
-from forestplot.graph_utils import draw_est_markers
-from forestplot.graph_utils import draw_ref_xline
-from forestplot.graph_utils import despineplot
-from forestplot.graph_utils import format_xticks
-from forestplot.graph_utils import draw_alt_row_colors
-from forestplot.graph_utils import draw_tablelines
 from matplotlib import rcParams
+from matplotlib.pyplot import Axes
+
+from forestplot.arg_validators import check_data
+from forestplot.dataframe_utils import insert_groups, reverse_dataframe, sort_data, sort_groups
+from forestplot.graph_utils import (
+    despineplot,
+    draw_alt_row_colors,
+    draw_ci,
+    draw_est_markers,
+    draw_pval_right,
+    draw_ref_xline,
+    draw_tablelines,
+    draw_ylabel1,
+    draw_yticklabel2,
+    format_grouplabels,
+    format_tableheader,
+    format_xlabel,
+    format_xticks,
+    remove_ticks,
+    right_flush_yticklabels,
+)
+from forestplot.text_utils import (
+    form_est_ci,
+    format_varlabels,
+    indent_nongroupvar,
+    make_tableheaders,
+    normalize_varlabels,
+    prep_annote,
+    prep_rightannnote,
+    star_pval,
+)
 
 rcParams["font.monospace"] = [
     "Lucida Sans Typewriter",
