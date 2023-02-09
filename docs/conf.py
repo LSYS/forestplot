@@ -17,8 +17,8 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'pyForestplot'
-copyright = '2022, Lucas Shen'
+project = 'Forestplot'
+copyright = '2023, Lucas Shen'
 author = 'Lucas Shen'
 
 # The full version, including alpha/beta/rc tags
@@ -33,7 +33,7 @@ release = ''
 extensions = [
 	'myst_parser'
 ]
-
+myst_heading_anchors = 2
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -49,7 +49,16 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # a list of builtin themes.
 #
 html_theme = 'furo'
-
+html_sidebars = {
+    "**": [
+        "sidebar/scroll-start.html",
+        "sidebar/brand.html",
+        "sidebar/search.html",
+        "sidebar/navigation.html",
+        "sidebar/ethical-ads.html",
+        "sidebar/scroll-end.html",
+    ]
+}
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".

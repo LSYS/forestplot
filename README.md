@@ -1,6 +1,6 @@
 <div id="top"></div> 
 <h1 align="center" >
-  <strong>Forestplot</strong>
+  Forestplot
 </h1>
 <p align="center">
   <a href="https://pypi.org/project/forestplot">
@@ -13,7 +13,6 @@
 <p align="center"><img width="100%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/main.png"></p>
 
 -----------------------------------------------------------
-
 This package makes publication-ready forest plots easy to make out-of-the-box. Users provide a `dataframe` (e.g. from a spreadsheet) where rows correspond to a variable/study with columns including estimates, variable labels, and lower and upper confidence interval limits.
 Additional options allow easy addition of columns in the `dataframe` as annotations in the plot.
 
@@ -21,17 +20,17 @@ Additional options allow easy addition of columns in the `dataframe` as annotati
 
 |    |    |
 | --- | --- |
-| Release | [![PyPI](https://img.shields.io/pypi/v/forestplot?color=blue&label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/forestplot/) ![Conda (channel only)](https://img.shields.io/conda/vn/conda-forge/forestplot?logo=conda-forge&logoColor=white) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/lsys/forestplot?color=blue&label=Latest%20release)](https://github.com/LSYS/forestplot/releases) |
+| Release | [![PyPI](https://img.shields.io/pypi/v/forestplot?color=blue&label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/forestplot/) [![Conda (channel only)](https://img.shields.io/conda/vn/conda-forge/forestplot?logo=conda-forge&logoColor=white)](https://anaconda.org/conda-forge/forestplot) [![GitHub release (latest by date)](https://img.shields.io/github/v/release/lsys/forestplot?color=blue&label=Latest%20release)](https://github.com/LSYS/forestplot/releases) |
 | Status | [![CI](https://github.com/LSYS/forestplot/actions/workflows/CI.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/CI.yml) [![Notebooks](https://github.com/LSYS/forestplot/actions/workflows/nb.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/nb.yml) |
 | Coverage |  [![Codecov](https://img.shields.io/codecov/c/github/lsys/forestplot?logo=codecov&logoColor=white&label=codecov)](https://app.codecov.io/gh/LSYS/forestplot) |
 | Python | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/forestplot?label=Python%203.6%2B&logo=python&logoColor=white)](https://pypi.org/project/forestplot/) |
 | Docs | [![Read the Docs (version)](https://img.shields.io/readthedocs/forestplot/stable?label=docs&logo=readthedocs&logoColor=white)](https://forestplot.readthedocs.io/en/latest/?badge=latest) [![DocLinks](https://github.com/LSYS/forestplot/actions/workflows/links.yml/badge.svg)](https://github.com/LSYS/forestplot/actions/workflows/links.yml)|
-| Meta | ![GitHub](https://img.shields.io/github/license/lsys/forestplot?color=purple&label=License) [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
- [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![types - Mypy](https://img.shields.io/badge/types-Mypy-blue.svg)](https://github.com/python/mypy) [![DOI](https://zenodo.org/badge/510013191.svg)](https://zenodo.org/badge/latestdoi/510013191) |
+| Meta | [![GitHub](https://img.shields.io/github/license/lsys/forestplot?color=purple&label=License)](https://choosealicense.com/licenses/mit/) [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![types - Mypy](https://img.shields.io/badge/types-Mypy-blue.svg)](https://github.com/python/mypy) [![DOI](https://zenodo.org/badge/510013191.svg)](https://zenodo.org/badge/latestdoi/510013191) |
 | Binder| [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/lsys/forestplot/main?labpath=examples%2Freadme-examples.ipynb) |
 
 <!---------------------- TABLE OF CONTENT ---------------------->
-<details open><summary><b>Table of Contents</b></summary><p>
+# Table of Contents[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#table-of-contents)
+<details open><summary><b>show/hide</b></summary><p>
 
 > - [Installation](#installation)
 > - [Quick Start](#quick-start)
@@ -52,7 +51,7 @@ pip install forestplot
 ```
 
 Install from conda-forge<br>
-![Conda (channel only)](https://img.shields.io/conda/vn/conda-forge/forestplot?logo=conda-forge&logoColor=white)
+[![Conda (channel only)](https://img.shields.io/conda/vn/conda-forge/forestplot?logo=conda-forge&logoColor=white)](https://anaconda.org/conda-forge/forestplot)
 ```bash
 conda install forestplot
 ```
@@ -79,7 +78,7 @@ make test
 
 
 <!------------------------- QUICK START ------------------------->
-## Quick start[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#quick-start)
+## Quick Start[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#quick-start)
 
 ```python
 import forestplot as fp
@@ -132,8 +131,7 @@ plt.savefig("plot.png", bbox_inches="tight")
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!------------------ EXAMPLES of CUSTOMIZATIONS ------------------>
-## Some examples with customizations[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#examples-with-customizations)
-
+## Some Examples With Customizations[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#examples-with-customizations)
 
 1. Add variable groupings, add group order, and sort by estimate size.
 ```python
@@ -149,7 +147,7 @@ fp.forestplot(df,  # the dataframe with results data
               sort=True,  # sort in ascending order (sorts within group if group is specified)               
               )
 ```
-<p align="left"><img width="65%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-sort.png"></p>
+<p align="left"><img width="75%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-sort.png"></p>
 
 2. Add p-values on the right and color alternate rows gray
 ```python
@@ -170,7 +168,7 @@ fp.forestplot(df,  # the dataframe with results data
               )
 ```
 
-<p align="left"><img width="70%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-pvalue-sort-colorrows.png"></p>
+<p align="left"><img width="80%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-pvalue-sort-colorrows.png"></p>
 
 
 3. Customize annotations and make it a table
@@ -190,7 +188,7 @@ fp.forestplot(df,  # the dataframe with results data
               )
 ```
 
-<p align="left"><img width="75%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/leftannote-rightannote-table.png"></p>
+<p align="left"><img width="85%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/leftannote-rightannote-table.png"></p>
 
 4. Strip down all bells and whistle
 ```python
@@ -234,7 +232,7 @@ fp.forestplot(df,  # the dataframe with results data
                 }  
               )
 ```
-<p align="left"><img width="70%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/main.png"></p>
+<p align="left"><img width="80%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/main.png"></p>
 
 <details><summary><i>Annotations arguments allowed include:</i></summary>
   
@@ -308,9 +306,10 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 
 <!------------------------ KNOWN ISSUES ------------------------>
 ## Known Issues[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#known-issues)
+
 * Variable labels coinciding with group variables may lead to unexpected formatting issues in the graph.
 * Left-flushing of annotations relies on the `monospace` font.
-* Plot may give strange behavior for few rows of data (six rows or fewer)
+* Plot may give strange behavior for few rows of data (six rows or fewer. [see this issue](https://github.com/LSYS/forestplot/issues/52))
 * Plot can get cluttered with too many variables/rows (~30 onwards) 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
