@@ -425,5 +425,9 @@ def _make_forestplot(
                 right_annoteheaders=right_annoteheaders,
                 ax=ax,
             )
-    ax.set_ylim(-0.5, ax.get_ylim()[1] - 1)
+    if annoteheaders or right_annoteheaders:
+        negative_padding = 1.0
+    else:
+        negative_padding = 0.5
+    ax.set_ylim(-0.5, ax.get_ylim()[1] - negative_padding)
     return ax
