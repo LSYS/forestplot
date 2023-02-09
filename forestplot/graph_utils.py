@@ -242,9 +242,20 @@ def draw_pval_right(
 
         # 2nd label title
         pval_title = kwargs.get("pval_title", "P-value")
+
+        # The next few lines of code make sure that the "P-value" label title on the right columns are of the 
+        # same height (using negative_padding) and fontsize (using kwargs.get("fontsize", 12)) as the 
+        # ylabel height and fontsize. See draw_ylabel1(...).
+        fontsize = kwargs.get("fontsize", 12)
+        ylabel1_size = kwargs.get("ylabel1_size", 1 + fontsize)
+        if annoteheaders:
+            negative_padding = 1.0
+        else:
+            negative_padding = 0.5
+
         if pval_title is not None:
             if annoteheaders is None:
-                t = ax.text(pad, ax.get_ylim()[1], pval_title, size=10, fontweight="bold")
+                t = ax.text(pad, ax.get_ylim()[1]-negative_padding, pval_title, size=ylabel1_size, fontweight="bold")
                 (_, _), (x1, _) = inv.transform(
                     t.get_window_extent(renderer=fig.canvas.get_renderer())
                 )
