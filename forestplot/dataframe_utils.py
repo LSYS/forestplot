@@ -1,6 +1,8 @@
-import pandas as pd
+"""Holds functions to check prepare dataframe for plotting."""
+from typing import Any, Optional, Union
+
 import numpy as np
-from typing import Optional, Union, Any
+import pandas as pd
 
 
 def insert_groups(

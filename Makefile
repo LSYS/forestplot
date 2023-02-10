@@ -24,10 +24,15 @@ lint:
 	mypy $(SRC_FILES) --ignore-missing-imports
 	python -m pyflakes tests/*.py $(SRC_FILES)
 	python -m pyflakes setup.py
+	isort --profile black $(BLACK_OPTS) . 
 	black forestplot/*.py $(BLACK_OPTS)
 	black forestplot/*.py $(BLACK_OPTS)
 	black tests/*.py $(BLACK_OPTS)
 	black setup.py $(BLACK_OPTS)
+
+.PHONY: docstring
+docstring: # Check docstrings using pydocstyle
+	pydocstyle --convention numpy
 
 .PHONY: prepack
 prepack: # Prepare packaging for PyPi

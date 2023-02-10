@@ -11,6 +11,7 @@ pytest
 black
 flake8
 mypy
+isort 
 
 # package in local install
 -e .

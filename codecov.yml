@@ -5,4 +5,5 @@ coverage:
         target: auto
         # adjust accordingly based on how flaky your tests are
         # this allows a 10% drop from the previous base commit coverage
-        threshold: 50%  # Relax my coverage target, because I have flaky tests
+        threshold: 10%  # Relax my coverage target, because I have flaky tests
+    patch: off

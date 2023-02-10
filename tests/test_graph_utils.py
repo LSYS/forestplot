@@ -1,24 +1,27 @@
 import warnings
 
 warnings.filterwarnings("ignore")
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
 from matplotlib.pyplot import Axes
-from forestplot.graph_utils import draw_ci
-from forestplot.graph_utils import draw_est_markers
-from forestplot.graph_utils import draw_ref_xline
-from forestplot.graph_utils import right_flush_yticklabels
-from forestplot.graph_utils import draw_pval_right
-from forestplot.graph_utils import draw_yticklabel2
-from forestplot.graph_utils import draw_ylabel1
-from forestplot.graph_utils import remove_ticks
-from forestplot.graph_utils import format_grouplabels
-from forestplot.graph_utils import despineplot
-from forestplot.graph_utils import format_tableheader
-from forestplot.graph_utils import format_xlabel
-from forestplot.graph_utils import format_xticks
-from forestplot.graph_utils import draw_alt_row_colors
-from forestplot.graph_utils import draw_tablelines
+
+from forestplot.graph_utils import (
+    despineplot,
+    draw_alt_row_colors,
+    draw_ci,
+    draw_est_markers,
+    draw_pval_right,
+    draw_ref_xline,
+    draw_tablelines,
+    draw_ylabel1,
+    draw_yticklabel2,
+    format_grouplabels,
+    format_tableheader,
+    format_xlabel,
+    format_xticks,
+    remove_ticks,
+    right_flush_yticklabels,
+)
 
 x, y = [0, 1, 2], [0, 1, 2]
 str_vector = ["a", "b", "c"]

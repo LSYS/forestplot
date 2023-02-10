@@ -1,8 +1,10 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-from matplotlib.pyplot import Axes
-from typing import Optional, Union, Tuple, Sequence, Any
+"""Holds functions to draw the plot."""
 import warnings
+from typing import Any, Optional, Sequence, Tuple, Union
+
+import matplotlib.pyplot as plt
+import pandas as pd
+from matplotlib.pyplot import Axes
 
 warnings.filterwarnings("ignore")
 
@@ -138,10 +140,9 @@ def draw_ref_xline(
 def right_flush_yticklabels(
     dataframe: pd.core.frame.DataFrame, yticklabel: str, flush: bool, ax: Axes, **kwargs: Any
 ) -> float:
-    """
-    Flushes the formatted ytickers to the left. Also returns the amount of max padding in the
-    window width. Padding to be used for drawing the 2nd yticklabels and ylabels.
+    """Flushes the formatted ytickers to the left. Also returns the amount of max padding in the window width.
 
+    Padding to be used for drawing the 2nd yticklabels and ylabels.
     My reference: https://stackoverflow.com/questions/15882249/matplotlib-aligning-y-ticks-to-the-left
 
     Parameters
@@ -241,9 +242,26 @@ def draw_pval_right(
 
         # 2nd label title
         pval_title = kwargs.get("pval_title", "P-value")
+
+        # The next few lines of code make sure that the "P-value" label title on the right columns are of the
+        # same height (using negative_padding) and fontsize (using kwargs.get("fontsize", 12)) as the
+        # ylabel height and fontsize. See draw_ylabel1(...).
+        fontsize = kwargs.get("fontsize", 12)
+        ylabel1_size = kwargs.get("ylabel1_size", 1 + fontsize)
+        if annoteheaders:
+            negative_padding = 1.0
+        else:
+            negative_padding = 0.5
+
         if pval_title is not None:
             if annoteheaders is None:
-                t = ax.text(pad, ax.get_ylim()[1], pval_title, size=10, fontweight="bold")
+                t = ax.text(
+                    pad,
+                    ax.get_ylim()[1] - negative_padding,
+                    pval_title,
+                    size=ylabel1_size,
+                    fontweight="bold",
+                )
                 (_, _), (x1, _) = inv.transform(
                     t.get_window_extent(renderer=fig.canvas.get_renderer())
                 )
@@ -375,7 +393,7 @@ def draw_ylabel1(ylabel: str, pad: float, ax: Axes, **kwargs: Any) -> Axes:
 
 def remove_ticks(ax: Axes) -> Axes:
     """
-    Removes the tickers on the top, left, and right borders.
+    Remove the tickers on the top, left, and right borders.
 
     Parameters
     ----------
@@ -492,7 +510,7 @@ def format_tableheader(
 
 def format_xlabel(xlabel: str, ax: Axes, **kwargs: Any) -> Axes:
     """
-    Format the x-axis label
+    Format the x-axis label.
 
     Parameters
     ----------

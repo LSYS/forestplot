@@ -1,8 +1,7 @@
-import pytest
-from forestplot.arg_validators import check_data
-from forestplot.arg_validators import check_iterables_samelen
-from forestplot.arg_validators import check_groups
 import pandas as pd
+import pytest
+
+from forestplot.arg_validators import check_data, check_groups, check_iterables_samelen
 
 
 def test_check_data():

@@ -1,8 +1,11 @@
-import pandas as pd
+"""Holds functions to prepare the strings and text in the dataframe."""
+from typing import Any, Optional, Sequence, Union
+
 import numpy as np
-from typing import Union, Optional, Sequence, Any
-from forestplot.dataframe_utils import insert_empty_row
+import pandas as pd
+
 from forestplot.arg_validators import check_iterables_samelen
+from forestplot.dataframe_utils import insert_empty_row
 
 
 def form_est_ci(
@@ -14,9 +17,9 @@ def form_est_ci(
     caps: Union[tuple, list, str] = "()",
     connector: str = " to ",
 ) -> pd.core.frame.DataFrame:
-    """
-    Form the estimated effect sizes and corresponding confidence intervals as a formatted column.
-    (Creating only on demand.)
+    """Form the estimated effect sizes and corresponding confidence intervals as a formatted column.
+
+    Creating only on demand.
 
     Parameters
     ----------
@@ -64,12 +67,11 @@ def star_pval(
     pval: str,
     starpval: bool,
     decimal_precision: int,
-    thresholds: Union[list, tuple] = (0.01, 0.05, 0.1),
-    symbols: Union[list, tuple] = ("***", "**", "*"),
+    **kwargs: Any,
 ) -> pd.core.frame.DataFrame:
-    """
-    Star the p-values according to the thresholds and symbols.
-    (Creating only on demand.)
+    """Star the p-values according to the thresholds and symbols.
+
+    Creating only on demand.
 
     Parameters
     ----------
@@ -94,6 +96,9 @@ def star_pval(
             pd.core.frame.DataFrame with additional column for 'formatted_pval'.
     """
     if pval is not None:
+        thresholds = kwargs.get("thresholds", (0.01, 0.05, 0.1))
+        symbols = kwargs.get("symbols", ("***", "**", "*"))
+
         check_iterables_samelen(thresholds, symbols)
         for ix, row in dataframe.iterrows():
             val = row[pval]
@@ -118,9 +123,9 @@ def indent_nongroupvar(
     groupvar: str,
     varindent: int = 2,
 ) -> pd.core.frame.DataFrame:
-    """
-    Indent the non-group variable labels when the 'form_ci_report' option is switched off.
-    (Creating only on demand.)
+    """Indent the non-group variable labels when the 'form_ci_report' option is switched off.
+
+    Creating only on demand.
 
     Parameters
     ----------
@@ -197,10 +202,9 @@ def format_varlabels(
     groupvar: Union[str, None],
     extrapad: int = 2,
 ) -> pd.core.frame.DataFrame:
-    """
-    Format the yticklabels as normalized variable labels + estimate + confidence interval if
-    form_ci_report = True. If form_ci_report = False, then just use the variable label.
-    (Creating only on demand.)
+    """Format the yticklabels as normalized variable labels + estimate + confidence interval if form_ci_report = True. If form_ci_report = False, then just use the variable label.
+
+    Creating only on demand.
 
     Parameters
     ----------
@@ -322,9 +326,9 @@ def prep_annote(
     groupvar: str,
     **kwargs: Any,
 ) -> pd.core.frame.DataFrame:
-    """
-    Prepare the additional columns to be printed as annotations.
-    (Creating only on demand.)
+    """Prepare the additional columns to be printed as annotations.
+
+    Creating only on demand.
 
     Parameters
     ----------
@@ -392,9 +396,9 @@ def prep_rightannnote(
     groupvar: str,
     **kwargs: Any,
 ) -> pd.core.frame.DataFrame:
-    """
-    Prepare the additional columns to be printed as annotations on the right.
-    (Creating only on demand.)
+    """Prepare the additional columns to be printed as annotations on the right.
+
+    Creating only on demand.
 
     Parameters
     ----------
@@ -465,10 +469,9 @@ def make_tableheaders(
     right_annoteheaders: Optional[Union[Sequence[str], None]],
     **kwargs: Any,
 ) -> pd.core.frame.DataFrame:
-    """
-    Make the table headers from 'annoteheaders' and 'right_annoteheaders' as a row in the
-    dataframe.
-    (Creating only on demand.)
+    """Make the table headers from 'annoteheaders' and 'right_annoteheaders' as a row in the dataframe.
+
+    Creating only on demand.
 
     Parameters
     ----------

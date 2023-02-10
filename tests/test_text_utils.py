@@ -1,21 +1,21 @@
-import pytest
-import pandas as pd
 import numpy as np
+import pandas as pd
+import pytest
+from pandas.testing import assert_frame_equal, assert_series_equal
+
 from forestplot.text_utils import (
+    _get_max_varlen,
+    _remove_est_ci,
+    _right_justify_num,
     form_est_ci,
-    star_pval,
-    indent_nongroupvar,
-    normalize_varlabels,
     format_varlabels,
+    indent_nongroupvar,
+    make_tableheaders,
+    normalize_varlabels,
     prep_annote,
     prep_rightannnote,
-    make_tableheaders,
-    _get_max_varlen,
-    _right_justify_num,
-    _remove_est_ci,
+    star_pval,
 )
-from pandas.testing import assert_frame_equal
-from pandas.testing import assert_series_equal
 
 
 def test_star_pval():

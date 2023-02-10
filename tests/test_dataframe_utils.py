@@ -1,16 +1,16 @@
-import pytest
-from forestplot.dataframe_utils import (
-    load_data,
-    insert_groups,
-    sort_groups,
-    sort_data,
-    reverse_dataframe,
-    insert_empty_row,
-)
-import pandas as pd
 import numpy as np
-from pandas.testing import assert_series_equal
-from pandas.testing import assert_frame_equal
+import pandas as pd
+import pytest
+from pandas.testing import assert_frame_equal, assert_series_equal
+
+from forestplot.dataframe_utils import (
+    insert_empty_row,
+    insert_groups,
+    load_data,
+    reverse_dataframe,
+    sort_data,
+    sort_groups,
+)
 
 
 def test_load_data():

@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 import pandas as pd
-from forestplot import forestplot
 from matplotlib.pyplot import Axes
+
+from forestplot import forestplot
 
 dataname = "sleep"
 data = f"https://raw.githubusercontent.com/lsys/pyforestplot/main/examples/data/{dataname}.csv"
