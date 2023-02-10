@@ -131,7 +131,7 @@ plt.savefig("plot.png", bbox_inches="tight")
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!------------------ EXAMPLES of CUSTOMIZATIONS ------------------>
-## Some Examples With Customizations[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#examples-with-customizations)
+## Some Examples With Customizations[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#some-examples-with-customizations)
 
 1. Add variable groupings, add group order, and sort by estimate size.
 ```python
