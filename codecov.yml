@@ -4,5 +4,9 @@ coverage:
       default:
         target: auto
         # adjust accordingly based on how flaky your tests are
-        # this allows a 10% drop from the previous base commit coverage
-        threshold: 50%  # Relax my coverage target, because I have flaky tests
+        # this allows a 20% drop from the previous base commit coverage
+        threshold: 20%  # Relax my coverage target, because I have flaky tests
+    patch:
+      default:
+        target: auto
+        if_ci_failed: ignore
