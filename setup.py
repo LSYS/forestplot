@@ -7,10 +7,10 @@ from setuptools import setup
 with open("README.md", "r") as fh:
     LONG_DESCRIPTION = fh.read()
 
-install_requires = ["pandas", "numpy", "matplotlib"]
+install_requires = ["pandas", "numpy", "matplotlib", "matplotlib-inline<=0.1.3"]
 setup(
     name="forestplot",
-    version="0.2.1",
+    version="0.2.2",
     license="MIT",
     author="Lucas Shen",
     author_email="lucas@lucasshen.com",
