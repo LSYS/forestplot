@@ -226,7 +226,7 @@ def check_groups(
         Name of column containing group of variables.
     group_order (list-like)
         List of groups by order to report in the figure.
-        
+
     Returns
     -------
     None
