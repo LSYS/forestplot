@@ -11,8 +11,9 @@ sphinx:
    configuration: docs/conf.py
 
 # If using Sphinx, optionally build your docs in additional formats such as PDF
-formats:
-   - pdf
+# RTD build was failing to compile latex
+# formats:
+#    - pdf
 
 python:
    install:
