@@ -1,3 +1,4 @@
+"""Holds functions to draw the plot."""
 import warnings
 from typing import Any, Optional, Sequence, Tuple, Union
 
@@ -139,10 +140,9 @@ def draw_ref_xline(
 def right_flush_yticklabels(
     dataframe: pd.core.frame.DataFrame, yticklabel: str, flush: bool, ax: Axes, **kwargs: Any
 ) -> float:
-    """
-    Flushes the formatted ytickers to the left. Also returns the amount of max padding in the
-    window width. Padding to be used for drawing the 2nd yticklabels and ylabels.
+    """Flushes the formatted ytickers to the left. Also returns the amount of max padding in the window width.
 
+    Padding to be used for drawing the 2nd yticklabels and ylabels.
     My reference: https://stackoverflow.com/questions/15882249/matplotlib-aligning-y-ticks-to-the-left
 
     Parameters
@@ -393,7 +393,7 @@ def draw_ylabel1(ylabel: str, pad: float, ax: Axes, **kwargs: Any) -> Axes:
 
 def remove_ticks(ax: Axes) -> Axes:
     """
-    Removes the tickers on the top, left, and right borders.
+    Remove the tickers on the top, left, and right borders.
 
     Parameters
     ----------
@@ -510,7 +510,7 @@ def format_tableheader(
 
 def format_xlabel(xlabel: str, ax: Axes, **kwargs: Any) -> Axes:
     """
-    Format the x-axis label
+    Format the x-axis label.
 
     Parameters
     ----------

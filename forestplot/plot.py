@@ -1,3 +1,4 @@
+"""Main functions to plot the forest plots."""
 from typing import Any, List, Optional, Sequence, Tuple, Union
 
 import numpy as np

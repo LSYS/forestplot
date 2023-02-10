@@ -1,3 +1,4 @@
+"""Holds functions to check prepare dataframe for plotting."""
 from typing import Any, Optional, Union
 
 import numpy as np

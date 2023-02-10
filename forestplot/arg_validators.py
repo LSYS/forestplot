@@ -1,3 +1,4 @@
+"""Holds functions to check data and validate arguments from users."""
 import warnings
 from typing import Optional, Sequence, Union
 
@@ -20,46 +21,45 @@ def check_data(
     pval: Optional[str] = None,
     ylabel2: Optional[str] = None,
 ) -> pd.core.frame.DataFrame:
-    """
-        Checks and validate that dataframe has the correct data. If data is missing, create them.
+    """Check and validate that dataframe has the correct data. If data is missing, create them.
 
     Checks and validates key arguments.
 
-        Parameters
-        ----------
-        dataframe (pandas.core.frame.DataFrame)
-                Pandas DataFrame where rows are variables. Columns are variable name, estimates,
-                margin of error, etc.
-        estimate (str)
-                Name of column containing the estimates (e.g. pearson correlation coefficient,
-                OR, regression estimates, etc.).
-        varlabel (str)
-                Name of column containing the variable label to be printed out.
-        groupvar (str)
-                Name of column containing group of variables.
-        group_order (list-like)
-                List of groups by order to report in the figure.
-        ll (str)
-                Name of column containing the lower limit of the confidence intervals.
-        hl (str)
-                Name of column containing the upper limit of the confidence intervals.
-        annote (list-like)
-                List of columns to add as additional annotation in the plot.
-        annoteheaders (list-like)
-                List of table headers to use as column headers for the additional annotations.
-        rightannote (list-like)
-                List of columns to add as additional annotation on the right-hand side of the plot.
-        right_annoteheaders (list-like)
-                List of table headers to use as column headers for the additional annotations
-                on the right-hand side of the plot.
-        pval (str)
-                Name of column containing the p-values.
-        ylabel2 (str)
-                Title of the right-hand side y-axis.
+    Parameters
+    ----------
+    dataframe (pandas.core.frame.DataFrame)
+            Pandas DataFrame where rows are variables. Columns are variable name, estimates,
+            margin of error, etc.
+    estimate (str)
+            Name of column containing the estimates (e.g. pearson correlation coefficient,
+            OR, regression estimates, etc.).
+    varlabel (str)
+            Name of column containing the variable label to be printed out.
+    groupvar (str)
+            Name of column containing group of variables.
+    group_order (list-like)
+            List of groups by order to report in the figure.
+    ll (str)
+            Name of column containing the lower limit of the confidence intervals.
+    hl (str)
+            Name of column containing the upper limit of the confidence intervals.
+    annote (list-like)
+            List of columns to add as additional annotation in the plot.
+    annoteheaders (list-like)
+            List of table headers to use as column headers for the additional annotations.
+    rightannote (list-like)
+            List of columns to add as additional annotation on the right-hand side of the plot.
+    right_annoteheaders (list-like)
+            List of table headers to use as column headers for the additional annotations
+            on the right-hand side of the plot.
+    pval (str)
+            Name of column containing the p-values.
+    ylabel2 (str)
+            Title of the right-hand side y-axis.
 
-        Returns
-        -------
-                pd.core.frame.DataFrame.
+    Returns
+    -------
+            pd.core.frame.DataFrame.
     """
     ##########################################################################
     ## Check that numeric data are numeric
@@ -204,7 +204,7 @@ def check_data(
 
 
 def check_iterables_samelen(*args):  # type: ignore
-    """Assert that provided iterables have same length"""
+    """Assert that provided iterables have same length."""
     try:
         assert all(len(args[0]) == len(_arg) for _arg in args[1:])
     except Exception:
@@ -215,8 +215,7 @@ def check_iterables_samelen(*args):  # type: ignore
 def check_groups(
     dataframe: pd.core.frame.DataFrame, groupvar: str, group_order: Optional[Sequence]
 ) -> None:
-    """
-    Check that provided group-related args are well-behaved.
+    """Check that provided group-related args are well-behaved.
 
     Parameters
     ----------
@@ -227,6 +226,7 @@ def check_groups(
         Name of column containing group of variables.
     group_order (list-like)
         List of groups by order to report in the figure.
+        
     Returns
     -------
     None

@@ -30,6 +30,10 @@ lint:
 	black tests/*.py $(BLACK_OPTS)
 	black setup.py $(BLACK_OPTS)
 
+.PHONY: docstring
+docstring: # Check docstrings using pydocstyle
+	pydocstyle --convention numpy
+
 .PHONY: prepack
 prepack: # Prepare packaging for PyPi
 prepack:
