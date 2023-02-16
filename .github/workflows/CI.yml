@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ "main", "docs", "patch", "feature" ]
+    branches: [ "main", "docs", "patch", "feature", "nodrawci" ]
   pull_request:
     branches: [ "main" ]
 
