@@ -14,6 +14,7 @@ def check_data(
     group_order: Optional[Sequence] = None,
     ll: Optional[str] = None,
     hl: Optional[str] = None,
+    form_ci_report: bool = None,
     annote: Optional[Union[Sequence[str], None]] = None,
     annoteheaders: Optional[Union[Sequence[str], None]] = None,
     rightannote: Optional[Union[Sequence[str], None]] = None,
@@ -43,6 +44,8 @@ def check_data(
             Name of column containing the lower limit of the confidence intervals.
     hl (str)
             Name of column containing the upper limit of the confidence intervals.
+    form_ci_report (bool)
+            If True, form the formatted confidence interval as a string.
     annote (list-like)
             List of columns to add as additional annotation in the plot.
     annoteheaders (list-like)
@@ -61,6 +64,24 @@ def check_data(
     -------
             pd.core.frame.DataFrame.
     """
+    ##########################################################################
+    ## Check that CI options (ll, hl, form_ci_report) are consistent
+    ##########################################################################
+    if ll is None:
+        try:
+            assert hl is None
+        except Exception:
+            raise TypeError("'ll' is None. 'hl' should also be None.")
+
+    if hl is None:
+        try:
+            assert ll is None
+        except Exception:
+            raise TypeError("'hl' is None. 'll' should also be None.")
+
+    if ll is None and form_ci_report:
+        warnings.warn("'ll' is None. 'form_ci_report' will be set to False.")
+
     ##########################################################################
     ## Check that numeric data are numeric
     ##########################################################################

@@ -49,16 +49,21 @@ def form_est_ci(
     -------
             pd.core.frame.DataFrame with an additional formatted 'est_ci' column.
     """
-    for col in [estimate, ll, hl]:
+    if ll is None:
+        cols = [estimate]
+    else:
+        cols = [estimate, ll, hl]
+    for col in cols:
         dataframe = _right_justify_num(
             dataframe=dataframe, col=col, decimal_precision=decimal_precision
         )
     for ix, row in dataframe.iterrows():
         formatted_est = row[f"formatted_{estimate}"]
-        formatted_ll, formatted_hl = row[f"formatted_{ll}"], row[f"formatted_{hl}"]
-        formatted_ci = "".join([caps[0], formatted_ll, connector, formatted_hl, caps[1]])
-        dataframe.loc[ix, "ci_range"] = formatted_ci
-        dataframe.loc[ix, "est_ci"] = "".join([formatted_est, formatted_ci])
+        if ll is not None:
+            formatted_ll, formatted_hl = row[f"formatted_{ll}"], row[f"formatted_{hl}"]
+            formatted_ci = "".join([caps[0], formatted_ll, connector, formatted_hl, caps[1]])
+            dataframe.loc[ix, "ci_range"] = formatted_ci
+            dataframe.loc[ix, "est_ci"] = "".join([formatted_est, formatted_ci])
     return dataframe
 
 

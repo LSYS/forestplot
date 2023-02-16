@@ -25,9 +25,9 @@ def test_check_data():
     check_data(dataframe=_df, estimate="estimate", varlabel="varlabel")
 
     # Assert that assertion for numeric type for ll works
-    _df = pd.DataFrame({"estimate": numeric, "ll": string})
+    _df = pd.DataFrame({"estimate": numeric, "ll": string, "hl": numeric})
     with pytest.raises(TypeError) as excinfo:
-        check_data(dataframe=_df, estimate="estimate", varlabel="estimate", ll="ll")
+        check_data(dataframe=_df, estimate="estimate", varlabel="estimate", ll="ll", hl="hl")
     assert str(excinfo.value) == "CI lowerlimit values should be float or int"
 
     # Assert that conversion for numeric ll stored as string works
@@ -41,9 +41,9 @@ def test_check_data():
     check_data(dataframe=_df, estimate="estimate", varlabel="estimate", ll="ll", hl="hl")
 
     # Assert that assertion for numeric type for hl works
-    _df = pd.DataFrame({"estimate": numeric, "hl": string})
+    _df = pd.DataFrame({"estimate": numeric, "ll": numeric, "hl": string})
     with pytest.raises(TypeError) as excinfo:
-        check_data(dataframe=_df, estimate="estimate", varlabel="estimate", hl="hl")
+        check_data(dataframe=_df, estimate="estimate", varlabel="estimate", ll="ll", hl="hl")
     assert str(excinfo.value) == "CI higherlimit values should be float or int"
 
     # Assert that conversion for numeric hl stored as string works
@@ -55,6 +55,17 @@ def test_check_data():
         }
     )
     check_data(dataframe=_df, estimate="estimate", varlabel="estimate", ll="ll", hl="hl")
+
+    # Assert that check for CI options are consistent works
+    _df = pd.DataFrame({"estimate": numeric, "ll": string, "hl": string})
+    with pytest.raises(TypeError) as excinfo:
+        check_data(dataframe=_df, estimate="estimate", varlabel="estimate", ll=None, hl="hl")
+    assert str(excinfo.value) == "'ll' is None. 'hl' should also be None."
+
+    _df = pd.DataFrame({"estimate": numeric, "ll": string, "hl": string})
+    with pytest.raises(TypeError) as excinfo:
+        check_data(dataframe=_df, estimate="estimate", varlabel="estimate", ll="ll", hl=None)
+    assert str(excinfo.value) == "'hl' is None. 'll' should also be None."
 
     ##########################################################################
     ## Check annote

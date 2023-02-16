@@ -230,7 +230,7 @@ def test_format_xticks():
     )
     # No ticks set
     _, ax = plt.subplots()
-    ax = format_xticks(input_df, ll="ll", hl="hl", xticks=None, ax=ax)
+    ax = format_xticks(input_df, estimate="estimate", ll="ll", hl="hl", xticks=None, ax=ax)
     assert isinstance(ax, Axes)
     ax_xmin, ax_xmax = ax.get_xlim()
     data_xmin, data_xmax = input_df.ll.min(), input_df.hl.max()
@@ -239,7 +239,9 @@ def test_format_xticks():
 
     # Set xticks
     _, ax = plt.subplots()
-    ax = format_xticks(input_df, ll="ll", hl="hl", xticks=[1, 2, 3], ax=ax)
+    ax = format_xticks(
+        input_df, estimate="estimate", ll="ll", hl="hl", xticks=[1, 2, 3], ax=ax
+    )
     assert isinstance(ax, Axes)
     ax_xmin, ax_xmax = ax.get_xlim()
     data_xmin, data_xmax = input_df.ll.min(), input_df.hl.max()
