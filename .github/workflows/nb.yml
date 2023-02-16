@@ -2,7 +2,7 @@ name: Notebooks
 
 on:
   push:
-    branches: [ "main", "patch", "feature" ]
+    branches: [ "main", "patch", "feature", "nodrawci" ]
   pull_request:
     branches: [ "main" ]
 
