@@ -121,7 +121,7 @@ fp.forestplot(df,  # the dataframe with results data
               xlabel="Pearson correlation",  # x-label title
               )
 ```
-<p align="left"><img width="55%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vanilla.png"></p>
+<p align="left"><img width="75%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vanilla.png"></p>
 
 Save the plot
 ```python
@@ -201,7 +201,7 @@ fp.forestplot(df,  # the dataframe with results data
               **{'fontfamily': 'sans-serif'}  # revert to sans-serif                              
               )
 ```               
-<p align="left"><img width="40%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vcoefplot.png"></p>
+<p align="left"><img width="50%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vcoefplot.png"></p>
 
 5. Example with more customizations
 ```python
@@ -231,7 +231,7 @@ fp.forestplot(df,  # the dataframe with results data
                 }  
               )
 ```
-<p align="left"><img width="80%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/main.png"></p>
+<p align="left"><img width="100%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/main.png"></p>
 
 <details><summary><i>Annotations arguments allowed include:</i></summary>
   
