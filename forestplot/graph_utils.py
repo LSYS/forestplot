@@ -43,17 +43,18 @@ def draw_ci(
     -------
             Matplotlib Axes object.
     """
-    lw = kwargs.get("lw", 1.4)
-    linecolor = kwargs.get("linecolor", ".6")
-    ax.errorbar(
-        x=dataframe[estimate],
-        y=dataframe[yticklabel],
-        xerr=[dataframe[estimate] - dataframe[ll], dataframe[hl] - dataframe[estimate]],
-        ecolor=linecolor,
-        elinewidth=lw,
-        ls="none",
-        zorder=0,
-    )
+    if ll is not None:
+        lw = kwargs.get("lw", 1.4)
+        linecolor = kwargs.get("linecolor", ".6")
+        ax.errorbar(
+            x=dataframe[estimate],
+            y=dataframe[yticklabel],
+            xerr=[dataframe[estimate] - dataframe[ll], dataframe[hl] - dataframe[estimate]],
+            ecolor=linecolor,
+            elinewidth=lw,
+            ls="none",
+            zorder=0,
+        )
     if logscale:
         ax.set_xscale("log", base=10)
     return ax
@@ -532,6 +533,7 @@ def format_xlabel(xlabel: str, ax: Axes, **kwargs: Any) -> Axes:
 
 def format_xticks(
     dataframe: pd.core.frame.DataFrame,
+    estimate: str,
     ll: str,
     hl: str,
     xticks: Optional[Union[list, range]],
@@ -550,6 +552,9 @@ def format_xticks(
     dataframe (pandas.core.frame.DataFrame)
             Pandas DataFrame where rows are variables. Columns are variable name, estimates,
             margin of error, etc.
+    estimate (str)
+            Name of column containing the estimates (e.g. pearson correlation coefficient,
+            OR, regression estimates, etc.).
     ll (str)
             Name of column containing the lower limit of the confidence intervals.
             Optional
@@ -568,8 +573,12 @@ def format_xticks(
     nticks = kwargs.get("nticks", 5)
     xtick_size = kwargs.get("xtick_size", 10)
     xticklabels = kwargs.get("xticklabels", None)
-    xlowerlimit = dataframe[ll].min()
-    xupperlimit = dataframe[hl].max()
+    if ll is not None:
+        xlowerlimit = dataframe[ll].min()
+        xupperlimit = dataframe[hl].max()
+    else:
+        xlowerlimit = 1.1 * dataframe[estimate].min()
+        xupperlimit = 1.1 * dataframe[estimate].max()
     ax.set_xlim(xlowerlimit, xupperlimit)
     if xticks is not None:
         ax.set_xticks(xticks)
@@ -653,6 +662,7 @@ def draw_tablelines(
     pval: str,
     right_annoteheaders: Optional[Union[Sequence[str], None]],
     ax: Axes,
+    **kwargs: Any
 ) -> Axes:
     """
     Plot horizontal lines as table lines.
@@ -684,7 +694,7 @@ def draw_tablelines(
         [x0, x1], [nrows - 1.45, nrows - 1.45], color="0.5", linewidth=lower_lw, clip_on=False
     )
     if (right_annoteheaders is not None) or (pval is not None):
-        extrapad = 0.05
+        extrapad = kwargs.get("extrapad", 0.05)
         x0 = ax.get_xlim()[1] * (1 + extrapad)
         plt.plot(
             [x0, righttext_width],

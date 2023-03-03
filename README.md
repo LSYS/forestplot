@@ -98,13 +98,12 @@ df.head(3)
 
   | Column    | Description                                     | Required  |
   |:----------|:------------------------------------------------|:----------|
-  | `var`     | Variable field                                  |           |
+  | `var`     | Variable label                                  | &check;   |
   | `r`       | Correlation coefficients (estimates to plot)    | &check;   |
-  | `moerror` | Conf. int.'s *margin of error*.                 |           |
   | `label`   | Variable labels                                 | &check;   |
   | `group`   | Variable grouping labels                        |           |
-  | `ll`      | Conf. int. *lower limits*                       | &check;  |
-  | `hl`      | Containing the conf. int. *higher limits*       | &check;  |
+  | `ll`      | Conf. int. *lower limits*                       |           |
+  | `hl`      | Containing the conf. int. *higher limits*       |           |
   | `n`       | Sample size                                     |           |
   | `power`   | Statistical power                               |           |
   | `p-val`   | P-value                                         |           |
@@ -122,7 +121,7 @@ fp.forestplot(df,  # the dataframe with results data
               xlabel="Pearson correlation",  # x-label title
               )
 ```
-<p align="left"><img width="55%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vanilla.png"></p>
+<p align="left"><img width="75%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vanilla.png"></p>
 
 Save the plot
 ```python
@@ -202,7 +201,7 @@ fp.forestplot(df,  # the dataframe with results data
               **{'fontfamily': 'sans-serif'}  # revert to sans-serif                              
               )
 ```               
-<p align="left"><img width="40%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vcoefplot.png"></p>
+<p align="left"><img width="50%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/vcoefplot.png"></p>
 
 5. Example with more customizations
 ```python
@@ -232,7 +231,7 @@ fp.forestplot(df,  # the dataframe with results data
                 }  
               )
 ```
-<p align="left"><img width="80%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/main.png"></p>
+<p align="left"><img width="100%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/main.png"></p>
 
 <details><summary><i>Annotations arguments allowed include:</i></summary>
   
@@ -259,8 +258,6 @@ fp.forestplot(df,  # the dataframe with results data
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-
-
 <!------------------- GALLERY AND API OPTIONS ------------------->
 ## Gallery and API Options[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#gallery-and-api-options)
 
@@ -276,8 +273,8 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 | `dataframe`           | Pandas dataframe where rows are variables (or studies for meta-analyses) and columns include estimated effect sizes, labels, and confidence intervals, etc. | &check; |
 | `estimate`            | Name of column in `dataframe` containing the *estimates*.                                                                                                   | &check; |
 | `varlabel`            | Name of column in `dataframe` containing the *variable labels* (study labels if meta-analyses).                                                             | &check; |
-| `ll`                  | Name of column in `dataframe` containing the conf. int. *lower limits*.                                                                                     | &check; |
-| `hl`                  | Name of column in `dataframe` containing the conf. int. *higher limits*.                                                                                    | &check; |
+| `ll`                  | Name of column in `dataframe` containing the conf. int. *lower limits*.                                                                                     |  |
+| `hl`                  | Name of column in `dataframe` containing the conf. int. *higher limits*.                                                                                    |  |
 | `logscale`            | If True, make the x-axis log scale. Default is False.                                                                                                     |  |
 | `capitalize`          | How to capitalize strings. Default is None. One of "capitalize", "title", "lower", "upper", "swapcase".                                                      | |
 | `form_ci_report`      | If True (default), report the estimates and confidence interval beside the variable labels.                                                                 |          |

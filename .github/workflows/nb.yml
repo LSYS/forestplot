@@ -2,7 +2,7 @@ name: Notebooks
 
 on:
   push:
-    branches: [ "main", "patch", "feature" ]
+    branches: [ "main", "patch", "feature", "nodrawci" ]
   pull_request:
     branches: [ "main" ]
 
@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.9']
+        python-version: ['3.10']
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}

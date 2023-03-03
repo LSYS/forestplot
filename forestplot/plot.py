@@ -100,7 +100,7 @@ def forestplot(
     form_ci_report (bool)
             If True, form the formatted confidence interval as a string.
     ci_report (bool)
-            If True, form the formatted confidence interval as a string.
+            If True, report the formatted confidence interval as a string.
     groupvar (str)
             Name of column containing group of variables.
     group_order (list-like)
@@ -170,8 +170,8 @@ def forestplot(
         rightannote=rightannote,
         right_annoteheaders=right_annoteheaders,
     )
-    if (ll is None) or (hl is None):
-        ll, hl = "ll", "hl"
+    if ll is None:
+        ci_report = False
     if ci_report is True:
         form_ci_report = True
     if preprocess:
@@ -371,7 +371,9 @@ def _make_forestplot(
     draw_est_markers(
         dataframe=dataframe, estimate=estimate, yticklabel=yticklabel, ax=ax, **kwargs
     )
-    format_xticks(dataframe=dataframe, ll=ll, hl=hl, xticks=xticks, ax=ax, **kwargs)
+    format_xticks(
+        dataframe=dataframe, estimate=estimate, ll=ll, hl=hl, xticks=xticks, ax=ax, **kwargs
+    )
     draw_ref_xline(
         ax=ax,
         dataframe=dataframe,
