@@ -116,7 +116,7 @@ def reverse_dataframe(dataframe: pd.core.frame.DataFrame) -> pd.core.frame.DataF
 def insert_empty_row(dataframe: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
     """Add an empty row to the top of the dataframe."""
     _df = pd.DataFrame([[np.nan] * len(dataframe.columns)], columns=dataframe.columns)
-    dataframe = _df.append(dataframe, ignore_index=True)
+    dataframe = pd.concat([_df, dataframe], axis=0, ignore_index=True)
     return dataframe
 
 
