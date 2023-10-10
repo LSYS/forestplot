@@ -8,9 +8,11 @@ from matplotlib.pyplot import Axes
 
 warnings.filterwarnings("ignore")
 
-def _get_pad(ax: Axes, **kwargs) -> float:
+
+def _get_pad(ax: Axes, **kwargs: Optional[Any]) -> float:
     extrapad = kwargs.get("extrapad", 0.05)
-    return ax.get_xlim()[1] + extrapad*(ax.get_xlim()[1] - ax.get_xlim()[0])
+    return ax.get_xlim()[1] + extrapad * (ax.get_xlim()[1] - ax.get_xlim()[0])
+
 
 def draw_ci(
     dataframe: pd.core.frame.DataFrame,

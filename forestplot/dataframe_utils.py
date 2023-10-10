@@ -6,7 +6,8 @@ from typing import Any, Optional, Union
 import numpy as np
 import pandas as pd
 
-offline = os.getenv('FORESTPLOT_OFFLINE')
+offline = os.getenv("FORESTPLOT_OFFLINE")
+
 
 def insert_groups(
     dataframe: pd.core.frame.DataFrame, groupvar: str, varlabel: str
@@ -125,9 +126,9 @@ def insert_empty_row(dataframe: pd.core.frame.DataFrame) -> pd.core.frame.DataFr
 
 def load_data(
     name: str,
-    data_path: Path = Path("./examples/data/"),
-    **param_dict: Optional[Any]
-    ) -> pd.core.frame.DataFrame:
+    data_path: Union[Path, str] = Path("./examples/data/"),
+    **param_dict: Optional[Any],
+) -> pd.core.frame.DataFrame:
     """
     Load example dataset for quickstart.
 
@@ -151,14 +152,16 @@ def load_data(
     available_data = ["mortality", "sleep", "sleep-untruncated"]
     name = name.lower().strip()
     if name in available_data:
-        data = Path(data_path) / f"{name}.csv"
-        if not data.is_file():
-            if offline:
-                raise AssertionError(f"{data} not found. Working offline (FORESTPLOT_OFFLINE={offline}).")
-            data = (
-                f"https://raw.githubusercontent.com/lsys/forestplot/main/examples/data/{name}.csv"
+        data_path = Path(data_path) / f"{name}.csv"
+        if data_path.is_file():
+            df = pd.read_csv(data_path, **param_dict)
+        elif offline:
+            raise AssertionError(
+                f"{data_path} not found. Working offline (FORESTPLOT_OFFLINE={offline})."
             )
-        df = pd.read_csv(data, **param_dict)
+        else:
+            url = f"https://github.com/LSYS/forestplot/tree/main/examples/data/{name}.csv"
+            df = pd.read_csv(url, **param_dict)
         if name == "sleep":
             df["n"] = df["n"].astype("str")
         return df
