@@ -1,9 +1,12 @@
 """Holds functions to check prepare dataframe for plotting."""
+import os
+from pathlib import Path
 from typing import Any, Optional, Union
 
 import numpy as np
 import pandas as pd
 
+offline = os.getenv('FORESTPLOT_OFFLINE')
 
 def insert_groups(
     dataframe: pd.core.frame.DataFrame, groupvar: str, varlabel: str
@@ -120,19 +123,26 @@ def insert_empty_row(dataframe: pd.core.frame.DataFrame) -> pd.core.frame.DataFr
     return dataframe
 
 
-def load_data(name: str, **param_dict: Optional[Any]) -> pd.core.frame.DataFrame:
+def load_data(
+    name: str,
+    data_path: Path = Path("./examples/data/"),
+    **param_dict: Optional[Any]
+    ) -> pd.core.frame.DataFrame:
     """
     Load example dataset for quickstart.
 
     Example data available now:
             - mortality
 
-    The source of these data will be from: https://github.com/LSYS/forestplot/tree/main/examples/data.
+    The source of the data will be in forestplot/examples/data if files exist there
+    else from https://github.com/LSYS/forestplot/tree/main/examples/data.
 
     Parameters
     ----------
     name (str)
             Name of the example data set.
+    data_path (Path) [Optional]
+            Directory containing local copies of csv data
 
     Returns
     -------
@@ -141,10 +151,14 @@ def load_data(name: str, **param_dict: Optional[Any]) -> pd.core.frame.DataFrame
     available_data = ["mortality", "sleep", "sleep-untruncated"]
     name = name.lower().strip()
     if name in available_data:
-        url = (
-            f"https://raw.githubusercontent.com/lsys/forestplot/main/examples/data/{name}.csv"
-        )
-        df = pd.read_csv(url, **param_dict)
+        data = Path(data_path) / f"{name}.csv"
+        if not data.is_file():
+            if offline:
+                raise AssertionError(f"{data} not found. Working offline (FORESTPLOT_OFFLINE={offline}).")
+            data = (
+                f"https://raw.githubusercontent.com/lsys/forestplot/main/examples/data/{name}.csv"
+            )
+        df = pd.read_csv(data, **param_dict)
         if name == "sleep":
             df["n"] = df["n"].astype("str")
         return df
