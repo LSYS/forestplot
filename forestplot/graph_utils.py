@@ -8,6 +8,9 @@ from matplotlib.pyplot import Axes
 
 warnings.filterwarnings("ignore")
 
+def _get_pad(ax: Axes, **kwargs) -> float:
+    extrapad = kwargs.get("extrapad", 0.05)
+    return ax.get_xlim()[1] + extrapad*(ax.get_xlim()[1] - ax.get_xlim()[0])
 
 def draw_ci(
     dataframe: pd.core.frame.DataFrame,
@@ -227,8 +230,7 @@ def draw_pval_right(
             if pd.isna(yticklabel2):
                 yticklabel2 = ""
 
-            extrapad = 0.05
-            pad = ax.get_xlim()[1] * (1 + extrapad)
+            pad = _get_pad(ax, **kwargs)
             t = ax.text(
                 x=pad,
                 y=yticklabel1,
@@ -324,8 +326,7 @@ def draw_yticklabel2(
         yticklabel1 = row["yticklabel"]
         yticklabel2 = row["yticklabel2"]
 
-        extrapad = 0.05
-        pad = ax.get_xlim()[1] * (1 + extrapad)
+        pad = _get_pad(ax, **kwargs)
         if (ix == top_row_ix) and (
             annoteheaders is not None or right_annoteheaders is not None
         ):
@@ -694,8 +695,7 @@ def draw_tablelines(
         [x0, x1], [nrows - 1.45, nrows - 1.45], color="0.5", linewidth=lower_lw, clip_on=False
     )
     if (right_annoteheaders is not None) or (pval is not None):
-        extrapad = kwargs.get("extrapad", 0.05)
-        x0 = ax.get_xlim()[1] * (1 + extrapad)
+        x0 = _get_pad(ax, **kwargs)
         plt.plot(
             [x0, righttext_width],
             [nrows - 0.4, nrows - 0.4],
