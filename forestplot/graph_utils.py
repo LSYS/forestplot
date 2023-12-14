@@ -175,10 +175,16 @@ def right_flush_yticklabels(
             dataframe[yticklabel], fontfamily=fontfamily, fontsize=fontsize, ha="right"
         )
     yax = ax.get_yaxis()
-    pad = max(
-        T.label.get_window_extent(renderer=fig.canvas.get_renderer()).width
-        for T in yax.majorTicks
-    )
+    try:
+        pad = max(
+            T.label.get_window_extent(renderer=fig.canvas.get_renderer()).width
+            for T in yax.majorTicks
+        )
+    except AttributeError:
+        pad = max(
+            T.label1.get_window_extent(renderer=fig.canvas.get_renderer()).width
+            for T in yax.majorTicks
+        )
     if flush:
         yax.set_tick_params(pad=pad)
 
