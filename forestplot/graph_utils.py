@@ -689,7 +689,10 @@ def draw_tablelines(
             Matplotlib Axes object.
     """
     first_yticklab = ax.get_yaxis().majorTicks[-1]
-    bbox_disp = first_yticklab.label.get_window_extent()
+    try:
+        bbox_disp = first_yticklab.label.get_window_extent()
+    except AttributeError:
+        bbox_disp = first_yticklab.label1.get_window_extent()
     (x0, _), (x1, _) = ax.transData.inverted().transform(bbox_disp)
     upper_lw, lower_lw = 2, 1.3
     nrows = len(dataframe)
