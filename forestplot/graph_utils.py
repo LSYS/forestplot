@@ -175,10 +175,16 @@ def right_flush_yticklabels(
             dataframe[yticklabel], fontfamily=fontfamily, fontsize=fontsize, ha="right"
         )
     yax = ax.get_yaxis()
-    pad = max(
-        T.label.get_window_extent(renderer=fig.canvas.get_renderer()).width
-        for T in yax.majorTicks
-    )
+    try:
+        pad = max(
+            T.label.get_window_extent(renderer=fig.canvas.get_renderer()).width
+            for T in yax.majorTicks
+        )
+    except AttributeError:
+        pad = max(
+            T.label1.get_window_extent(renderer=fig.canvas.get_renderer()).width
+            for T in yax.majorTicks
+        )        
     if flush:
         yax.set_tick_params(pad=pad)
 
@@ -683,7 +689,10 @@ def draw_tablelines(
             Matplotlib Axes object.
     """
     first_yticklab = ax.get_yaxis().majorTicks[-1]
-    bbox_disp = first_yticklab.label.get_window_extent()
+    try:
+        bbox_disp = first_yticklab.label.get_window_extent()
+    except:
+        bbox_disp = first_yticklab.label1.get_window_extent()
     (x0, _), (x1, _) = ax.transData.inverted().transform(bbox_disp)
     upper_lw, lower_lw = 2, 1.3
     nrows = len(dataframe)
