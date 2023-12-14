@@ -184,7 +184,7 @@ def right_flush_yticklabels(
         pad = max(
             T.label1.get_window_extent(renderer=fig.canvas.get_renderer()).width
             for T in yax.majorTicks
-        )        
+        )
     if flush:
         yax.set_tick_params(pad=pad)
 
