@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ "main", "docs", "patch", "feature", "mplot" ]
+    branches: [ "main", "docs", "patch", "feature", "mplot", "mplot-dev" ]
   pull_request:
     branches: [ "main" ]
 
