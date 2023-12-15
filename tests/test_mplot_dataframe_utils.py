@@ -207,4 +207,7 @@ def test_make_multimodel_tableheaders():
     )
     # Verify
     # assert_frame_equal(df_result, df_expected)
-    pd.testing.assert_frame_equal(df_result.iloc[:, :4], df_expected.iloc[:, :4])
+    assert_frame_equal(df_result.iloc[:, :4], df_expected.iloc[:, :4])
+    assert_series_equal(df_result["yticklabel"], df_expected["yticklabel"])
+    assert_series_equal(df_result["yticklabel2"], df_expected["yticklabel2"])
+    
