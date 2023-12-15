@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
-from pandas.testing import assert_frame_equal, assert_series_equal
-from numpy.testing import assert_array_equal
+from pandas.testing import assert_frame_equal
+
 from forestplot.mplot_dataframe_utils import (
     _insert_headers_models,
     insert_group_model,
@@ -73,9 +73,7 @@ def test_insert_headers_models():
     result = _insert_headers_models(df, "model_col", None)
 
     # Verify
-    assert_frame_equal(
-        result.reset_index(drop=True), expected_output.reset_index(drop=True)
-    )
+    assert_frame_equal(result.reset_index(drop=True), expected_output.reset_index(drop=True))
 
 
 def test_make_multimodel_tableheaders():
