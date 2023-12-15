@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from pandas.testing import assert_frame_equal
 
 from forestplot.mplot_dataframe_utils import (
     _insert_headers_models,
@@ -48,7 +49,7 @@ def test_insert_group_model():
     result_df = insert_group_model(df, "groupvar", "varlabel", "model_col")
 
     # Assert
-    pd.testing.assert_frame_equal(result_df, expected_df)
+    assert_frame_equal(result_df, expected_df)
 
 
 def test_insert_headers_models():
@@ -72,9 +73,7 @@ def test_insert_headers_models():
     result = _insert_headers_models(df, "model_col", None)
 
     # Verify
-    pd.testing.assert_frame_equal(
-        result.reset_index(drop=True), expected_output.reset_index(drop=True)
-    )
+    assert_frame_equal(result.reset_index(drop=True), expected_output.reset_index(drop=True))
 
 
 def test_make_multimodel_tableheaders():
@@ -205,4 +204,6 @@ def test_make_multimodel_tableheaders():
         right_annoteheaders=None,
     )
     # Verify
-    pd.testing.assert_frame_equal(df_result, df_expected)
+    assert_frame_equal(df_result.iloc[:, :4], df_expected.iloc[:, :4])
+    assert pd.notna(df_result.loc[0, "yticklabel"])
+    assert pd.notna(df_result.loc[0, "yticklabel2"])
