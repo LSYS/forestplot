@@ -50,18 +50,37 @@ def mdraw_ref_xline(
     return ax
 
 
-# =============================================================================================
-# =============================================================================================
-# =============================================================================================
 def mdraw_yticklabels(
     dataframe: pd.core.frame.DataFrame,
     yticklabel: str,
-    model_col: str,
-    models: Optional[Union[Sequence[str], None]],
     flush: bool,
     ax: Axes,
     **kwargs: Any,
 ) -> Axes:
+    """
+    Set custom y-axis tick labels on a matplotlib Axes object using the yticklabel column in the provided
+    pandas dataframe.
+
+    Parameters
+    ----------
+    dataframe : pd.core.frame.DataFrame
+        The pandas DataFrame from which the y-axis tick labels are derived.
+    yticklabel : str
+        Column name in the DataFrame whose values are used as y-axis tick labels.
+    flush : bool
+        If True, aligns y-axis tick labels to the left with adjusted padding to prevent overlap.
+        If False, aligns labels to the right.
+    ax : Axes
+        The matplotlib Axes object to be modified.
+    **kwargs : Any
+        Additional keyword arguments for customizing the appearance of the tick labels.
+        Supported customizations include 'fontfamily' (default 'monospace') and 'fontsize' (default 12).
+
+    Returns
+    -------
+    Axes
+        The modified matplotlib Axes object with updated y-axis tick labels.
+    """
     ax.set_yticks(range(len(dataframe)))
 
     fontfamily = kwargs.get("fontfamily", "monospace")
@@ -72,10 +91,16 @@ def mdraw_yticklabels(
         )
         yax = ax.get_yaxis()
         fig = plt.gcf()
-        pad = max(
-            T.label.get_window_extent(renderer=fig.canvas.get_renderer()).width
-            for T in yax.majorTicks
-        )
+        try:
+            pad = max(
+                T.label.get_window_extent(renderer=fig.canvas.get_renderer()).width
+                for T in yax.majorTicks
+            )
+        except AttributeError:
+            pad = max(
+                T.label1.get_window_extent(renderer=fig.canvas.get_renderer()).width
+                for T in yax.majorTicks
+            )
         yax.set_tick_params(pad=pad)
     else:
         ax.set_yticklabels(
