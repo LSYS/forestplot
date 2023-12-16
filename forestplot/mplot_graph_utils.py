@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib import rcParams
-from matplotlib.pyplot import Axes
 from matplotlib.lines import Line2D
+from matplotlib.pyplot import Axes
 
 
 def mdraw_ref_xline(
@@ -177,8 +177,8 @@ def mdraw_ci(
     """
     Plot confidence intervals on a matplotlib Axes object using data from a DataFrame.
 
-    This function adds error bars to an existing Axes object to represent confidence intervals 
-    (or similar intervals) for different model groups in the data. It allows customization of 
+    This function adds error bars to an existing Axes object to represent confidence intervals
+    (or similar intervals) for different model groups in the data. It allows customization of
     error bar colors and line width.
 
     Parameters
@@ -202,7 +202,7 @@ def mdraw_ci(
     mcolor : Union[Sequence[str], None], optional
         A sequence of colors for the error bars for each model group, defaults to ["0", "0.4", ".8", "0.2"].
     **kwargs : Any
-        Additional keyword arguments. Supported customizations include 'lw' (line width, default 1.4) 
+        Additional keyword arguments. Supported customizations include 'lw' (line width, default 1.4)
         and 'offset' for the spacing between error bars of different model groups.
 
     Returns
@@ -232,8 +232,6 @@ def mdraw_ci(
     if logscale:
         ax.set_xscale("log", base=10)
     return ax
-
-
 
 
 def mdraw_legend(
