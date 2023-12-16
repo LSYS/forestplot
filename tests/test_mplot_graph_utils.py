@@ -8,7 +8,7 @@ from forestplot.mplot_graph_utils import (
     mdraw_est_markers,
     mdraw_legend,
     mdraw_ref_xline,
-    mdraw_yticklabels,
+    mdraw_yticklabels, mdraw_yticklabel2
 )
 
 x, y = [0, 1, 2], [0, 1, 2]
@@ -101,7 +101,7 @@ def test_mdraw_ci():
 
 def test_mdraw_legend():
     # Create a simple plot
-    fig, ax = plt.subplots()
+    _, ax = plt.subplots()
     ax.plot([0, 1], [0, 1], marker="o", color="0")
     ax.plot([0, 1], [1, 0], marker="s", color="0.4")
 
@@ -128,3 +128,27 @@ def test_mdraw_legend():
     for line, color in zip(legend.legendHandles, mcolor):
         assert isinstance(line, Line2D), "Legend entry is not a Line2D instance."
         assert line.get_color() == color, "Legend marker color does not match."
+
+
+    
+def test_mdraw_yticklabel2():
+    # Create sample DataFrame
+    df = pd.DataFrame({
+        'yticklabel2': ['Label 1', 'Label 2', 'Label 3']
+    })
+
+    # Initialize Matplotlib Axes
+    _, ax = plt.subplots()
+
+    # Call the function
+    ax, righttext_width = mdraw_yticklabel2(df, None, None, ax)
+
+    # Assertions
+    # Check if righttext_width is a float (or int, based on your implementation)
+    assert isinstance(righttext_width, (float, int)), "righttext_width is not a numeric value."
+
+    # Additional checks can be made for text properties like content, font size, and alignment
+    texts = [text for text in ax.get_children() if isinstance(text, plt.Text)]
+    for text, expected_label in zip(texts, df['yticklabel2']):
+        assert text.get_text() == expected_label, "Text label content does not match."
+

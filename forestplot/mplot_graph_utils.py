@@ -323,6 +323,34 @@ def mdraw_yticklabel2(
     ax: Axes,
     **kwargs: Any,
 ) -> Axes:
+    """
+    Add custom y-axis labels (rightannote) to the right side of a matplotlib Axes object based on a DataFrame.
+
+    Parameters
+    ----------
+    dataframe : pd.core.frame.DataFrame
+        The pandas DataFrame containing the data. The 'yticklabel2' column is used for the y-axis labels.
+    annoteheaders : Union[Sequence[str], None]
+        A sequence of strings specifying additional annotation headers to be displayed. If None, no additional headers are used.
+    right_annoteheaders : Union[Sequence[str], None]
+        A sequence of strings specifying additional right-aligned annotation headers to be displayed. If None, no additional headers are used.
+    ax : Axes
+        The matplotlib Axes object on which to add the labels.
+    **kwargs : Any
+        Additional keyword arguments for customization. Supported customizations include 'grouplab_fontweight' 
+        (font weight for the group label, default 'bold'), 'fontfamily' (font family, default 'monospace'), 
+        and 'fontsize' (font size, default 12).
+
+    Returns
+    -------
+    Tuple
+        A tuple containing the modified Axes object and the width of the rightmost text label.
+
+    Notes
+    -----
+    - The function adjusts the position of each label based on the presence of annotation headers.
+    - The returned 'righttext_width' can be used for further layout adjustments, especially in complex plots.
+    """
     grouplab_fontweight = kwargs.get("grouplab_fontweight", "bold")
     fontfamily = kwargs.get("fontfamily", "monospace")
     fontsize = kwargs.get("fontsize", 12)
