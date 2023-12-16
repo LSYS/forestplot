@@ -242,6 +242,41 @@ def mdraw_legend(
     mcolor: Union[Sequence[str], None] = ["0", "0.4", ".8", "0.2"],
     **kwargs: Any,
 ) -> Axes:
+    """
+    Add a custom legend to a matplotlib Axes object for the different models.
+
+    This function creates and adds a legend to a given Axes object, allowing for customization of
+    the legend's markers, colors, size, and positioning. It's particularly useful for graphs
+    representing different models or categories with distinct markers and colors.
+
+    Parameters
+    ----------
+    ax : Axes
+        The matplotlib Axes object to which the legend will be added.
+    xlabel : Union[Sequence[str], None]
+        A sequence of strings for x-axis labels, used to adjust the legend position. If None, the default position is used.
+    modellabels : Optional[Union[Sequence[str], None]]
+        A sequence of strings that serve as labels for the legend entries.
+    msymbols : Union[Sequence[str], None], optional
+        A sequence of marker symbols for each legend entry, defaults to 'soDx'.
+    mcolor : Union[Sequence[str], None], optional
+        A sequence of colors for each legend entry, defaults to ["0", "0.4", ".8", "0.2"].
+    **kwargs : Any
+        Additional keyword arguments for further customization. Supported customizations include 'leg_markersize'
+        (size of the legend markers, default 8), 'bbox_to_anchor' (tuple specifying the anchor point of the legend),
+        'leg_loc' (location of the legend, default 'lower center' or 'best'), 'leg_ncol' (number of columns in the legend,
+        default 2 or 1), and 'leg_fontsize' (font size of legend text, default 12).
+
+    Returns
+    -------
+    Axes
+        The modified matplotlib Axes object with the legend added.
+
+    Notes
+    -----
+    - The 'xlabel' parameter is used to adjust the legend's position based on the presence of x-axis labels.
+      It does not directly set the x-axis labels.
+    """
     leg_markersize = kwargs.get("leg_markersize", 8)
     leg_artists = []
     for ix, symbol in enumerate(msymbols):

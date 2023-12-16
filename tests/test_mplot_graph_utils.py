@@ -1,10 +1,12 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+from matplotlib.lines import Line2D
 from matplotlib.pyplot import Axes
 
 from forestplot.mplot_graph_utils import (
     mdraw_ci,
     mdraw_est_markers,
+    mdraw_legend,
     mdraw_ref_xline,
     mdraw_yticklabels,
 )
@@ -95,3 +97,33 @@ def test_mdraw_ci():
     # Assertions
     assert isinstance(ax, Axes)
     assert len(ax.collections) == len(set(models_vector))
+
+def test_mdraw_legend():
+    # Create a simple plot
+    fig, ax = plt.subplots()
+    ax.plot([0, 1], [0, 1], marker="o", color="0")
+    ax.plot([0, 1], [1, 0], marker="s", color="0.4")
+
+    # Sample parameters for the legend
+    modellabels = ["Model 1", "Model 2"]
+    msymbols = ["o", "s"]
+    mcolor = ["0", "0.4"]
+
+    # Call the function
+    ax = mdraw_legend(ax, None, modellabels, msymbols, mcolor)
+
+    # Assertions
+    legend = ax.get_legend()
+    assert legend is not None, "Legend was not created."
+
+    # Check number of legend entries
+    assert len(legend.get_texts()) == len(modellabels), "Incorrect number of legend entries."
+
+    # Check legend labels
+    for label, model_label in zip(legend.get_texts(), modellabels):
+        assert label.get_text() == model_label, "Legend labels do not match."
+
+    # Check legend marker colors and symbols
+    for line, color in zip(legend.legendHandles, mcolor):
+        assert isinstance(line, Line2D), "Legend entry is not a Line2D instance."
+        assert line.get_color() == color, "Legend marker color does not match."
