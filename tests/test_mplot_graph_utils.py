@@ -8,7 +8,8 @@ from forestplot.mplot_graph_utils import (
     mdraw_est_markers,
     mdraw_legend,
     mdraw_ref_xline,
-    mdraw_yticklabels, mdraw_yticklabel2
+    mdraw_yticklabel2,
+    mdraw_yticklabels,
 )
 
 x, y = [0, 1, 2], [0, 1, 2]
@@ -130,12 +131,9 @@ def test_mdraw_legend():
         assert line.get_color() == color, "Legend marker color does not match."
 
 
-    
 def test_mdraw_yticklabel2():
     # Create sample DataFrame
-    df = pd.DataFrame({
-        'yticklabel2': ['Label 1', 'Label 2', 'Label 3']
-    })
+    df = pd.DataFrame({"yticklabel2": ["Label 1", "Label 2", "Label 3"]})
 
     # Initialize Matplotlib Axes
     _, ax = plt.subplots()
@@ -149,6 +147,5 @@ def test_mdraw_yticklabel2():
 
     # Additional checks can be made for text properties like content, font size, and alignment
     texts = [text for text in ax.get_children() if isinstance(text, plt.Text)]
-    for text, expected_label in zip(texts, df['yticklabel2']):
+    for text, expected_label in zip(texts, df["yticklabel2"]):
         assert text.get_text() == expected_label, "Text label content does not match."
-
