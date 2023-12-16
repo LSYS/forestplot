@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.pyplot import Axes
 
-from forestplot.mplot_graph_utils import mdraw_est_markers, mdraw_ref_xline, mdraw_yticklabels
+from forestplot.mplot_graph_utils import mdraw_est_markers, mdraw_ref_xline, mdraw_yticklabels, mdraw_ci
 
 x, y = [0, 1, 2], [0, 1, 2]
 str_vector = ["a", "b", "c"]
@@ -63,9 +63,20 @@ def test_mdraw_est_markers():
         models=list(set(models_vector)),
         ax=ax,
     )
+    assert isinstance(ax, Axes)
     assert (all(isinstance(tick, int)) for tick in ax.get_yticks())
 
     xmin, xmax = ax.get_xlim()
     assert xmin <= input_df["estimate"].min()
     assert xmax >= input_df["estimate"].max()
+    assert len(ax.collections) == len(set(models_vector))
+
+def test_mdraw_ci():
+    _, ax = plt.subplots()
+
+    # Call the function
+    ax = mdraw_ci(input_df, estimate='estimate', ll='ll', hl='hl', model_col='model', models=list(set(models_vector)), logscale=False, ax=ax)
+
+    # Assertions
+    assert isinstance(ax, Axes)
     assert len(ax.collections) == len(set(models_vector))
