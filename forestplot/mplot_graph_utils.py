@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib import rcParams
+from matplotlib.lines import Line2D
 from matplotlib.pyplot import Axes
 
 
@@ -164,7 +165,6 @@ def mdraw_est_markers(
 def mdraw_ci(
     dataframe: pd.core.frame.DataFrame,
     estimate: str,
-    yticklabel: str,
     ll: str,
     hl: str,
     model_col: str,
@@ -174,7 +174,42 @@ def mdraw_ci(
     mcolor: Union[Sequence[str], None] = ["0", "0.4", ".8", "0.2"],
     **kwargs: Any,
 ) -> Axes:
-    """Docstring"""
+    """
+    Plot confidence intervals on a matplotlib Axes object using data from a DataFrame.
+
+    This function adds error bars to an existing Axes object to represent confidence intervals
+    (or similar intervals) for different model groups in the data. It allows customization of
+    error bar colors and line width.
+
+    Parameters
+    ----------
+    dataframe : pd.core.frame.DataFrame
+        The pandas DataFrame containing the data to be plotted.
+    estimate : str
+        The name of the column in the DataFrame that contains the central estimate values for the error bars.
+    ll : str
+        The name of the column representing the lower limit of the confidence interval.
+    hl : str
+        The name of the column representing the upper limit of the confidence interval.
+    model_col : str
+        The column in the DataFrame that defines different model groups.
+    models : Optional[Sequence[str]]
+        A sequence of strings representing the different model groups for which to plot error bars.
+    logscale : bool
+        If True, sets the x-axis to a logarithmic scale.
+    ax : Axes
+        The matplotlib Axes object on which the error bars will be plotted.
+    mcolor : Union[Sequence[str], None], optional
+        A sequence of colors for the error bars for each model group, defaults to ["0", "0.4", ".8", "0.2"].
+    **kwargs : Any
+        Additional keyword arguments. Supported customizations include 'lw' (line width, default 1.4)
+        and 'offset' for the spacing between error bars of different model groups.
+
+    Returns
+    -------
+    Axes
+        The modified matplotlib Axes object with the error bars added.
+    """
     lw = kwargs.get("lw", 1.4)
     n = len(models)
     offset = kwargs.get("offset", 0.3 - (n - 2) * 0.05)
@@ -197,9 +232,6 @@ def mdraw_ci(
     if logscale:
         ax.set_xscale("log", base=10)
     return ax
-
-
-from matplotlib.lines import Line2D
 
 
 def mdraw_legend(
