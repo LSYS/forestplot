@@ -80,6 +80,60 @@ def mforestplot(
     table: bool = False,
     **kwargs: Any,
 ) -> Axes:
+    """
+    Generate a forest plot from a DataFrame using Matplotlib.
+
+    This function creates a forest plot, which is useful for displaying the estimates from different models 
+    or groups, along with their confidence intervals. It provides a range of customization options for the plot, 
+    including sorting, annotations, and visual style.
+
+    Parameters
+    ----------
+    dataframe : pd.core.frame.DataFrame
+        The DataFrame containing the data to be plotted.
+    estimate : str
+        The name of the column in the DataFrame that contains the estimate values.
+    varlabel : str
+        The name of the column used for variable labels on the y-axis.
+    model_col : str
+        The name of the column that categorizes data into different models or groups.
+    models : Optional[Sequence[str]]
+        The list of models to include in the plot. If None, all models in model_col are used.
+    modellabels : Optional[Sequence[str]]
+        Labels for the models, used in the plot legend. If None, model names are used as labels.
+    ll : Optional[str]
+        The name of the column representing the lower limit of the confidence intervals.
+    hl : Optional[str]
+        The name of the column representing the upper limit of the confidence intervals.
+    [Other parameters]
+        ...
+
+    Returns
+    -------
+    Tuple
+        A tuple containing a modified DataFrame (if return_df is True) and the matplotlib Axes object 
+        with the forest plot.
+
+    Examples
+    --------
+    >>> df = pd.DataFrame({
+    ...     'model': ['model1', 'model2'],
+    ...     'estimate': [1.5, 2.0],
+    ...     'll': [1.0, 1.7],
+    ...     'hl': [2.0, 2.3],
+    ...     'varlabel': ['Variable 1', 'Variable 2']
+    ... })
+    >>> modified_df, ax = mforestplot(df, 'estimate', 'varlabel', 'model')
+    >>> plt.show()
+
+    Notes
+    -----
+    - The function is highly customizable with several optional parameters to adjust the appearance and functionality 
+      of the plot.
+    - If `return_df` is True, the function also returns the DataFrame after preprocessing and sorting based on the 
+      specified parameters.
+    - The `preprocess` parameter controls whether the input DataFrame should be preprocessed before plotting.
+    """
     _local_df = dataframe.copy(deep=True)
     _local_df = check_data(
         dataframe=_local_df,
@@ -145,7 +199,10 @@ def mforestplot(
         table=table,
         **kwargs,
     )
-    return _local_df, ax
+    if return_df:
+        return _local_df, ax
+    else:
+        return ax
 
 
 def _mpreprocess_dataframe(
