@@ -159,7 +159,7 @@ def mdraw_est_markers(
         _y = base_y_vector + (ix * offset)
         ax.scatter(y=_y, x=_df[estimate], marker=msymbols[ix], color=mcolor[ix], s=markersize)
     return ax
-
+ 
 
 def mdraw_ci(
     dataframe: pd.core.frame.DataFrame,
