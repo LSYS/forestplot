@@ -98,7 +98,6 @@ def test_mdraw_ci():
     assert isinstance(ax, Axes)
     assert len(ax.collections) == len(set(models_vector))
 
-
 def test_mdraw_legend():
     # Create a simple plot
     fig, ax = plt.subplots()
