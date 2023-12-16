@@ -245,8 +245,8 @@ def mdraw_legend(
     """
     Add a custom legend to a matplotlib Axes object for the different models.
 
-    This function creates and adds a legend to a given Axes object, allowing for customization of 
-    the legend's markers, colors, size, and positioning. It's particularly useful for graphs 
+    This function creates and adds a legend to a given Axes object, allowing for customization of
+    the legend's markers, colors, size, and positioning. It's particularly useful for graphs
     representing different models or categories with distinct markers and colors.
 
     Parameters
@@ -262,9 +262,9 @@ def mdraw_legend(
     mcolor : Union[Sequence[str], None], optional
         A sequence of colors for each legend entry, defaults to ["0", "0.4", ".8", "0.2"].
     **kwargs : Any
-        Additional keyword arguments for further customization. Supported customizations include 'leg_markersize' 
-        (size of the legend markers, default 8), 'bbox_to_anchor' (tuple specifying the anchor point of the legend), 
-        'leg_loc' (location of the legend, default 'lower center' or 'best'), 'leg_ncol' (number of columns in the legend, 
+        Additional keyword arguments for further customization. Supported customizations include 'leg_markersize'
+        (size of the legend markers, default 8), 'bbox_to_anchor' (tuple specifying the anchor point of the legend),
+        'leg_loc' (location of the legend, default 'lower center' or 'best'), 'leg_ncol' (number of columns in the legend,
         default 2 or 1), and 'leg_fontsize' (font size of legend text, default 12).
 
     Returns
@@ -272,20 +272,10 @@ def mdraw_legend(
     Axes
         The modified matplotlib Axes object with the legend added.
 
-    Examples
-    --------
-    >>> fig, ax = plt.subplots()
-    >>> ax.plot([0, 1], [0, 1], 'o-', color="0")
-    >>> ax.plot([0, 1], [1, 0], 's-', color="0.4")
-    >>> mdraw_legend(ax, None, ['Model 1', 'Model 2'], 'so', ['0', '0.4'])
-    >>> plt.show()
-
     Notes
     -----
-    - The 'xlabel' parameter is used to adjust the legend's position based on the presence of x-axis labels. 
+    - The 'xlabel' parameter is used to adjust the legend's position based on the presence of x-axis labels.
       It does not directly set the x-axis labels.
-    - This function is designed to provide flexibility in creating legends tailored to different types of plots, 
-      especially those representing multiple models or categories.
     """
     leg_markersize = kwargs.get("leg_markersize", 8)
     leg_artists = []
