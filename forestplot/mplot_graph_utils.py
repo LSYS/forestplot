@@ -68,7 +68,7 @@ def mdraw_yticklabels(
     yticklabel : str
         Column name in the DataFrame whose values are used as y-axis tick labels.
     flush : bool
-        If True, aligns y-axis tick labels to the left with adjusted padding to prevent overlap. 
+        If True, aligns y-axis tick labels to the left with adjusted padding to prevent overlap.
         If False, aligns labels to the right.
     ax : Axes
         The matplotlib Axes object to be modified.
@@ -100,7 +100,7 @@ def mdraw_yticklabels(
             pad = max(
                 T.label1.get_window_extent(renderer=fig.canvas.get_renderer()).width
                 for T in yax.majorTicks
-            )            
+            )
         yax.set_tick_params(pad=pad)
     else:
         ax.set_yticklabels(
