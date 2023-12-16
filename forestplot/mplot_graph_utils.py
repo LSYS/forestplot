@@ -337,8 +337,8 @@ def mdraw_yticklabel2(
     ax : Axes
         The matplotlib Axes object on which to add the labels.
     **kwargs : Any
-        Additional keyword arguments for customization. Supported customizations include 'grouplab_fontweight' 
-        (font weight for the group label, default 'bold'), 'fontfamily' (font family, default 'monospace'), 
+        Additional keyword arguments for customization. Supported customizations include 'grouplab_fontweight'
+        (font weight for the group label, default 'bold'), 'fontfamily' (font family, default 'monospace'),
         and 'fontsize' (font size, default 12).
 
     Returns
