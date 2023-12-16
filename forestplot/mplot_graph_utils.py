@@ -91,10 +91,16 @@ def mdraw_yticklabels(
         )
         yax = ax.get_yaxis()
         fig = plt.gcf()
-        pad = max(
-            T.label.get_window_extent(renderer=fig.canvas.get_renderer()).width
-            for T in yax.majorTicks
-        )
+        try:
+            pad = max(
+                T.label.get_window_extent(renderer=fig.canvas.get_renderer()).width
+                for T in yax.majorTicks
+            )
+        except AttributeError:
+            pad = max(
+                T.label1.get_window_extent(renderer=fig.canvas.get_renderer()).width
+                for T in yax.majorTicks
+            )            
         yax.set_tick_params(pad=pad)
     else:
         ax.set_yticklabels(
