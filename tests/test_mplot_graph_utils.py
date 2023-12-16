@@ -2,11 +2,11 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.pyplot import Axes
 
-from forestplot.mplot_graph_utils import mdraw_ref_xline, mdraw_yticklabels, mdraw_est_markers
+from forestplot.mplot_graph_utils import mdraw_est_markers, mdraw_ref_xline, mdraw_yticklabels
 
 x, y = [0, 1, 2], [0, 1, 2]
 str_vector = ["a", "b", "c"]
-models_vector =["m1", "m1", "m2"]
+models_vector = ["m1", "m1", "m2"]
 input_df = pd.DataFrame(
     {
         "yticklabel": str_vector,
@@ -55,11 +55,17 @@ def test_mdraw_yticklabels():
 
 
 def test_mdraw_est_markers():
-	_, ax = plt.subplots()
-	ax = mdraw_est_markers(input_df, estimate='estimate', model_col='model', models=list(set(models_vector)), ax=ax)
-	assert (all(isinstance(tick, int)) for tick in ax.get_yticks())
+    _, ax = plt.subplots()
+    ax = mdraw_est_markers(
+        input_df,
+        estimate="estimate",
+        model_col="model",
+        models=list(set(models_vector)),
+        ax=ax,
+    )
+    assert (all(isinstance(tick, int)) for tick in ax.get_yticks())
 
-	xmin, xmax = ax.get_xlim()
-	assert xmin <= input_df["estimate"].min()
-	assert xmax >= input_df["estimate"].max()
-	assert len(ax.collections) == len(set(models_vector))
+    xmin, xmax = ax.get_xlim()
+    assert xmin <= input_df["estimate"].min()
+    assert xmax >= input_df["estimate"].max()
+    assert len(ax.collections) == len(set(models_vector))

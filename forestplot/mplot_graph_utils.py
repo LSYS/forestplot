@@ -142,7 +142,7 @@ def mdraw_est_markers(
     mcolor : Union[Sequence[str], None], optional
         A sequence of colors for each model group, defaults to ["0", "0.4", ".8", "0.2"].
     **kwargs : Any
-        Additional keyword arguments. Supported customizations include 'markersize' (default 40) 
+        Additional keyword arguments. Supported customizations include 'markersize' (default 40)
         and 'offset' for the spacing between markers of different model groups.
 
     Returns
@@ -159,7 +159,7 @@ def mdraw_est_markers(
         _y = base_y_vector + (ix * offset)
         ax.scatter(y=_y, x=_df[estimate], marker=msymbols[ix], color=mcolor[ix], s=markersize)
     return ax
- 
+
 
 def mdraw_ci(
     dataframe: pd.core.frame.DataFrame,
