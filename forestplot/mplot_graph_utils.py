@@ -112,7 +112,6 @@ def mdraw_yticklabels(
 def mdraw_est_markers(
     dataframe: pd.core.frame.DataFrame,
     estimate: str,
-    yticklabel: str,
     model_col: str,
     models: Sequence[str],
     ax: Axes,
@@ -120,7 +119,37 @@ def mdraw_est_markers(
     mcolor: Union[Sequence[str], None] = ["0", "0.4", ".8", "0.2"],
     **kwargs: Any,
 ) -> Axes:
-    """docstring"""
+    """
+    Plot scatter markers on a matplotlib Axes object based on model estimates from a DataFrame.
+
+    This function adds the scatter plot markers to an existing Axes object for different model groups in the data.
+    It allows for customization of marker symbols, colors, and sizes.
+
+    Parameters
+    ----------
+    dataframe : pd.core.frame.DataFrame
+        The pandas DataFrame containing the data to be plotted.
+    estimate : str
+        The name of the column in the DataFrame that contains the estimate values to plot on the x-axis.
+    model_col : str
+        The column in the DataFrame that defines different model groups.
+    models : Sequence[str]
+        A sequence of strings representing the different model groups to plot.
+    ax : Axes
+        The matplotlib Axes object on which the scatter plot will be drawn.
+    msymbols : Union[Sequence[str], None], optional
+        A sequence of marker symbols for each model group, defaults to 'soDx'.
+    mcolor : Union[Sequence[str], None], optional
+        A sequence of colors for each model group, defaults to ["0", "0.4", ".8", "0.2"].
+    **kwargs : Any
+        Additional keyword arguments. Supported customizations include 'markersize' (default 40) 
+        and 'offset' for the spacing between markers of different model groups.
+
+    Returns
+    -------
+    Axes
+        The modified matplotlib Axes object with the scatter plot added.
+    """
     markersize = kwargs.get("markersize", 40)
     n = len(models)
     offset = kwargs.get("offset", 0.3 - (n - 2) * 0.05)

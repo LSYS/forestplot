@@ -2,13 +2,15 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.pyplot import Axes
 
-from forestplot.mplot_graph_utils import mdraw_ref_xline, mdraw_yticklabels
+from forestplot.mplot_graph_utils import mdraw_ref_xline, mdraw_yticklabels, mdraw_est_markers
 
 x, y = [0, 1, 2], [0, 1, 2]
 str_vector = ["a", "b", "c"]
+models_vector =["m1", "m1", "m2"]
 input_df = pd.DataFrame(
     {
         "yticklabel": str_vector,
+        "model": models_vector,
         "estimate": x,
         "moerror": y,
         "ll": x,
@@ -50,3 +52,29 @@ def test_mdraw_yticklabels():
 
     assert isinstance(ax, Axes)
     assert [label.get_text() for label in ax.get_yticklabels()] == str_vector
+
+
+def test_mdraw_est_markers():
+    # Creating test data
+    # df = pd.DataFrame({
+    #     'estimate': [1, 2, 3, 4],
+    #     'model_col': ['model1', 'model1', 'model2', 'model2'],
+    # })
+    # models = ['model1', 'model2']
+
+    # # Initialize Matplotlib Axes
+    # fig, ax = plt.subplots()
+
+    # # Call the function
+    # ax = mdraw_est_markers(df, 'estimate', 'model_col', 'model_col', models, ax)
+
+    # # Assertions
+    # # assert len(ax.collections) == len(models), "Incorrect number of scatter plots."
+	_, ax = plt.subplots()
+	ax = mdraw_est_markers(input_df, estimate='estimate', model_col='model', models=list(set(models_vector)), ax=ax)
+	assert (all(isinstance(tick, int)) for tick in ax.get_yticks())
+
+	xmin, xmax = ax.get_xlim()
+	assert xmin <= input_df["estimate"].min()
+	assert xmax >= input_df["estimate"].max()
+	assert len(ax.collections) == len(set(models_vector))
