@@ -83,8 +83,8 @@ def mforestplot(
     """
     Generate a forest plot from a DataFrame using Matplotlib.
 
-    This function creates a forest plot, which is useful for displaying the estimates from different models 
-    or groups, along with their confidence intervals. It provides a range of customization options for the plot, 
+    This function creates a forest plot, which is useful for displaying the estimates from different models
+    or groups, along with their confidence intervals. It provides a range of customization options for the plot,
     including sorting, annotations, and visual style.
 
     Parameters
@@ -111,7 +111,7 @@ def mforestplot(
     Returns
     -------
     Tuple
-        A tuple containing a modified DataFrame (if return_df is True) and the matplotlib Axes object 
+        A tuple containing a modified DataFrame (if return_df is True) and the matplotlib Axes object
         with the forest plot.
 
     Examples
@@ -128,9 +128,9 @@ def mforestplot(
 
     Notes
     -----
-    - The function is highly customizable with several optional parameters to adjust the appearance and functionality 
+    - The function is highly customizable with several optional parameters to adjust the appearance and functionality
       of the plot.
-    - If `return_df` is True, the function also returns the DataFrame after preprocessing and sorting based on the 
+    - If `return_df` is True, the function also returns the DataFrame after preprocessing and sorting based on the
       specified parameters.
     - The `preprocess` parameter controls whether the input DataFrame should be preprocessed before plotting.
     """

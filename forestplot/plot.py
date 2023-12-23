@@ -248,7 +248,7 @@ def _preprocess_dataframe(
     **kwargs: Any,
 ) -> pd.core.frame.DataFrame:
     """
-    Preprocess a DataFrame for forest plot visualization, handling various aspects such as sorting, 
+    Preprocess a DataFrame for forest plot visualization, handling various aspects such as sorting,
     normalizing labels, and formatting annotations.
 
     Parameters
@@ -402,7 +402,7 @@ def _make_forestplot(
     """
     Create and draw a forest plot using the given DataFrame and specified parameters.
 
-    This function sets up and renders a forest plot using matplotlib, with various options for customization, 
+    This function sets up and renders a forest plot using matplotlib, with various options for customization,
     including confidence intervals, marker styles, axis labels, and annotations.
 
     Parameters
