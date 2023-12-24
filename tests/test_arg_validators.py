@@ -105,7 +105,7 @@ def test_check_data():
     check_data(
         dataframe=_df,
         estimate="estimate",
-        varlabel="moerror",
+        varlabel="estimate",
         annote=["ci_range"],
     )
 
@@ -147,7 +147,7 @@ def test_check_data():
     check_data(
         dataframe=_df,
         estimate="estimate",
-        varlabel="moerror",
+        varlabel="estimate",
         rightannote=["ci_range"],
     )
 
@@ -176,6 +176,20 @@ def test_check_data():
     assert (
         str(excinfo.value)
         == "Annotation headers are provided but no columns provided ('annote')."
+    )
+
+    ##########################################################################
+    ## Check that warning for duplicated label works
+    ##########################################################################
+    duplicated_string = ["a", "a", "c"]
+    numeric = [-1, 2, 3.0]
+
+    # Assert that assertion for numeric type for estimate works
+    _df = pd.DataFrame({"varlabel": duplicated_string, "estimate": numeric})
+    with pytest.warns(UserWarning) as user_warning:
+        check_data(dataframe=_df, estimate="estimate", varlabel="varlabel")
+    assert "Duplicates found in variable labels ('varlabel'). Plot may have errors." in str(
+        user_warning[0].message
     )
 
 
