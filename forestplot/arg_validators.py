@@ -221,6 +221,11 @@ def check_data(
                 "Duplicates found in variable labels ('varlabel') and group labels ('groupvar'). Formatting of y-axis labels may lead to unexpected errors."
             )
 
+    if len(dataframe) != dataframe[varlabel].dropna().nunique():
+        warnings.warn(
+            "Duplicates found in variable labels ('varlabel'). Plot may have errors."
+        )
+
     return dataframe
 
 

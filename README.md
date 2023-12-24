@@ -308,6 +308,8 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 * Left-flushing of annotations relies on the `monospace` font.
 * Plot may give strange behavior for few rows of data (six rows or fewer. [see this issue](https://github.com/LSYS/forestplot/issues/52))
 * Plot can get cluttered with too many variables/rows (~30 onwards) 
+* Not tested with PyCharm (#80).
+* Duplicated `varlabel` may lead to unexpected results (see #76, #81). `mplot` for grouped models could be useful for such cases (see #59, WIP).
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!----------------- BACKGROUND AND ADDITIONAL RESOURCES ----------------->
