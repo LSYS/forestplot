@@ -1,10 +1,9 @@
-import forestplot as fp
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
-
+import forestplot as fp
 
 # fill in
 df = pd.read_csv('test.csv')
