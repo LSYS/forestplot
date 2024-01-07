@@ -267,12 +267,14 @@ import forestplot as fp
 df_mmodel = pd.read_csv("../examples/data/sleep-mmodel.csv").query(
     "model=='all' | model=='young kids'"
 )
-df_mmodel.head()
+df_mmodel.head(3)
 ```
 
-```
-|    | var   |       coef |       se |         T |     pval |       r2 |     adj_r2 |         ll |      hl | model      | group         | label       |\n|---:|:------|-----------:|---------:|----------:|---------:|---------:|-----------:|-----------:|--------:|:-----------|:--------------|:------------|\n|  0 | age   |   0.994889 |  1.96925 |  0.505213 | 0.613625 | 0.127289 |  0.103656  |   -2.87382 |  4.8636 | all        | age           | in years    |\n|  3 | age   |  22.634    | 15.4953  |  1.4607   | 0.149315 | 0.178147 | -0.0136188 |   -8.36124 | 53.6293 | young kids | age           | in years    |\n|  4 | black | -84.7966   | 82.1501  | -1.03222  | 0.302454 | 0.127289 |  0.103656  | -246.186   | 76.5925 | all        | other factors | =1 if black |
-```
+|    | var   |       coef |       se |         T |     pval |       r2 |     adj_r2 |         ll |      hl | model      | group         | label       |
+|---:|:------|-----------:|---------:|----------:|---------:|---------:|-----------:|-----------:|--------:|:-----------|:--------------|:------------|
+|  0 | age   |   0.994889 |  1.96925 |  0.505213 | 0.613625 | 0.127289 |  0.103656  |   -2.87382 |  4.8636 | all        | age           | in years    |
+|  3 | age   |  22.634    | 15.4953  |  1.4607   | 0.149315 | 0.178147 | -0.0136188 |   -8.36124 | 53.6293 | young kids | age           | in years    |
+|  4 | black | -84.7966   | 82.1501  | -1.03222  | 0.302454 | 0.127289 |  0.103656  | -246.186   | 76.5925 | all        | other factors | =1 if black |
 
 ```python
 fp.mforestplot(
@@ -301,7 +303,7 @@ fp.mforestplot(
 ```
 <p align="left"><img width="80%" src="https://raw.githubusercontent.com/LSYS/forestplot/mplot-dev/docs/images/multimodel.png"></p>
 
-Please note: This module is still experimental. See [this jupyter notebook](https://nbviewer.org/github/LSYS/forestplot/blob/main/examples/test-multmodel-sleep.ipynb) for more examples and tweaks.
+Please note: This module is still experimental. See [this jupyter notebook](https://nbviewer.org/github/LSYS/forestplot/blob/mplot-dev/examples/test-multmodel-sleep.ipynb) for more examples and tweaks.
 
 <!------------------- GALLERY AND API OPTIONS ------------------->
 ## Gallery and API Options[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#gallery-and-api-options)
