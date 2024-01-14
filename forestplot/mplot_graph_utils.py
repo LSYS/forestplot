@@ -1,3 +1,4 @@
+import warnings
 from typing import Any, List, Optional, Sequence, Tuple, Union
 
 import matplotlib.pyplot as plt
@@ -158,7 +159,7 @@ def mdraw_est_markers(
         _df = dataframe.query(f'{model_col}=="{modelgroup}"')
         base_y_vector = np.arange(len(_df)) - offset / 2 - (offset / 2) * (n - 2)
         _y = base_y_vector + (ix * offset)
-        ax.scatter(y=_y, x=_df[estimate], marker=msymbols[ix], color=mcolor[ix], s=markersize)
+        ax.scatter(y=_y, x=_df[estimate], marker=msymbols[ix], c=mcolor[ix], s=markersize)
     return ax
 
 
@@ -280,9 +281,13 @@ def mdraw_legend(
     leg_markersize = kwargs.get("leg_markersize", 8)
     leg_artists = []
     for ix, symbol in enumerate(msymbols):
-        leg_artists.append(
-            Line2D([0], [0], marker=symbol, color=mcolor[ix], markersize=leg_markersize)
-        )
+        try:
+            leg_artists.append(
+                Line2D([0], [0], marker=symbol, color=mcolor[ix], markersize=leg_markersize)
+            )
+        except IndexError:
+            warnings.warn("'msymbols' and 'mcolor' have different lengths.")
+            pass
     # Handle position of legend
     # bbox_to_anchor = kwargs.get("bbox_to_anchor", None)
     if len(modellabels) <= 2:
