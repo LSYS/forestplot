@@ -78,6 +78,7 @@ def mforestplot(
     return_df: bool = False,
     preprocess: bool = True,
     table: bool = False,
+    legend: bool = True,
     **kwargs: Any,
 ) -> Axes:
     """
@@ -197,6 +198,7 @@ def mforestplot(
         yticker2=yticker2,
         color_alt_rows=color_alt_rows,
         table=table,
+        legend=legend,
         **kwargs,
     )
     if return_df:
@@ -309,6 +311,7 @@ def _make_mforestplot(
     despine: bool = True,
     color_alt_rows: bool = False,
     table: bool = False,
+    legend: bool = True,
     **kwargs: Any,
 ) -> Axes:
     if models is None:
@@ -339,7 +342,10 @@ def _make_mforestplot(
         ax=ax,
         **kwargs,
     )
-    ax = mdraw_legend(models=models, modellabels=modellabels, ax=ax, xlabel=xlabel, **kwargs)
+    if legend:
+        ax = mdraw_legend(
+            models=models, modellabels=modellabels, ax=ax, xlabel=xlabel, **kwargs
+        )
 
     format_xticks(
         dataframe=dataframe, estimate=estimate, ll=ll, hl=hl, xticks=xticks, ax=ax, **kwargs
