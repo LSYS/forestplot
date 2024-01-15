@@ -48,6 +48,7 @@ def mdraw_ref_xline(
             linestyle=xlinestyle,
             color=xlinecolor,
             linewidth=xlinewidth,
+            zorder=0,
         )
     return ax
 
