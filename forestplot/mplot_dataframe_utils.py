@@ -197,7 +197,7 @@ def make_multimodel_tableheaders(
             left_headers,
             right_headers,
         )
-        dataframe.loc[ix, "model"] = models[c]
+        dataframe.loc[ix, model_col] = models[c]
         c += 1
 
     return dataframe
