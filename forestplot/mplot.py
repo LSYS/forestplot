@@ -343,7 +343,9 @@ def _make_mforestplot(
         **kwargs,
     )
     if legend:
-        ax = mdraw_legend(models=models, modellabels=modellabels, ax=ax, xlabel=xlabel, **kwargs)
+        ax = mdraw_legend(
+            models=models, modellabels=modellabels, ax=ax, xlabel=xlabel, **kwargs
+        )
 
     format_xticks(
         dataframe=dataframe, estimate=estimate, ll=ll, hl=hl, xticks=xticks, ax=ax, **kwargs
