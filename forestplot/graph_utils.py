@@ -1,6 +1,6 @@
 """Holds functions to draw the plot."""
 import warnings
-from typing import Any, Optional, Sequence, Tuple, Union
+from typing import Any, List, Optional, Sequence, Tuple, Union
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -544,6 +544,7 @@ def format_xticks(
     hl: str,
     xticks: Optional[Union[list, range]],
     ax: Axes,
+    xlim: Optional[Union[Tuple, List]] = None,
     **kwargs: Any
 ) -> Axes:
     """
@@ -596,6 +597,8 @@ def format_xticks(
         ax.set_xticklabels(xticklabels)
     for xticklab in ax.get_xticklabels():
         xticklab.set_fontfamily("sans-serif")
+    if xlim:
+        ax.set_xlim(xlim[0], xlim[1])
     return ax
 
 
