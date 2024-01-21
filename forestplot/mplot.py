@@ -79,6 +79,7 @@ def mforestplot(
     preprocess: bool = True,
     table: bool = False,
     legend: bool = True,
+    xlim: Optional[Union[Tuple, List]] = None,
     **kwargs: Any,
 ) -> Axes:
     """
@@ -199,6 +200,7 @@ def mforestplot(
         color_alt_rows=color_alt_rows,
         table=table,
         legend=legend,
+        xlim=xlim,
         **kwargs,
     )
     if return_df:
@@ -312,6 +314,7 @@ def _make_mforestplot(
     color_alt_rows: bool = False,
     table: bool = False,
     legend: bool = True,
+    xlim: Optional[Union[Tuple, List]] = None,
     **kwargs: Any,
 ) -> Axes:
     if models is None:
@@ -348,7 +351,14 @@ def _make_mforestplot(
         )
 
     format_xticks(
-        dataframe=dataframe, estimate=estimate, ll=ll, hl=hl, xticks=xticks, ax=ax, **kwargs
+        dataframe=dataframe,
+        estimate=estimate,
+        ll=ll,
+        hl=hl,
+        xticks=xticks,
+        xlim=xlim,
+        ax=ax,
+        **kwargs,
     )
     mdraw_ref_xline(
         ax=ax,
@@ -410,4 +420,5 @@ def _make_mforestplot(
         negative_padding = 0.5
     ax.set_ylim(-0.5, ax.get_ylim()[1] - negative_padding)
     despineplot(despine=despine, ax=ax)
+
     return ax
