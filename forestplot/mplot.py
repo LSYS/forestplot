@@ -107,26 +107,66 @@ def mforestplot(
         The name of the column representing the lower limit of the confidence intervals.
     hl : Optional[str]
         The name of the column representing the upper limit of the confidence intervals.
-    [Other parameters]
-        ...
+    groupvar: Optional[str] = None
+        The name of the column used for grouping the variables. If specified, it allows the plot to visually
+        distinguish between different groups of variables.
+    group_order: Optional[Union[list, tuple]] = None
+        Specifies the order in which groups (as defined by `groupvar`) should be displayed in the plot.
+        If None, the groups are displayed in the order they appear in the DataFrame.
+    logscale: bool = False
+        If True, the x-axis will be log-scaled. Useful for variables that span several orders of magnitude.
+    annote: Optional[Union[Sequence[str], None]] = None
+        A list of column names in the DataFrame that contain additional annotations for each variable.
+    annoteheaders: Optional[Union[Sequence[str], None]] = None
+        Headers for the annotation columns. If None, the column names specified in `annote` are used as headers.
+    rightannote: Optional[Union[Sequence[str], None]] = None
+        A list of column names for annotations that should be placed on the right side of the plot.
+    right_annoteheaders: Optional[Union[Sequence[str], None]] = None
+        Headers for the right-side annotation columns.
+    pval: Optional[str] = None
+        The name of the column containing p-values for each estimate. Used for displaying statistical significance.
+    capitalize: Optional[str] = None
+        Column name for which the text should be capitalized.
+    starpval: bool = True
+        If True, display stars (*) next to estimates to indicate statistical significance based on p-values.
+    sort: bool = False
+        If True, the variables will be sorted based on the `sortby` parameter.
+    sortby: Optional[str] = None
+        Column name to sort the variables by. Only relevant if `sort` is True.
+    flush: bool = True
+        If True, aligns all the estimates along a vertical line for better visual comparison.
+    decimal_precision: int = 2
+        The number of decimal places for numeric values displayed in the plot.
+    figsize: Union[Tuple, List] = (4, 8)
+        Size of the plot specified as (width, height) in inches.
+    xticks: Optional[Union[list, range]] = None
+        Custom x-axis tick values. If None, Matplotlib's default ticks are used.
+    ylabel: Optional[str] = None
+        Label for the y-axis. If None, no label is displayed.
+    xlabel: Optional[str] = None
+        Label for the x-axis. If None, no label is displayed.
+    yticker2: Optional[str] = None
+        Secondary y-axis tick labels, if applicable.
+    color_alt_rows: bool = False
+        If True, alternate rows will have different background colors for better readability.
+    return_df: bool = False
+        If True, returns the processed DataFrame along with the Axes object.
+    preprocess: bool = True
+        If True, performs preprocessing on the DataFrame before plotting.
+    table: bool = False
+        If True, displays a table at the bottom of the plot with variable names and their corresponding estimates.
+    legend: bool = True
+        If True, displays a legend for the models or groups.
+    xlim: Optional[Union[Tuple, List]] = None
+        Custom limits for the x-axis. Specified as (xmin, xmax).
+    **kwargs: Any
+        Additional keyword arguments to pass to Matplotlib plotting functions.
 
     Returns
     -------
     Tuple
         A tuple containing a modified DataFrame (if return_df is True) and the matplotlib Axes object
         with the forest plot.
-
-    Examples
-    --------
-    >>> df = pd.DataFrame({
-    ...     'model': ['model1', 'model2'],
-    ...     'estimate': [1.5, 2.0],
-    ...     'll': [1.0, 1.7],
-    ...     'hl': [2.0, 2.3],
-    ...     'varlabel': ['Variable 1', 'Variable 2']
-    ... })
-    >>> modified_df, ax = mforestplot(df, 'estimate', 'varlabel', 'model')
-    >>> plt.show()
 
     Notes
     -----
@@ -229,7 +269,45 @@ def _mpreprocess_dataframe(
     **kwargs: Any,
 ) -> pd.core.frame.DataFrame:
     """
-    Preprocess the dataframe to be ready for plotting.
+    Preprocess the dataframe to be ready for plotting in the `mforestplot` function.
+
+    Parameters
+    ----------
+    dataframe : pd.core.frame.DataFrame
+        The DataFrame containing the data to be plotted.
+    estimate : str
+        The name of the column in the DataFrame that contains the estimate values.
+    varlabel : str
+        The name of the column used for variable labels on the y-axis.
+    model_col : str
+        The name of the column that categorizes data into different models or groups.
+    models : Optional[Union[Sequence[str], None]]
+        The list of models to include in the plot. If None, all models in model_col are used.
+    ll : Optional[str]
+        The name of the column representing the lower limit of the confidence intervals.
+    hl : Optional[str]
+        The name of the column representing the upper limit of the confidence intervals.
+    groupvar : Optional[str]
+        The name of the column used for grouping the variables. If provided, the DataFrame will be sorted and/or
+        grouped based on this column.
+    group_order : Optional[Union[list, tuple]]
+        The order in which to display the groups defined by `groupvar`. This affects the sorting of the DataFrame.
+    annote : Optional[Union[Sequence[str], None]]
+        A list of column names in the DataFrame that contain additional annotations for each variable.
+    annoteheaders : Optional[Union[Sequence[str], None]]
+        Headers for the annotation columns. If None, the column names specified in `annote` are used as headers.
+    rightannote : Optional[Union[Sequence[str], None]]
+        A list of column names for annotations that should be placed on the right side of the plot.
+    right_annoteheaders : Optional[Union[Sequence[str], None]]
+        Headers for the right-side annotation columns.
+    capitalize : Optional[str]
+        Column name for which the text should be capitalized.
+    flush : bool
+        If True, aligns all the estimates along a vertical line for better visual comparison.
+    decimal_precision : int
+        The number of decimal places for numeric values in the DataFrame.
+    **kwargs : Any
+        Additional keyword arguments that might be used in other preprocessing steps.
 
     Returns
     -------
@@ -317,6 +395,67 @@ def _make_mforestplot(
     xlim: Optional[Union[Tuple, List]] = None,
     **kwargs: Any,
 ) -> Axes:
+    """
+    Constructs a forest plot from a preprocessed DataFrame.
+
+    Parameters
+    ----------
+    dataframe : pd.core.frame.DataFrame
+        The DataFrame containing the data to be plotted.
+    yticklabel : str
+        The name of the column used for y-axis tick labels.
+    estimate : str
+        The name of the column in the DataFrame that contains the estimate values.
+    model_col : str
+        The name of the column that categorizes data into different models or groups.
+    models : Optional[Union[Sequence[str], None]]
+        The list of models to include in the plot. If None, all models in model_col are used.
+    modellabels : Optional[Union[Sequence[str], None]]
+        Labels for the models, used in the plot legend. If None, model names are used as labels.
+    groupvar : str
+        The name of the column used for grouping the variables.
+    xticks : Optional[Union[list, range]]
+        Custom x-axis tick values. If None, Matplotlib's default ticks are used.
+    ll : str
+        The name of the column representing the lower limit of the confidence intervals.
+    hl : str
+        The name of the column representing the upper limit of the confidence intervals.
+    logscale : bool
+        If True, the x-axis will be log-scaled.
+    flush : bool
+        If True, aligns all the estimates along a vertical line for better visual comparison.
+    annoteheaders : Optional[Union[Sequence[str], None]]
+        Headers for the annotation columns.
+    rightannote : Optional[Union[Sequence[str], None]]
+        A list of column names for annotations to be placed on the right side of the plot.
+    right_annoteheaders : Optional[Union[Sequence[str], None]]
+        Headers for the right-side annotation columns.
+    ylabel : str
+        Label for the y-axis.
+    xlabel : str
+        Label for the x-axis.
+    yticker2 : Optional[str]
+        Secondary y-axis tick labels, if applicable.
+    figsize : Union[Tuple, List]
+        Size of the plot specified as (width, height) in inches.
+    despine : bool
+        If True, removes the top and right spines from the plot.
+    color_alt_rows : bool
+        If True, alternate rows will have different background colors for better readability.
+    table : bool
+        If True, displays a table at the bottom of the plot with variable names and their corresponding estimates.
+    legend : bool
+        If True, displays a legend for the models or groups.
+    xlim : Optional[Union[Tuple, List]]
+        Custom limits for the x-axis. Specified as (xmin, xmax).
+    **kwargs : Any
+        Additional keyword arguments to pass to plotting functions.
+
+    Returns
+    -------
+    Axes
+        A Matplotlib Axes object containing the forest plot.
+    """
     if models is None:
         models = dataframe[model_col].dropna().unique()
     if modellabels is None:
