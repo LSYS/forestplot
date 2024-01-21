@@ -261,6 +261,8 @@ fp.forestplot(df,  # the dataframe with results data
 <!------------------- Multi-models ------------------->
 ## Multi-models[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#multi-models)
 
+For coefficient plots where each variable can have multiple estimates (each `model` has one).
+
 ```python
 import forestplot as fp
 
@@ -293,15 +295,18 @@ fp.mforestplot(
     xlabel="Coefficient (95% CI)",
     modellabels=["Have young kids", "Full sample"],
     xticks=[-1200, -600, 0, 600],
+    mcolor=["#CC6677", "#4477AA"],
     # Additional kwargs for customizations
     **{
         "markersize": 30,
-        # override default vertical space between models
-        "offset": 0.4,  
+        # override default vertical offset between models (0.0 to 1.0)
+        "offset": 0.35,  
+        "xlinestyle": (0, (10, 5)),  # long dash for x-reference line
+        "xlinecolor": ".8",  # gray color for x-reference line
     },
 )
 ```
-<p align="left"><img width="80%" src="https://raw.githubusercontent.com/LSYS/forestplot/mplot-dev/docs/images/multimodel.png"></p>
+<p align="left"><img width="100%" src="https://raw.githubusercontent.com/LSYS/forestplot/mplot-dev/docs/images/multimodel.png"></p>
 
 Please note: This module is still experimental. See [this jupyter notebook](https://nbviewer.org/github/LSYS/forestplot/blob/mplot-dev/examples/test-multmodel-sleep.ipynb) for more examples and tweaks.
 
