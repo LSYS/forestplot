@@ -694,7 +694,7 @@ def draw_tablelines(
     first_yticklab = ax.get_yaxis().majorTicks[-1]
     try:
         bbox_disp = first_yticklab.label.get_window_extent()
-    except:
+    except AttributeError:
         bbox_disp = first_yticklab.label1.get_window_extent()
     (x0, _), (x1, _) = ax.transData.inverted().transform(bbox_disp)
     upper_lw, lower_lw = 2, 1.3

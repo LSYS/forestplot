@@ -137,14 +137,14 @@ plt.savefig("plot.png", bbox_inches="tight")
 ```python
 fp.forestplot(df,  # the dataframe with results data
               estimate="r",  # col containing estimated effect size 
-              moerror="moerror",  # columns containing conf. int. margin of error
+              ll="ll", hl="hl",  # columns containing conf. int. lower and higher limits              
               varlabel="label",  # column containing variable label
               capitalize="capitalize",  # Capitalize labels
               groupvar="group",  # Add variable groupings 
               # group ordering
               group_order=["labor factors", "occupation", "age", "health factors", 
                            "family factors", "area of residence", "other factors"],
-              sort=True,  # sort in ascending order (sorts within group if group is specified)               
+              sort=True  # sort in ascending order (sorts within group if group is specified)               
               )
 ```
 <p align="left"><img width="75%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-sort.png"></p>
@@ -360,6 +360,8 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 * Left-flushing of annotations relies on the `monospace` font.
 * Plot may give strange behavior for few rows of data (six rows or fewer. [see this issue](https://github.com/LSYS/forestplot/issues/52))
 * Plot can get cluttered with too many variables/rows (~30 onwards) 
+* Not tested with PyCharm (#80).
+* Duplicated `varlabel` may lead to unexpected results (see #76, #81). `mplot` for grouped models could be useful for such cases (see #59, WIP).
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!----------------- BACKGROUND AND ADDITIONAL RESOURCES ----------------->

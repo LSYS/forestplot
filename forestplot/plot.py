@@ -78,6 +78,7 @@ def forestplot(
     return_df: bool = False,
     preprocess: bool = True,
     table: bool = False,
+    ax: Optional[Axes] = None,
     **kwargs: Any,
 ) -> Axes:
     """
@@ -218,6 +219,7 @@ def forestplot(
         yticker2=yticker2,
         color_alt_rows=color_alt_rows,
         table=table,
+        ax=ax,
         **kwargs,
     )
     return (_local_df, ax) if return_df else ax
@@ -395,6 +397,7 @@ def _make_forestplot(
     yticker2: Optional[str],
     color_alt_rows: bool,
     figsize: Union[Tuple, List],
+    ax: Axes,
     despine: bool = True,
     table: bool = False,
     **kwargs: Any,
@@ -455,7 +458,8 @@ def _make_forestplot(
     Axes
         The matplotlib Axes object with the forest plot.
     """
-    _, ax = plt.subplots(figsize=figsize, facecolor="white")
+    if not ax:
+        _, ax = plt.subplots(figsize=figsize, facecolor="white")
     ax = draw_ci(
         dataframe=dataframe,
         estimate=estimate,
