@@ -15,7 +15,7 @@ notebook:
 	cd examples && runpynb readme-examples.ipynb
 
 BLACK_OPTS := -l 95
-SRC_FILES := arg_validators dataframe_utils graph_utils plot text_utils
+SRC_FILES := arg_validators dataframe_utils graph_utils text_utils plot mplot
 SRC_FILES := $(addprefix forestplot/, $(addsuffix .py, $(SRC_FILES))) 
 .PHONY: lint
 lint: # Check with mypy, pyflakes, black

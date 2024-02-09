@@ -78,6 +78,7 @@ def forestplot(
     return_df: bool = False,
     preprocess: bool = True,
     table: bool = False,
+    ax: Optional[Axes] = None,
     **kwargs: Any,
 ) -> Axes:
     """
@@ -218,6 +219,7 @@ def forestplot(
         yticker2=yticker2,
         color_alt_rows=color_alt_rows,
         table=table,
+        ax=ax,
         **kwargs,
     )
     return (_local_df, ax) if return_df else ax
@@ -248,11 +250,60 @@ def _preprocess_dataframe(
     **kwargs: Any,
 ) -> pd.core.frame.DataFrame:
     """
-    Preprocess the dataframe to be ready for plotting.
+    Preprocess a DataFrame for forest plot visualization, handling various aspects such as sorting,
+    normalizing labels, and formatting annotations.
+
+    Parameters
+    ----------
+    dataframe : pd.core.frame.DataFrame
+        The DataFrame to preprocess.
+    estimate : str
+        The column name for the estimate values.
+    varlabel : str
+        The column name for the variable labels.
+    ll : Optional[str], default=None
+        The column name for the lower limit of confidence intervals.
+    hl : Optional[str], default=None
+        The column name for the upper limit of confidence intervals.
+    form_ci_report : Optional[bool], default=False
+        Flag to determine if confidence interval reporting is required.
+    ci_report : Optional[bool], default=False
+        Flag to determine if confidence interval reporting is enabled.
+    groupvar : Optional[str], default=None
+        The column name for group variables.
+    group_order : Optional[Union[list, tuple]], default=None
+        The order of groups for sorting.
+    annote : Optional[Union[Sequence[str], None]], default=None
+        Annotations to add to the DataFrame.
+    annoteheaders : Optional[Union[Sequence[str], None]], default=None
+        Headers for the annotations.
+    rightannote : Optional[Union[Sequence[str], None]], default=None
+        Right-aligned annotations to add to the DataFrame.
+    right_annoteheaders : Optional[Union[Sequence[str], None]], default=None
+        Headers for the right-aligned annotations.
+    capitalize : Optional[str], default=None
+        Flag to capitalize certain text elements.
+    pval : Optional[str], default=None
+        The column name for p-values.
+    starpval : bool, default=True
+        Flag to add stars to significant p-values.
+    sort : bool, default=False
+        Flag to enable sorting.
+    sortby : Optional[str], default=None
+        The column name to sort by.
+    sortascend : bool, default=True
+        Flag to set sorting order.
+    flush : bool, default=True
+        Flag to flush certain text elements.
+    decimal_precision : int, default=2
+        The number of decimal places for rounding numeric values.
+    **kwargs : Any
+        Additional keyword arguments.
 
     Returns
     -------
-            pd.core.frame.DataFrame with additional columns for plotting.
+    pd.core.frame.DataFrame
+        The preprocessed DataFrame, ready for visualization with additional columns for plotting.
     """
     if (groupvar is not None) and (group_order is not None):
         if sort is True:
@@ -346,18 +397,69 @@ def _make_forestplot(
     yticker2: Optional[str],
     color_alt_rows: bool,
     figsize: Union[Tuple, List],
+    ax: Axes,
     despine: bool = True,
     table: bool = False,
     **kwargs: Any,
 ) -> Axes:
     """
-    Draw the forest plot.
+    Create and draw a forest plot using the given DataFrame and specified parameters.
+
+    This function sets up and renders a forest plot using matplotlib, with various options for customization,
+    including confidence intervals, marker styles, axis labels, and annotations.
+
+    Parameters
+    ----------
+    dataframe : pd.core.frame.DataFrame
+        The DataFrame containing the data to be plotted.
+    yticklabel : str
+        The column name to be used for y-axis tick labels.
+    estimate : str
+        The column name representing the central estimate for each observation.
+    groupvar : str
+        The column name used for grouping variables in the plot.
+    pval : str
+        The column name for the p-value.
+    xticks : Optional[Union[list, range]]
+        Custom x-ticks for the plot.
+    ll : str
+        The column name for the lower limit of the confidence interval.
+    hl : str
+        The column name for the upper limit of the confidence interval.
+    logscale : bool
+        Whether to use a logarithmic scale for the x-axis.
+    flush : bool
+        Flag to align the y-tick labels.
+    annoteheaders : Optional[Union[Sequence[str], None]]
+        Additional annotations to be included in the plot.
+    rightannote : Optional[Union[Sequence[str], None]]
+        Annotations to be aligned to the right side of the plot.
+    right_annoteheaders : Optional[Union[Sequence[str], None]]
+        Headers for the right-aligned annotations.
+    ylabel : str
+        Label for the y-axis.
+    xlabel : str
+        Label for the x-axis.
+    yticker2 : Optional[str]
+        Additional y-tick labels.
+    color_alt_rows : bool
+        Whether to color alternate rows for better readability.
+    figsize : Union[Tuple, List]
+        Size of the figure to be created.
+    despine : bool, default=True
+        Whether to remove the top and right spines of the plot.
+    table : bool, default=False
+        Whether to draw a table-like structure on the plot.
+    **kwargs : Any
+        Additional keyword arguments for further customization.
 
     Returns
     -------
-            Matplotlib Axes object.
+    Axes
+        The matplotlib Axes object with the forest plot.
     """
-    _, ax = plt.subplots(figsize=figsize, facecolor="white")
+    if not ax:
+        _, ax = plt.subplots(figsize=figsize, facecolor="white")
     ax = draw_ci(
         dataframe=dataframe,
         estimate=estimate,

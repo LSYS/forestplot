@@ -10,7 +10,7 @@ with open("README.md", "r") as fh:
 install_requires = ["pandas", "numpy", "matplotlib", "matplotlib-inline<=0.1.3"]
 setup(
     name="forestplot",
-    version="0.3.0",
+    version="0.4.0",
     license="MIT",
     author="Lucas Shen",
     author_email="lucas@lucasshen.com",

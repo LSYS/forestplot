@@ -36,6 +36,7 @@ Additional options allow easy addition of columns in the `dataframe` as annotati
 > - [Quick Start](#quick-start)
 > - [Some Examples with Customizations](#some-examples-with-customizations)
 > - [Gallery and API Options](#gallery-and-api-options)
+> - [Multi-models](#multi-models)
 > - [Known Issues](#known-issues)
 > - [Background and Additional Resources](#background-and-additional-resources)
 > - [Contributing](#contributing)
@@ -136,14 +137,14 @@ plt.savefig("plot.png", bbox_inches="tight")
 ```python
 fp.forestplot(df,  # the dataframe with results data
               estimate="r",  # col containing estimated effect size 
-              moerror="moerror",  # columns containing conf. int. margin of error
+              ll="ll", hl="hl",  # columns containing conf. int. lower and higher limits              
               varlabel="label",  # column containing variable label
               capitalize="capitalize",  # Capitalize labels
               groupvar="group",  # Add variable groupings 
               # group ordering
               group_order=["labor factors", "occupation", "age", "health factors", 
                            "family factors", "area of residence", "other factors"],
-              sort=True,  # sort in ascending order (sorts within group if group is specified)               
+              sort=True  # sort in ascending order (sorts within group if group is specified)               
               )
 ```
 <p align="left"><img width="75%" src="https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/group-grouporder-sort.png"></p>
@@ -257,6 +258,57 @@ fp.forestplot(df,  # the dataframe with results data
 </details>
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+<!------------------- Multi-models ------------------->
+## Multi-models[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#multi-models)
+
+For coefficient plots where each variable can have multiple estimates (each `model` has one).
+
+```python
+import forestplot as fp
+
+df_mmodel = pd.read_csv("../examples/data/sleep-mmodel.csv").query(
+    "model=='all' | model=='young kids'"
+)
+df_mmodel.head(3)
+```
+
+|    | var   |       coef |       se |         T |     pval |       r2 |     adj_r2 |         ll |      hl | model      | group         | label       |
+|---:|:------|-----------:|---------:|----------:|---------:|---------:|-----------:|-----------:|--------:|:-----------|:--------------|:------------|
+|  0 | age   |   0.994889 |  1.96925 |  0.505213 | 0.613625 | 0.127289 |  0.103656  |   -2.87382 |  4.8636 | all        | age           | in years    |
+|  3 | age   |  22.634    | 15.4953  |  1.4607   | 0.149315 | 0.178147 | -0.0136188 |   -8.36124 | 53.6293 | young kids | age           | in years    |
+|  4 | black | -84.7966   | 82.1501  | -1.03222  | 0.302454 | 0.127289 |  0.103656  | -246.186   | 76.5925 | all        | other factors | =1 if black |
+
+```python
+fp.mforestplot(
+    dataframe=df_mmodel,
+    estimate="coef",
+    ll="ll",
+    hl="hl",
+    varlabel="label",
+    capitalize="capitalize",
+    model_col="model",
+    color_alt_rows=True,
+    groupvar="group",
+    table=True,
+    rightannote=["var", "group"],
+    right_annoteheaders=["Source", "Group"],
+    xlabel="Coefficient (95% CI)",
+    modellabels=["Have young kids", "Full sample"],
+    xticks=[-1200, -600, 0, 600],
+    mcolor=["#CC6677", "#4477AA"],
+    # Additional kwargs for customizations
+    **{
+        "markersize": 30,
+        # override default vertical offset between models (0.0 to 1.0)
+        "offset": 0.35,  
+        "xlinestyle": (0, (10, 5)),  # long dash for x-reference line
+        "xlinecolor": ".8",  # gray color for x-reference line
+    },
+)
+```
+<p align="left"><img width="100%" src="https://raw.githubusercontent.com/LSYS/forestplot/mplot-dev/docs/images/multimodel.png"></p>
+
+Please note: This module is still experimental. See [this jupyter notebook](https://nbviewer.org/github/LSYS/forestplot/blob/mplot-dev/examples/test-multmodel-sleep.ipynb) for more examples and tweaks.
 
 <!------------------- GALLERY AND API OPTIONS ------------------->
 ## Gallery and API Options[![](https://raw.githubusercontent.com/LSYS/forestplot/main/docs/images/pin.svg)](#gallery-and-api-options)
@@ -308,6 +360,8 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 * Left-flushing of annotations relies on the `monospace` font.
 * Plot may give strange behavior for few rows of data (six rows or fewer. [see this issue](https://github.com/LSYS/forestplot/issues/52))
 * Plot can get cluttered with too many variables/rows (~30 onwards) 
+* Not tested with PyCharm (#80).
+* Duplicated `varlabel` may lead to unexpected results (see #76, #81). `mplot` for grouped models could be useful for such cases (see #59, WIP).
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!----------------- BACKGROUND AND ADDITIONAL RESOURCES ----------------->
