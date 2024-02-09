@@ -1,12 +1,17 @@
 #!/usr/bin/env python
 # coding: utf-8
+from pathlib import Path
+
 import pandas as pd
 from matplotlib.pyplot import Axes
 
 from forestplot import forestplot
 
 dataname = "sleep"
-data = f"https://raw.githubusercontent.com/lsys/pyforestplot/main/examples/data/{dataname}.csv"
+data = Path(f"./examples/data/{dataname}.csv")
+if not data.is_file():
+    data = f"https://raw.githubusercontent.com/lsys/pyforestplot/main/examples/data/{dataname}.csv"
+
 df = pd.read_csv(data).assign(n=lambda df: df["n"].map(str))
 
 # fmt: off
