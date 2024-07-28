@@ -1,4 +1,5 @@
 """Holds functions to draw the plot."""
+
 import warnings
 from typing import Any, List, Optional, Sequence, Tuple, Union
 
