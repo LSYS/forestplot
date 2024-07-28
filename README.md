@@ -360,7 +360,7 @@ More fined-grained control for base plot options (eg font sizes, marker colors) 
 * Left-flushing of annotations relies on the `monospace` font.
 * Plot may give strange behavior for few rows of data (six rows or fewer. [see this issue](https://github.com/LSYS/forestplot/issues/52))
 * Plot can get cluttered with too many variables/rows (~30 onwards) 
-* Not tested with PyCharm (#80).
+* Not tested with PyCharm (#80) nor Google Colab (#110).
 * Duplicated `varlabel` may lead to unexpected results (see #76, #81). `mplot` for grouped models could be useful for such cases (see #59, WIP).
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -378,7 +378,7 @@ This layout is similar to coefficient plots ([coefplots](http://repec.sowi.unibe
 
 <details><summary><i>More resources about forest plots</i></summary><p>
 
-* [[1]](https://doi.org/10.1038/s41433-021-01867-6) Chang, Y., Phillips, M.R., Guymer, R.H. et al. The 5 min meta-analysis: understanding how to read and interpret a forest plot. Eye 36, 673–675 (2022).
+* [[1]](https://doi.org/10.1038/s41433-021-01867-6) Chang, Y., Phillips, M.R., Guymer, R.H. et al. The 5 min meta-analysis: understanding how to read and interpret a forest plot. Eye 36, 673–675 (2022).
 * [[2]](https://doi.org/10.1136/bmj.322.7300.1479) Lewis S, Clarke M. Forest plots: trying to see the wood and the trees BMJ 2001; 322 :1479 
 </p></details><p></p>
 
@@ -419,7 +419,7 @@ Contributions are welcome, and they are greatly appreciated!
 **Issues**
 
 Please submit bugs, questions, or issues you encounter to the [GitHub Issue Tracker](https://github.com/lsys/forestplot/issues).
-For bugs, please provide a minimal reproducible example demonstrating the problem.
+For bugs, please provide a minimal reproducible example demonstrating the problem (it may help me troubleshoot if I have a version of your data).
 
 **Pull Requests**
 
