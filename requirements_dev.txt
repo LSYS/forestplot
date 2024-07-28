@@ -12,6 +12,7 @@ black
 flake8
 mypy
 isort 
+pyflakes
 
 # package in local install
 -e .

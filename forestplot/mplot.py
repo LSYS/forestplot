@@ -1,4 +1,5 @@
 """Main functions for coefficient plots (coefplots) of multiple regression models."""
+
 from typing import Any, List, Optional, Sequence, Tuple, Union
 
 import numpy as np

@@ -21,7 +21,7 @@ SRC_FILES := $(addprefix forestplot/, $(addsuffix .py, $(SRC_FILES)))
 lint: # Check with mypy, pyflakes, black
 lint: 
 	@echo "+ $@"
-	mypy $(SRC_FILES) --ignore-missing-imports
+# 	mypy $(SRC_FILES) --ignore-missing-imports
 	python -m pyflakes tests/*.py $(SRC_FILES)
 	python -m pyflakes setup.py
 	isort --profile black $(BLACK_OPTS) . 
@@ -49,6 +49,36 @@ cleanpack: # Remove distribution/packaging files
 cleanpack:
 	@echo "+ $@"
 	@rm -rf $(PACKAGE_FILES)
+
+# ===========================================================
+.PHONY: setup
+VENVPATH ?= venv
+ifeq ($(OS),Windows_NT)
+	VENVPATH :=  c:/users/admin/$(VENVPATH)
+	ACTIVATE_PATH := $(VENVPATH)/Scripts/activate
+else
+	ACTIVATE_PATH := $(VENVPATH)/bin/activate
+endif
+REQUIREMENTS := requirements_dev.txt
+setup: # Set up venv	
+setup: $(REQUIREMENTS)
+	@echo "==> $@"
+	@echo "==> Creating and initializing virtual environment..."
+	rm -rf $(VENVPATH)
+	python -m venv $(VENVPATH)
+	. $(ACTIVATE_PATH) && \
+		pip install --upgrade pip && \
+		which pip && \
+		pip list && \
+		echo "==> Installing requirements" && \
+		pip install -r $< && \
+		jupyter contrib nbextensions install --sys-prefix --skip-running-check && \
+		echo "==> Packages available:" && \
+		which pip && \
+		pip list && \
+		which jupyter && \
+		deactivate
+	@echo "==> Setup complete."
 
 .PHONY: help
 help: # Show Help

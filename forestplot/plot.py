@@ -1,4 +1,5 @@
 """Main functions to plot the forest plots."""
+
 from typing import Any, List, Optional, Sequence, Tuple, Union
 
 import numpy as np
@@ -534,9 +535,6 @@ def _make_forestplot(
                 right_annoteheaders=right_annoteheaders,
                 ax=ax,
             )
-    if annoteheaders or right_annoteheaders:
-        negative_padding = 1.0
-    else:
-        negative_padding = 0.5
+    negative_padding = 0.5
     ax.set_ylim(-0.5, ax.get_ylim()[1] - negative_padding)
     return ax

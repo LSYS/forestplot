@@ -1,4 +1,5 @@
 """Holds functions to check data and validate arguments from users."""
+
 import warnings
 from typing import Optional, Sequence, Union
 

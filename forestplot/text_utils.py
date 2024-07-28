@@ -1,4 +1,5 @@
 """Holds functions to prepare the strings and text in the dataframe."""
+
 from typing import Any, Optional, Sequence, Union
 
 import numpy as np
