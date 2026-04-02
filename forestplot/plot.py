@@ -17,6 +17,7 @@ from forestplot.graph_utils import (
     draw_alt_row_colors,
     draw_ci,
     draw_est_markers,
+    draw_total_diamond,
     draw_pval_right,
     draw_ref_xline,
     draw_tablelines,
@@ -80,6 +81,10 @@ def forestplot(
     preprocess: bool = True,
     table: bool = False,
     ax: Optional[Axes] = None,
+    weight_col = None,
+    total_col = None,
+    total_stats_col = None,
+    flag_col = "",
     **kwargs: Any,
 ) -> Axes:
     """
@@ -152,7 +157,14 @@ def forestplot(
             If True, in addition to the Matplotlib Axes object, returns the intermediate dataframe
             created from preprocess_dataframe().
             A tuple of (preprocessed_dataframe, Ax) will be returned.
-
+    weight_col (str)
+        Default is None. If specified, marker size will be proportaional to the weight of the study.
+    total_col (str)
+        Default is None. If specified, it should be the name of the column indicating which row is subtotal. The values in the column should be 0 (not a subtotal), or 1 (a subtotal row). A horizontal diamond will be drawn for subtotal rows rather than square&whiskers.
+    total_stats_col (str)
+        Default is None. If specified, it should be the name of the column indicating which row contains the stats info of the subtotal. The values in the column should be 0 (not such a row), or 1 (is such a row). In such a row, the stats info should be specified in the varlabel column using complete descriptions like "Test for overall effect: Z = 3.02 (P = 0.003)", "Heterogeneity: Tau² (DLb) = 0.00; Chi² = 2.86, df = 3 (P = 0.41); I² = 0%". Can add as many such rows as needed.
+    flag_col (str)
+        the column based on which we color the yticklables to flag suspicious rows.
     Returns
     -------
             Matplotlib Axes object.
@@ -198,9 +210,10 @@ def forestplot(
             sortby=sortby,
             flush=flush,
             decimal_precision=decimal_precision,
+            total_stats_col=total_stats_col,
             **kwargs,
         )
-    ax = _make_forestplot(
+    fig, ax = _make_forestplot(
         dataframe=_local_df,
         yticklabel="yticklabel",
         estimate=estimate,
@@ -221,9 +234,12 @@ def forestplot(
         color_alt_rows=color_alt_rows,
         table=table,
         ax=ax,
+        weight_col=weight_col,
+        total_col=total_col,
+        flag_col=flag_col,
         **kwargs,
     )
-    return (_local_df, ax) if return_df else ax
+    return (_local_df, fig, ax) if return_df else (fig, ax)
 
 
 def _preprocess_dataframe(
@@ -248,6 +264,7 @@ def _preprocess_dataframe(
     sortascend: bool = True,
     flush: bool = True,
     decimal_precision: int = 2,
+    total_stats_col: Optional[str] = None,
     **kwargs: Any,
 ) -> pd.core.frame.DataFrame:
     """
@@ -320,11 +337,11 @@ def _preprocess_dataframe(
     )
     if groupvar is not None:  # Make groups
         dataframe = normalize_varlabels(
-            dataframe=dataframe, varlabel=groupvar, capitalize=capitalize
+            dataframe=dataframe, varlabel=groupvar, capitalize=capitalize, total_stats_col=total_stats_col
         )
         dataframe = insert_groups(dataframe=dataframe, groupvar=groupvar, varlabel=varlabel)
     dataframe = normalize_varlabels(
-        dataframe=dataframe, varlabel=varlabel, capitalize=capitalize
+        dataframe=dataframe, varlabel=varlabel, capitalize=capitalize, total_stats_col=total_stats_col
     )
     dataframe = indent_nongroupvar(dataframe=dataframe, varlabel=varlabel, groupvar=groupvar)
     if form_ci_report:
@@ -357,6 +374,7 @@ def _preprocess_dataframe(
             varlabel=varlabel,
             annote=annote,
             annoteheaders=annoteheaders,
+            total_stats_col=total_stats_col,
             **kwargs,
         )
     if rightannote is not None:
@@ -374,6 +392,7 @@ def _preprocess_dataframe(
         annoteheaders=annoteheaders,
         rightannote=rightannote,
         right_annoteheaders=right_annoteheaders,
+        total_stats_col=total_stats_col,
         **kwargs,
     )
     return reverse_dataframe(dataframe)  # since plotting starts from bottom
@@ -401,7 +420,10 @@ def _make_forestplot(
     ax: Axes,
     despine: bool = True,
     table: bool = False,
-    **kwargs: Any,
+    weight_col = None,
+    total_col = None,
+    flag_col = "",
+    **kwargs: Any
 ) -> Axes:
     """
     Create and draw a forest plot using the given DataFrame and specified parameters.
@@ -451,6 +473,8 @@ def _make_forestplot(
         Whether to remove the top and right spines of the plot.
     table : bool, default=False
         Whether to draw a table-like structure on the plot.
+    weight_col: str, default=None
+        If weight column is specified, the marker size will be drawn proportionally to weight.
     **kwargs : Any
         Additional keyword arguments for further customization.
 
@@ -460,7 +484,7 @@ def _make_forestplot(
         The matplotlib Axes object with the forest plot.
     """
     if not ax:
-        _, ax = plt.subplots(figsize=figsize, facecolor="white")
+        fig, ax = plt.subplots(figsize=figsize, facecolor="white")
     ax = draw_ci(
         dataframe=dataframe,
         estimate=estimate,
@@ -471,9 +495,15 @@ def _make_forestplot(
         ax=ax,
         **kwargs,
     )
+    # 250715: draw marker sizes proportionally to study weights
     draw_est_markers(
-        dataframe=dataframe, estimate=estimate, yticklabel=yticklabel, ax=ax, **kwargs
+        dataframe=dataframe, estimate=estimate, yticklabel=yticklabel, ax=ax, weight_col=weight_col, total_col=total_col, **kwargs
     )
+    
+    
+    if total_col is not None:
+        draw_total_diamond(dataframe=dataframe, total_col=total_col, ax=ax, estimate=estimate, ll=ll, hl=hl,  **kwargs
+        )
     format_xticks(
         dataframe=dataframe, estimate=estimate, ll=ll, hl=hl, xticks=xticks, ax=ax, **kwargs
     )
@@ -485,8 +515,9 @@ def _make_forestplot(
         **kwargs,
     )
     pad = right_flush_yticklabels(
-        dataframe=dataframe, yticklabel=yticklabel, flush=flush, ax=ax, **kwargs
+        dataframe=dataframe, yticklabel=yticklabel, flush=flush, ax=ax, flag_col=flag_col, **kwargs
     )
+    draw_ylabel1(ylabel=ylabel, pad=pad, ax=ax, **kwargs)
     if rightannote is None:
         ax, righttext_width = draw_pval_right(
             dataframe=dataframe,
@@ -507,10 +538,10 @@ def _make_forestplot(
             ax=ax,
             **kwargs,
         )
-
-    draw_ylabel1(ylabel=ylabel, pad=pad, ax=ax, **kwargs)
+    
     remove_ticks(ax)
     format_grouplabels(dataframe=dataframe, groupvar=groupvar, ax=ax, **kwargs)
+    
     format_tableheader(
         annoteheaders=annoteheaders, right_annoteheaders=right_annoteheaders, ax=ax, **kwargs
     )
@@ -536,5 +567,6 @@ def _make_forestplot(
                 ax=ax,
             )
     negative_padding = 0.5
-    ax.set_ylim(-0.5, ax.get_ylim()[1] - negative_padding)
-    return ax
+    # ax.set_ylim(-0.5, ax.get_ylim()[1] - negative_padding) # this doesn't reflect the number of actually required rows
+    ax.set_ylim(-0.5, dataframe.shape[0]) # 250713: added by Takua Liu
+    return fig, ax
